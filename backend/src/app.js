@@ -11,7 +11,7 @@ app.use(cors())
 app.use(express.json({limit: "10kb"}))
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
-app.use(errorHandler())
+app.use(errorHandler)
 // app.use(express.static("public"))
 
 app.use('/api/auth', authroute)

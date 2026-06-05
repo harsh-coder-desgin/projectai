@@ -148,8 +148,8 @@ const sendChat = async (req, res) => {
         prompt
     );
     // YOUR AI LOGIC HERE
-    const aiResponse =
-        "AI response generated here";
+    // const aiResponses =
+    //     "AI response generated here";
 
     // NEW CHAT
     if (!chatId) {
