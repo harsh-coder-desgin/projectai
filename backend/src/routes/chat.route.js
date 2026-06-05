@@ -5,11 +5,12 @@ import {
   sendChat,
   getAllChats,
   getOneChat,
-} from "../controllers/userData.controller.js";
+  demoChat,
+} from "../controllers/chat.controllers.js";
 
 const router = express.Router();
 
-router.post("/tech",saveUserTech);
+router.post("/tech",verifyUser,saveUserTech);
 
 //demo send chat without login user
 router.post("/chats",demoChat);
