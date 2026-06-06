@@ -1,15 +1,16 @@
+import { Outlet } from 'react-router-dom'
 import './App.css'
 
 function App() {
-
   return (
-   <div>
-    Hello world
-   </div>
+    <div>
+      <Outlet />
+    </div>
   )
 }
 
 export default App
+
 
 // IF local storage no data render form of tech
 // if local storage has data push to caht
