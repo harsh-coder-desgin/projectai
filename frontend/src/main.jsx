@@ -1,8 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout } from "./Componets/index.js"
 import App from './App.jsx'
+import Tech from './pages/Tech.jsx' 
 import './index.css'
 
 const router = createBrowserRouter([
@@ -13,35 +14,35 @@ const router = createBrowserRouter([
       {
         path: "/tech",
         element: (
-          <AuthLayout>
+          // <AuthLayout>
             <Tech />
-          </AuthLayout>
+          // </AuthLayout>
         ),
       },
-      {
-        path: "/login",
-        element: (
-          <AuthLayout>
-            <Login />,
-          </AuthLayout>
-        )
-      },
-      {
-        path: "/signup",
-        element: (
-          <AuthLayout>
-            <Signup />
-          </AuthLayout>
-        ),
-      },
-      {
-        path: "/chat",
-        element: (
-          <AuthLayout>
-            <Chat />
-          </AuthLayout>
-        ),
-      },
+      // {
+      //   path: "/login",
+      //   element: (
+      //     <AuthLayout>
+      //       <Login />,
+      //     </AuthLayout>
+      //   )
+      // },
+      // {
+      //   path: "/signup",
+      //   element: (
+      //     <AuthLayout>
+      //       <Signup />
+      //     </AuthLayout>
+      //   ),
+      // },
+      // {
+      //   path: "/chat",
+      //   element: (
+      //     <AuthLayout>
+      //       <Chat />
+      //     </AuthLayout>
+      //   ),
+      // },
     ],
   },
 ]);
