@@ -1,44 +1,69 @@
 import { useState } from "react";
 
-function AddMoreSkills({ formData, setFormData, onBack, onFinish }) {
+function AddOtherSkills({ onBack, onSubmit }) {
   const [input, setInput] = useState("");
+  const [skills, setSkills] = useState([]);
 
-  const addSkill = () => {
+  const addSkills = () => {
     const newSkills = input
       .split(",")
       .map((s) => s.trim())
-      .filter((s) => s.length > 0);
+      .filter(Boolean);
 
-    setFormData((prev) => ({
-      ...prev,
-      other: [...prev.other, ...newSkills],
-    }));
-
+    setSkills((prev) => [...prev, ...newSkills]);
     setInput("");
+  };
+  const handleFinal = () => {
+    onSubmit(skills);
   };
 
   return (
-    <div className="add-skills">
-      <h2>🎯 Add Extra Skills</h2>
+    <div className="form-wrap">
 
-      <input
-        type="text"
-        placeholder="e.g. Python, Go, Rust"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
+      <div className="step-card">
+        <h2>➕ Add Custom Skills (Other)</h2>
 
-      <button onClick={addSkill}>Add Skill</button>
+        <input
+          type="text"
+          placeholder="e.g. Python, AI, Blockchain"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <button onClick={addSkills} className="btn-add" >Add</button>
+        <div style={{ marginTop: "10px", display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          {skills.map((s, i) => (
+            <span
+              key={i}
+              style={{
+                background: "#f1f5f9",
+                padding: "6px 10px",
+                borderRadius: "20px",
+                fontSize: "13px",
+                fontWeight: "500",
+                color: "#1e293b",
+                border: "1px solid #cbd5e1",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+              }}
+            >
+              ⭐ {s}
+            </span>
+          ))}
+        </div>
+      </div>
 
-      <h3>Current Other Skills:</h3>
-      <p>{formData.other.join(", ")}</p>
+      <div className="nav-row">
+        <button className="btn-prev" onClick={onBack}>
+          Back
+        </button>
 
-      <div>
-        <button onClick={onBack}>Back</button>
-        <button onClick={onFinish}>Finish & Save</button>
+        <button className="btn-submit" onClick={handleFinal}>
+          Final Submit
+        </button>
       </div>
     </div>
   );
 }
 
-export default AddMoreSkills;
+export default AddOtherSkills;

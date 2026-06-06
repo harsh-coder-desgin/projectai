@@ -1,10 +1,11 @@
 import { useState } from "react";
 import SkillForm from "./SkillForm";
-import AddMoreSkills from "./CustomSkillForm";
+import { skillCategories } from "./skillCategories";
+import CustomSkillForm from "./CustomSkillForm.jsx"
 
 function TechForm() {
   const [step, setStep] = useState(0);
-
+  const [showExtraForm, setShowExtraForm] = useState(false);
   const [formData, setFormData] = useState({
     frontend: [],
     backend: [],
@@ -12,42 +13,22 @@ function TechForm() {
     other: [],
   });
 
-  const forms = [
-    {
-      key: "frontend",
-      title: "Frontend Skills",
-      skills: ["HTML", "CSS", "JavaScript", "React", "Next.js"],
-    },
-    {
-      key: "backend",
-      title: "Backend Skills",
-      skills: ["Node.js", "Express", "JWT", "REST API"],
-    },
-    {
-      key: "database",
-      title: "Database Skills",
-      skills: ["MongoDB", "MySQL", "PostgreSQL"],
-    },
-    {
-      key: "other",
-      title: "Other Skills",
-      skills: ["Docker", "AWS", "GitHub Actions", "Nginx"],
-    },
-  ];
+  const currentForm = skillCategories[step];
 
-  const currentForm = forms[step];
-
+  // toggle skill
   const handleSkillChange = (skill) => {
     setFormData((prev) => {
-      const list = prev[currentForm.key];
+      const list = prev[currentForm.id];
 
-      const updated = list.includes(skill)
-        ? list.filter((s) => s !== skill)
-        : [...list, skill];
+      const exists = list.includes(skill.id);
+
+      const updated = exists
+        ? list.filter((id) => id !== skill.id)
+        : [...list, skill.id];
 
       return {
         ...prev,
-        [currentForm.key]: updated,
+        [currentForm.id]: updated,
       };
     });
   };
@@ -60,38 +41,54 @@ function TechForm() {
     setStep((prev) => prev - 1);
   };
 
+  // FIRST SUBMIT (before custom other skills)
   const handleSubmit = () => {
-    localStorage.setItem("techSkills", JSON.stringify(formData));
-    console.log("FINAL DATA:", formData);
-    setStep(4); 
+    console.log("Step 1 Saved:", formData);
+
+    // go to extra form instead of final save
+    setShowExtraForm(true);
   };
 
-  if (step === 4) {
+  // FINAL SUBMIT (after custom skills)
+  const handleFinalSubmit = (extraSkills) => {
+    const finalData = {
+      ...formData,
+      other: [...formData.other, ...extraSkills],
+    };
+
+    localStorage.setItem("techSkills", JSON.stringify(finalData));
+
+    console.log("FINAL SAVED DATA:");
+    console.log(finalData);
+  };
+
+  // 👉 SHOW EXTRA FORM AFTER FIRST SUBMIT
+  if (showExtraForm) {
     return (
-      <AddMoreSkills
-        formData={formData}
-        setFormData={setFormData}
-        onBack={() => setStep(3)}
-        onFinish={() => {
-          localStorage.setItem("techSkills", JSON.stringify(formData));
-          console.log("FINAL SAVED:", formData);
-        }}
+      <CustomSkillForm
+        existingSkills={formData.other}
+        onBack={() => setShowExtraForm(false)}
+        onSubmit={handleFinalSubmit}
       />
     );
   }
 
   return (
     <SkillForm
-      title={currentForm.title}
+      title={currentForm.label}
+      desc={currentForm.desc}
       skills={currentForm.skills}
-      selectedSkills={formData[currentForm.key]}
+      selectedSkills={formData[currentForm.id]}
       handleSkillChange={handleSkillChange}
       showPrevious={step > 0}
-      showNext={step < 3}
-      showSubmit={step === 3}
+      showNext={step < skillCategories.length - 1}
+      showSubmit={step === skillCategories.length - 1}
       onNext={handleNext}
       onPrevious={handlePrevious}
       onSubmit={handleSubmit}
+      currentIcon={currentForm.icon}
+      step={step}
+      totalSteps={skillCategories.length}
     />
   );
 }

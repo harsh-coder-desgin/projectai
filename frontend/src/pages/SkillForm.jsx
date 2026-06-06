@@ -1,7 +1,8 @@
-import "./SkillForm.css";
+import "./Form.css";
 
 function SkillForm({
   title,
+  desc,
   skills,
   selectedSkills,
   handleSkillChange,
@@ -11,40 +12,87 @@ function SkillForm({
   showPrevious,
   showNext,
   showSubmit,
+  currentIcon,
+  step,
+  totalSteps,
 }) {
   return (
-    <div className="skill-form">
-      <h2>{title}</h2>
+    <div className="form-wrap">
 
-      <div className="skills-container">
-        {skills.map((skill) => (
-          <label key={skill} className="skill-item">
-            <input
-              type="checkbox"
-              checked={selectedSkills.includes(skill)}
-              onChange={() => handleSkillChange(skill)}
-            />
-            {skill}
-          </label>
-        ))}
+      {/* HEADER */}
+      <div className="step-card">
+        <div className="step-header">
+          <div className="step-icon">{currentIcon}</div>
+
+          <div>
+            <div className="step-title">{title}</div>
+            <div className="step-desc">{desc}</div>
+          </div>
+
+          <div className="step-count-badge">
+            {step + 1} / {totalSteps}
+          </div>
+        </div>
+
+        {/* SKILLS */}
+        <div className="skill-grid">
+          {skills.map((skill) => {
+
+            // ✅ THIS LINE IS HERE
+            const isActive = selectedSkills.includes(skill.id);
+
+            return (
+              <div
+                key={skill.id}
+                className={`skill-card ${isActive ? "skill-card--on" : ""}`}
+                onClick={() => handleSkillChange(skill)}
+              >
+                <div className="skill-top">
+                  <div className="skill-icon">{skill.icon}</div>
+
+                  <div className="skill-name">{skill.label}</div>
+
+                  <div className={`skill-check ${isActive ? "skill-check--on" : ""}`}>
+                    {isActive ? "✓" : ""}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      <div className="btn-container">
-        {showPrevious && (
-          <button onClick={onPrevious}>
-            Previous
-          </button>
-        )}
+      <div className="nav-row">
 
-        {showNext && (
-          <button onClick={onNext}>
+        <button
+          className="btn-prev"
+          onClick={onPrevious}
+          disabled={!showPrevious}
+        >
+          Previous
+        </button>
+
+        <div className="nav-center">
+          <div className="nav-step-text">
+            Step {step + 1} of {totalSteps}
+          </div>
+        </div>
+
+        {showSubmit ? (
+          <button
+            className="btn-next"
+            onClick={onSubmit}
+            disabled={selectedSkills.length === 0}
+          >
             Next
           </button>
-        )}
-
-        {showSubmit && (
-          <button onClick={onSubmit}>
-            Submit
+        ) : (
+          <button
+            className="btn-next"
+            onClick={onNext}
+            disabled={selectedSkills.length === 0}
+          >
+            Next
           </button>
         )}
       </div>
