@@ -7,21 +7,28 @@
 }
 
 :root {
-  --bg: #f0f4f9;
-  --surface: #ffffff;
-  --surface2: #eef3fb;
-  --border: #d4e0f0;
-  --border-lit: #b0c8e8;
+  --bg: #111827;
+  --surface: #1f2937;
+  --surface2: #374151;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-lit: #4b5563;
+
   --blue: #2563eb;
-  --blue-light: #dbeafe;
+  --blue-light: rgba(37, 99, 235, 0.15);
   --blue-dark: #1d4ed8;
-  --blue-text: #1e40af;
-  --text: #1e293b;
-  --text-2: #64748b;
-  --text-3: #94a3b8;
+  --blue-text: #93c5fd;
+
+  --text: #f9fafb;
+  --text-2: #d1d5db;
+  --text-3: #9ca3af;
+
   --radius: 14px;
   --radius-sm: 8px;
-  --shadow: 0 1px 3px rgba(37, 99, 235, 0.07), 0 4px 16px rgba(37, 99, 235, 0.06);
+
+  --shadow:
+    0 4px 12px rgba(0, 0, 0, 0.25),
+    0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
 body {
@@ -149,15 +156,9 @@ body {
 }
 
 .step-count-badge {
-  margin-left: auto;
-  background: var(--blue-light);
-  color: var(--blue-text);
-  font-size: 12px;
-  font-weight: 700;
-  padding: 5px 14px;
-  border-radius: 20px;
-  border: 1px solid #bfdbfe;
-  flex-shrink: 0;
+  background: rgba(37, 99, 235, 0.15);
+  color: #93c5fd;
+  border: 1px solid rgba(37, 99, 235, 0.25);
 }
 
 .skill-grid {
@@ -167,12 +168,9 @@ body {
 }
 
 .skill-card {
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  transition: border .15s, background .15s, box-shadow .15s;
+  background: #111827;
 }
+
 
 .skill-card:hover {
   border-color: var(--border-lit);
@@ -180,9 +178,7 @@ body {
 }
 
 .skill-card--on {
-  background: var(--blue-light);
-  border-color: var(--blue);
-  box-shadow: 0 2px 8px rgba(37, 99, 235, .12);
+  background: rgba(37, 99, 235, 0.15);
 }
 
 .skill-top {
@@ -310,27 +306,14 @@ body {
 }
 
 .nav-dot--done {
-  background: var(--blue-light);
-  border: 1.5px solid var(--blue);
+  background: #2563eb;
 }
 
-.btn-prev {
-  padding: 10px 20px;
-  border-radius: var(--radius-sm);
-  border: 1.5px solid var(--border-lit);
-  background: var(--surface);
-  color: var(--text-2);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all .15s;
-}
-
+.btn-reset:hover,
 .btn-prev:hover:not(:disabled) {
-  border-color: var(--blue);
+  background: rgba(37, 99, 235, 0.15);
   color: var(--blue);
-  background: var(--blue-light);
+  border-color: var(--blue);
 }
 
 .btn-prev:disabled {
@@ -430,10 +413,7 @@ body {
 }
 
 .success-group {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 12px;
+  background: #111827;
 }
 
 .success-group-label {
@@ -452,15 +432,8 @@ body {
 }
 
 .success-tag {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 10px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
+  background: #374151;
+  color: #f9fafb;
 }
 
 .success-level {
@@ -475,16 +448,9 @@ body {
 }
 
 .btn-reset {
-  padding: 10px 24px;
-  background: transparent;
-  border: 1.5px solid var(--border-lit);
-  color: var(--text-2);
-  border-radius: var(--radius-sm);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all .15s;
+  background: #374151;
+  color: #d1d5db;
+  border-color: #4b5563;
 }
 
 .btn-reset:hover {
@@ -500,24 +466,26 @@ button:disabled {
 input {
   width: 100%;
   padding: 12px 14px;
-  border: 1.5px solid #000000;
+  border: 1.5px solid #4b5563;
+  background: #374151;
+  color: #f9fafb;
   font-size: 14px;
   outline: none;
   transition: all 0.2s ease;
   font-family: inherit;
   margin-top: 10px;
   margin-left: 2px;
+  border-radius: 10px;
 }
 
 input:focus {
   border-color: #2563eb;
-  background: #ffffff;
+  background: #4b5563;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 input::placeholder {
-  color: #94a3b8;
-  font-size: 13px;
+  color: #9ca3af;
 }
 
 .btn-add {
@@ -541,4 +509,31 @@ input::placeholder {
 
 .btn-add:active {
   transform: scale(0.97);
+}
+
+.btn-prev {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1.5px solid #4b5563;
+  background: #374151;
+  color: #f9fafb;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-prev:hover:not(:disabled) {
+  background: #4b5563;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.btn-prev:disabled {
+  background: #1f2937;
+  color: #6b7280;
+  border-color: #374151;
+  opacity: 0.7;
+  cursor: not-allowed;
 }
