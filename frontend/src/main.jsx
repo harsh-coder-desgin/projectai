@@ -3,7 +3,9 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout } from "./Componets/index.js"
 import App from './App.jsx'
-import Tech from './pages/Tech.jsx' 
+import Tech from './pages/Tech.jsx'
+import Login from './pages/Login.jsx'
+import Signup from './pages/Signup.jsx' 
 import './index.css'
 
 const router = createBrowserRouter([
@@ -19,22 +21,22 @@ const router = createBrowserRouter([
           // </AuthLayout>
         ),
       },
-      // {
-      //   path: "/login",
-      //   element: (
-      //     <AuthLayout>
-      //       <Login />,
-      //     </AuthLayout>
-      //   )
-      // },
-      // {
-      //   path: "/signup",
-      //   element: (
-      //     <AuthLayout>
-      //       <Signup />
-      //     </AuthLayout>
-      //   ),
-      // },
+      {
+        path: "/login",
+        element: (
+          // <AuthLayout>
+            <Login />
+          // </AuthLayout>
+        )
+      },
+      {
+        path: "/signup",
+        element: (
+          // <AuthLayout>
+            <Signup />
+          // </AuthLayout>
+        ),
+      },
       // {
       //   path: "/chat",
       //   element: (
