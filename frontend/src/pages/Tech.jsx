@@ -1,7 +1,5 @@
 import { useState } from "react";
-import SkillForm from "./SkillForm";
-import { skillCategories } from "./skillCategories";
-import CustomSkillForm from "./CustomSkillForm.jsx"
+import { skillCategories, AddOtherSkills ,SkillForm } from "../Componets/index.js";
 
 function TechForm() {
   const [step, setStep] = useState(0);
@@ -14,8 +12,6 @@ function TechForm() {
   });
 
   const currentForm = skillCategories[step];
-
-  // toggle skill
   const handleSkillChange = (skill) => {
     setFormData((prev) => {
       const list = prev[currentForm.id];
@@ -41,31 +37,24 @@ function TechForm() {
     setStep((prev) => prev - 1);
   };
 
-  // FIRST SUBMIT (before custom other skills)
   const handleSubmit = () => {
     console.log("Step 1 Saved:", formData);
-
-    // go to extra form instead of final save
     setShowExtraForm(true);
   };
 
-  // FINAL SUBMIT (after custom skills)
   const handleFinalSubmit = (extraSkills) => {
     const finalData = {
       ...formData,
       other: [...formData.other, ...extraSkills],
     };
-
     localStorage.setItem("techSkills", JSON.stringify(finalData));
-
     console.log("FINAL SAVED DATA:");
     console.log(finalData);
   };
 
-  // 👉 SHOW EXTRA FORM AFTER FIRST SUBMIT
   if (showExtraForm) {
     return (
-      <CustomSkillForm
+      <AddOtherSkills
         existingSkills={formData.other}
         onBack={() => setShowExtraForm(false)}
         onSubmit={handleFinalSubmit}
