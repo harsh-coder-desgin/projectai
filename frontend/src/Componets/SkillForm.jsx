@@ -1,4 +1,5 @@
 import "./Form.css";
+import { Button } from "./index.js"
 
 function SkillForm({
   title,
@@ -19,7 +20,6 @@ function SkillForm({
   return (
     <div className="form-wrap">
 
-      {/* HEADER */}
       <div className="step-card">
         <div className="step-header">
           <div className="step-icon">{currentIcon}</div>
@@ -34,13 +34,9 @@ function SkillForm({
           </div>
         </div>
 
-        {/* SKILLS */}
         <div className="skill-grid">
           {skills.map((skill) => {
-
-            // ✅ THIS LINE IS HERE
             const isActive = selectedSkills.includes(skill.id);
-
             return (
               <div
                 key={skill.id}
@@ -64,13 +60,13 @@ function SkillForm({
 
       <div className="nav-row">
 
-        <button
+        <Button
           className="btn-prev"
           onClick={onPrevious}
           disabled={!showPrevious}
         >
           Previous
-        </button>
+        </Button>
 
         <div className="nav-center">
           <div className="nav-step-text">
@@ -79,21 +75,21 @@ function SkillForm({
         </div>
 
         {showSubmit ? (
-          <button
+          <Button
             className="btn-next"
             onClick={onSubmit}
             disabled={selectedSkills.length === 0}
           >
             Next
-          </button>
+          </Button>
         ) : (
-          <button
+          <Button
             className="btn-next"
             onClick={onNext}
             disabled={selectedSkills.length === 0}
           >
             Next
-          </button>
+          </Button>
         )}
       </div>
     </div>

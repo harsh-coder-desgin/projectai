@@ -57,9 +57,3 @@ function AuthLayout({ children }) {
 }
 
 export default AuthLayout;
-
-// if login so no /tech /logn /sinup
-// if not login all allwored
-// if no tech data in local storage push /tech 
-// if tech data in local storage not allwoed in /tech 
-// if login refrhtoken need or not check

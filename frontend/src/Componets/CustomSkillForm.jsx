@@ -1,16 +1,39 @@
 import { useState } from "react";
+import { Button, Input, skillCategories } from "./index.js"
 
 function AddOtherSkills({ onBack, onSubmit }) {
   const [input, setInput] = useState("");
   const [skills, setSkills] = useState([]);
-
+  const [error, setError] = useState("");
   const addSkills = () => {
-    const newSkills = input
+    const existingSkills = skillCategories.flatMap((category) =>
+      category.skills.map((skill) => skill.label.toLowerCase())
+    );
+
+    const enteredSkills = input
       .split(",")
       .map((s) => s.trim())
       .filter(Boolean);
 
-    setSkills((prev) => [...prev, ...newSkills]);
+    const duplicates = enteredSkills.filter(
+      (skill) =>
+        existingSkills.includes(skill.toLowerCase()) ||
+        skills.some((s) => s.toLowerCase() === skill.toLowerCase())
+    );
+
+    const validSkills = enteredSkills.filter(
+      (skill) =>
+        !existingSkills.includes(skill.toLowerCase()) &&
+        !skills.some((s) => s.toLowerCase() === skill.toLowerCase())
+    );
+
+    if (duplicates.length > 0) {
+      setError(`${duplicates.join(", ")} already exists`);
+    } else {
+      setError("");
+    }
+
+    setSkills((prev) => [...prev, ...validSkills]);
     setInput("");
   };
   const handleFinal = () => {
@@ -23,13 +46,14 @@ function AddOtherSkills({ onBack, onSubmit }) {
       <div className="step-card">
         <h2>➕ Add Custom Skills (Other)</h2>
 
-        <input
+        <Input
           type="text"
           placeholder="e.g. Python, AI, Blockchain"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button onClick={addSkills} className="btn-add" >Add</button>
+        <Button onClick={addSkills} className="btn-add" >Add</Button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <div style={{ marginTop: "10px", display: "flex", flexWrap: "wrap", gap: "8px" }}>
           {skills.map((s, i) => (
             <span
@@ -54,13 +78,13 @@ function AddOtherSkills({ onBack, onSubmit }) {
       </div>
 
       <div className="nav-row">
-        <button className="btn-prev" onClick={onBack}>
+        <Button className="btn-prev" onClick={onBack}>
           Back
-        </button>
+        </Button>
 
-        <button className="btn-submit" onClick={handleFinal}>
+        <Button className="btn-submit" onClick={handleFinal}>
           Final Submit
-        </button>
+        </Button>
       </div>
     </div>
   );
