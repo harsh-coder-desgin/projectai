@@ -1,88 +1,87 @@
 import { useState, useRef, useEffect } from "react";
 import "./Chat.css";
+import { RecentChatItem, WelcomeScreen, MessageBubble, ChatInput } from "../Componets/index.js"
 
-// ─── ICONS ──────────────────────────────────────────
 const Icon = {
   Sparkle: () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275z"/>
+      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275z" />
     </svg>
   ),
   Plus: () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M5 12h14M12 5v14"/>
+      <path d="M5 12h14M12 5v14" />
     </svg>
   ),
   MenuOpen: () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/>
+      <rect width="18" height="18" x="3" y="3" rx="2" /><path d="M9 3v18" />
     </svg>
   ),
   Chat: () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
     </svg>
   ),
   Send: () => (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M5 12h14M12 5l7 7-7 7"/>
+      <path d="M5 12h14M12 5l7 7-7 7" />
     </svg>
   ),
   Stop: () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-      <rect x="4" y="4" width="16" height="16" rx="2"/>
+      <rect x="4" y="4" width="16" height="16" rx="2" />
     </svg>
   ),
   Copy: () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
     </svg>
   ),
   ThumbUp: () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M7 10v12M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11z"/>
+      <path d="M7 10v12M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11z" />
     </svg>
   ),
   ThumbDown: () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M17 14V2M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11z"/>
+      <path d="M17 14V2M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11z" />
     </svg>
   ),
   Refresh: () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>
+      <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" />
     </svg>
   ),
   Attach: () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+      <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48" />
     </svg>
   ),
   Globe: () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
+      <circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" />
     </svg>
   ),
   Image: () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
     </svg>
   ),
   ChevronDown: () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m6 9 6 6 6-6"/>
+      <path d="m6 9 6 6 6-6" />
     </svg>
   ),
   Share: () => (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-      <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
+      <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
+      <line x1="8.59" x2="15.42" y1="13.51" y2="17.49" /><line x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
     </svg>
   ),
 };
 
-// ─── CONSTANTS ───────────────────────────────────────
-const APP_NAME = "AI Project";
+// const APP_NAME = "AI Project";
 
 const CHAT_HISTORY = [
   { id: 1, title: "React component architecture" },
@@ -117,45 +116,6 @@ function TypingIndicator() {
   );
 }
 
-function MessageBubble({ msg }) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(msg.text).catch(() => {});
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
-
-  const renderText = (text) => {
-    const parts = text.split(/(```[\s\S]*?```)/g);
-    return parts.map((part, i) => {
-      if (part.startsWith("```")) {
-        const code = part.replace(/^```[^\n]*\n?/, "").replace(/```$/, "");
-        return <pre key={i}><code>{code}</code></pre>;
-      }
-      const lines = part.split("\n").filter(Boolean);
-      return lines.map((line, j) => {
-        const bold = line.replace(/\*\*(.*?)\*\*/g, (_, m) => `<strong>${m}</strong>`);
-        return <p key={`${i}-${j}`} dangerouslySetInnerHTML={{ __html: bold }} />;
-      });
-    });
-  };
-
-  return (
-    <div className={`message-row ${msg.role}`}>
-      <div className={`msg-avatar ${msg.role === "ai" ? "ai" : "user-av"}`}>
-        {msg.role === "ai" ? "AI" : "U"}
-      </div>
-      <div className="msg-content">
-        <div className="msg-sender">{msg.role === "ai" ? APP_NAME : "You"}</div>
-        <div className="msg-bubble">{renderText(msg.text)}</div>
-      </div>
-    </div>
-  );
-}
-
-// ─── MAIN APP ────────────────────────────────────────
-
 export default function ChatApp() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeChat, setActiveChat] = useState(null);
@@ -170,12 +130,12 @@ export default function ChatApp() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  const autoResize = () => {
-    const ta = textareaRef.current;
-    if (!ta) return;
-    ta.style.height = "auto";
-    ta.style.height = Math.min(ta.scrollHeight, 180) + "px";
-  };
+  // const autoResize = () => {
+  //   const ta = textareaRef.current;
+  //   if (!ta) return;
+  //   ta.style.height = "auto";
+  //   ta.style.height = Math.min(ta.scrollHeight, 180) + "px";
+  // };
 
   const sendMessage = () => {
     const text = input.trim();
@@ -239,11 +199,7 @@ export default function ChatApp() {
       <aside className={`sidebar ${sidebarOpen ? "" : "collapsed"}`}>
         <div className="sidebar-header">
           <div className="sidebar-logo">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <rect width="24" height="24" rx="6" fill="#2563eb"/>
-              <path d="M7 12h10M12 7v10" stroke="#fff" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-            {APP_NAME}
+            AI Project
           </div>
           <button className="icon-btn" onClick={() => setSidebarOpen(false)} title="Close sidebar">
             <Icon.MenuOpen />
@@ -257,16 +213,16 @@ export default function ChatApp() {
         <div className="sidebar-section-label">Recent</div>
 
         <div className="sidebar-chats">
-          {chats.map((c) => (
-            <div
-              key={c.id}
-              className={`chat-item ${activeChat === c.id ? "active" : ""}`}
-              onClick={() => loadChat(c.id)}
-            >
-              <Icon.Chat />
-              <span className="chat-item-text">{c.title}</span>
-            </div>
-          ))}
+          {
+            chats.map((chat) => (
+              <RecentChatItem
+                key={chat.id}
+                chat={chat}
+                activeChat={activeChat}
+                loadChat={loadChat}
+              />
+            ))
+          }
         </div>
 
         <div className="sidebar-footer">
@@ -295,22 +251,10 @@ export default function ChatApp() {
         {/* Messages */}
         <div className="messages-area">
           {messages.length === 0 ? (
-            <div className="welcome-screen">
-              <div className="welcome-logo">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-                  <path d="M7 12h10M12 7v10" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
-                </svg>
-              </div>
-              <h1 className="welcome-title">What can I help with?</h1>
-              <div className="welcome-suggestions">
-                {SUGGESTIONS.map((s, i) => (
-                  <button key={i} className="suggestion-card" onClick={() => handleSuggestion(s.title)}>
-                    <div className="suggestion-title">{s.title}</div>
-                    <div className="suggestion-subtitle">{s.subtitle}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
+            <WelcomeScreen
+              suggestions={SUGGESTIONS}
+              handleSuggestion={handleSuggestion}
+            />
           ) : (
             <div className="messages-inner">
               {messages.map((msg) => (
@@ -320,7 +264,7 @@ export default function ChatApp() {
                 <div className="message-row ai">
                   <div className="msg-avatar ai">AI</div>
                   <div className="msg-content">
-                    <div className="msg-sender">{APP_NAME}</div>
+                    <div className="msg-sender">AI Project</div>
                     <div className="msg-bubble">
                       <TypingIndicator />
                     </div>
@@ -340,34 +284,16 @@ export default function ChatApp() {
         )}
 
         {/* Input */}
-        <div className="input-area">
-          <div className="input-inner">
-            <div className="input-box">
-              <div className="input-row">
-                <textarea
-                  ref={textareaRef}
-                  className="chat-textarea"
-                  placeholder={`Message ${APP_NAME}`}
-                  rows={1}
-                  value={input}
-                  onChange={(e) => { setInput(e.target.value); autoResize(); }}
-                  onKeyDown={handleKeyDown}
-                />
-                <button
-                  className="send-btn"
-                  onClick={sendMessage}
-                  disabled={!input.trim() || isTyping}
-                  title="Send message"
-                >
-                  <Icon.Send />
-                </button>
-              </div>
-            </div>
-            <div className="input-footer">
-              {APP_NAME} can make mistakes. Check important info.
-            </div>
-          </div>
-        </div>
+        <ChatInput
+          input={input}
+          setInput={setInput}
+          sendMessage={sendMessage}
+          isTyping={isTyping}
+          textareaRef={textareaRef}
+          // autoResize={autoResize}
+          handleKeyDown={handleKeyDown}
+          Icon={Icon}
+        />
       </main>
     </div>
   );

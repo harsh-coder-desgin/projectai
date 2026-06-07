@@ -181,7 +181,7 @@ body {
 
 .chat-item.active {
   background: var(--bg-active);
-  color: var(--accent-light);
+  color: var(--text-primary);
   border-left: 2px solid var(--accent);
   padding-left: 8px;
 }
