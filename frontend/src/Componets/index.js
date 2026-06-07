@@ -8,6 +8,10 @@ import WelcomeScreen from "./WelcomeScreen.jsx"
 import RecentChatItem from "./RecentChatItem.jsx"
 import MessageBubble from "./MessageBubble.jsx"
 import ChatInput from "./ChatInput.jsx"
+import UserProfile from "./UserProfile.jsx"
+import TypingMessage from "./TypingMessage.jsx"
+import * as Icon from "./Icons";
+
 export {
     AuthLayout,
     AddOtherSkills,
@@ -18,5 +22,8 @@ export {
     WelcomeScreen,
     RecentChatItem,
     MessageBubble,
-    ChatInput
+    ChatInput,
+    UserProfile,
+    TypingMessage,
+    Icon
 }
