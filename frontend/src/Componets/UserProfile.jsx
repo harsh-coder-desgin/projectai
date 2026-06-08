@@ -1,4 +1,4 @@
-import "./Form.css"
+import "../styles/Form.css"
 import { Button } from "./index.js"
 
 function UserProfile({

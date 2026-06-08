@@ -1,3 +1,6 @@
+import { Button } from "./index.js"
+import "../styles/Chat.css"
+
 function ChatInput({
   input,
   setInput,
@@ -27,14 +30,14 @@ function ChatInput({
               onKeyDown={handleKeyDown}
             />
 
-            <button
+            <Button
               className="send-btn"
               onClick={sendMessage}
               disabled={!input.trim() || isTyping}
               title="Send message"
             >
               <Icon.Send />
-            </button>
+            </Button>
           </div>
         </div>
 

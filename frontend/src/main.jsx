@@ -7,6 +7,7 @@ import Tech from './pages/Tech.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx' 
 import Chat from './pages/Chat.jsx' 
+import Home from './pages/Home.jsx' 
 import './index.css'
 
 const router = createBrowserRouter([
@@ -14,6 +15,14 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
+       {
+        path: "/",
+        element: (
+          // <AuthLayout>
+            <Home />
+          // </AuthLayout>
+        ),
+      },
       {
         path: "/tech",
         element: (

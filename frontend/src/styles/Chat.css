@@ -648,6 +648,8 @@ body {
 }
 
 .chat-textarea {
+  padding-bottom: 5px;
+  padding-left: 12px;
   flex: 1;
   background: none;
   border: none;

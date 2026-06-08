@@ -1,3 +1,5 @@
+import { Button } from "./index.js"
+
 function WelcomeScreen({
   suggestions,
   handleSuggestion,
@@ -26,7 +28,7 @@ function WelcomeScreen({
 
       <div className="welcome-suggestions">
         {suggestions.map((s, i) => (
-          <button
+          <Button
             key={i}
             className="suggestion-card"
             onClick={() => handleSuggestion(s.title)}
@@ -38,7 +40,7 @@ function WelcomeScreen({
             <div className="suggestion-subtitle">
               {s.subtitle}
             </div>
-          </button>
+          </Button>
         ))}
       </div>
     </div>

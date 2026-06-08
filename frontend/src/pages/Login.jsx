@@ -1,5 +1,5 @@
 import { useState } from "react";
-import './login.css'
+import "../styles/login.css"
 import { Button,Input } from "../Componets/index.js"
 
 export default function LoginForm() {
