@@ -27,7 +27,7 @@ function WelcomeScreen({
       </h1>
 
       <div className="welcome-suggestions">
-        {suggestions.map((s, i) => (
+        {suggestions?.map((s, i) => (
           <Button
             key={i}
             className="suggestion-card"

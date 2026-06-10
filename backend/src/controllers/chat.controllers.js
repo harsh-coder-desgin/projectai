@@ -241,21 +241,21 @@ const demoChat = async (req, res) => {
     }
 
     // AI Security Check
-    const blockedWords = [
-        "hack",
-        "malware",
-    ];
+    // const blockedWords = [
+    //     "hack",
+    //     "malware",
+    // ];
 
-    const isUnsafe = blockedWords.some((word) =>
-        message.toLowerCase().includes(word)
-    );
+    // const isUnsafe = blockedWords.some((word) =>
+    //     message.toLowerCase().includes(word)
+    // );
 
-    if (isUnsafe) {
-        throw new ApiError(
-            400,
-            "Unsafe prompt detected"
-        );
-    }
+    // if (isUnsafe) {
+    //     throw new ApiError(
+    //         400,
+    //         "Unsafe prompt detected"
+    //     );
+    // }
 
     const prompt = `
         User Technologies:

@@ -8,7 +8,7 @@ function ChatInput({
   isTyping,
   APP_NAME,
   textareaRef,
-  autoResize,
+  // autoResize,
   handleKeyDown,
   Icon,
 }) {
@@ -25,7 +25,7 @@ function ChatInput({
               value={input}
               onChange={(e) => {
                 setInput(e.target.value);
-                autoResize();
+                // autoResize();
               }}
               onKeyDown={handleKeyDown}
             />

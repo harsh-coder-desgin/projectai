@@ -1,12 +1,14 @@
-const request = async (url, options = {}) => {
+const request = async (url,options) => {
+  console.log(url,options);
+  
   try {
-
     const res = await fetch(url, {
+      method:options.method,
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
-      ...options,
+      body: options.body,
     });
 
     const data = await res.json();
