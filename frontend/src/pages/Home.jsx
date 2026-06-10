@@ -1,7 +1,10 @@
 import { Button } from "../Componets/index.js"
+import { useNavigate } from "react-router-dom";
 import "../styles/home.css"
 
 function Home() {
+    const navigate = useNavigate();
+
     return (
         <div className="home">
             <section className="hero">
@@ -21,7 +24,9 @@ function Home() {
                     you learn and get hired.
                 </p>
 
-                <Button className="hero-btn">
+                <Button
+                    className="hero-btn"
+                    onClick={() => navigate("/tech")}>
                     Generate Project Idea
                 </Button>
             </section>
@@ -85,7 +90,8 @@ function Home() {
                         </div>
                     </div>
 
-                    <Button className="generate-btn">
+                    <Button className="generate-btn"
+                        onClick={() => navigate("/tech")}>
                         Generate Your Project
                     </Button>
                 </div>

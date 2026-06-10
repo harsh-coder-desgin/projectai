@@ -2,8 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import "../styles/Chat.css"
 import { RecentChatItem, WelcomeScreen, MessageBubble, ChatInput, UserProfile, TypingMessage ,Icon } from "../Componets/index.js"
 
-// const APP_NAME = "AI Project";
-
 const CHAT_HISTORY = [
   { id: 1, title: "React component architecture" },
   { id: 2, title: "Python data analysis tips" },

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../styles/login.css"
 import { Button, Input } from "../Componets/index.js";
+import auth from "../auth/auth.js";
 
 export default function SignupForm() {
   const [username, setUsername] = useState("");
@@ -22,7 +23,9 @@ export default function SignupForm() {
     }, 2500);
   };
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
+    const res =  await auth.register(username,email,password)
+    console.log(res);
     if (!username || !email || !password) {
       showToast("Please fill in all fields");
       return;
