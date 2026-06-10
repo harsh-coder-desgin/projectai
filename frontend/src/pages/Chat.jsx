@@ -24,7 +24,6 @@ const AI_RESPONSES = [
   "Absolutely! Here's a concise breakdown:\n\n- **Performance**: Optimized for speed with lazy loading.\n- **Scalability**: Designed to handle millions of requests.\n- **Developer experience**: Clean API with great documentation.\n\nLet me know if you need code examples or further details.",
 ];
 
-
 function TypingIndicator() {
   return (
     <div className="typing-indicator">

@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { skillCategories, AddOtherSkills ,SkillForm } from "../Componets/index.js";
+import { skillCategories, AddOtherSkills, SkillForm } from "../Componets/index.js";
+import { useNavigate } from "react-router-dom";
 
-function TechForm() {
+function TechForm() {    
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [showExtraForm, setShowExtraForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -50,6 +52,7 @@ function TechForm() {
     localStorage.setItem("techSkills", JSON.stringify(finalData));
     console.log("FINAL SAVED DATA:");
     console.log(finalData);
+    navigate("/chat")
   };
 
   if (showExtraForm) {
@@ -63,22 +66,52 @@ function TechForm() {
   }
 
   return (
-    <SkillForm
-      title={currentForm.label}
-      desc={currentForm.desc}
-      skills={currentForm.skills}
-      selectedSkills={formData[currentForm.id]}
-      handleSkillChange={handleSkillChange}
-      showPrevious={step > 0}
-      showNext={step < skillCategories.length - 1}
-      showSubmit={step === skillCategories.length - 1}
-      onNext={handleNext}
-      onPrevious={handlePrevious}
-      onSubmit={handleSubmit}
-      currentIcon={currentForm.icon}
-      step={step}
-      totalSteps={skillCategories.length}
-    />
+    <>
+      <div style={{ marginTop: "50px" }}>
+        <h1
+          style={{
+            fontSize: "clamp(1.5rem, 2vw, 2rem)",
+            fontWeight: "400",
+            textAlign: "center",
+            background: "linear-gradient(90deg, #7c3aed, #06b6d4)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            letterSpacing: "-1px",
+          }}
+        >
+          Choose Your Tech Stack
+        </h1>
+
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: "1.1rem",
+            color: "#94a3b8",
+            maxWidth: "650px",
+            marginLeft: "450px",
+            lineHeight: "1.6",
+          }}
+        >
+          Select your technology to continue and generate AI-powered project ideas.
+        </p>
+      </div>
+      <SkillForm
+        title={currentForm.label}
+        desc={currentForm.desc}
+        skills={currentForm.skills}
+        selectedSkills={formData[currentForm.id]}
+        handleSkillChange={handleSkillChange}
+        showPrevious={step > 0}
+        showNext={step < skillCategories.length - 1}
+        showSubmit={step === skillCategories.length - 1}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+        onSubmit={handleSubmit}
+        currentIcon={currentForm.icon}
+        step={step}
+        totalSteps={skillCategories.length}
+      />
+    </>
   );
 }
 
