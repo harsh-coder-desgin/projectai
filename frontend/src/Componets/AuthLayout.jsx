@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import auth from "../auth/auth.js"
 
 function AuthLayout({ children }) {
   const location = useLocation();
@@ -12,12 +13,13 @@ function AuthLayout({ children }) {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const data = await authuser.getuser();
+        const data = await auth.verify()
+        //save data in usecontect and make api for getuser
         setIsLoggedIn(true);
       } catch (err) {
         if (err.response?.status === 401) {
           try {
-            await authuser.refreshtoken();
+            await auth.refreshToken();
             setIsLoggedIn(true);
           } catch (error) {
             setIsLoggedIn(false);
@@ -48,7 +50,7 @@ function AuthLayout({ children }) {
   // Logged in user cannot access auth pages
   if (
     isLoggedIn &&
-    ["/tech", "/login", "/signup", "/verfiyemail"].includes(location.pathname)
+    ["/tech", "/login", "/signup"].includes(location.pathname)
   ) {
     return <Navigate to="/chat" replace />;
   }

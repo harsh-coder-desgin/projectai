@@ -181,9 +181,27 @@ const logout = async (req, res) => {
     .json(new ApiResponse(200, {}, "User logged out successfully"))
 };
 
+const verify = async (req, res) => {
+  const users = req.user
+
+  if (!users) {
+    throw new ApiError(401, "User authentication failed. Please log in again.");
+  }
+
+  const userData = {
+    username: users.username,
+    email: users.email,
+  };
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, userData,"User Fetch successfully"))
+};
+
 export {
   logout,
   login,
   registerUser,
-  refreshToken
+  refreshToken,
+  verify
 }

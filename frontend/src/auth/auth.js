@@ -24,6 +24,11 @@ const auth = {
     request(`${API}/logout`, {
       method: "POST",
     }),
+
+  verify: async () =>
+    request(`${API}/user/auth`, {
+      method: "GET",
+    }),
 };
 
 export default auth;
