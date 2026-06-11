@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { RecentChatItem, WelcomeScreen, MessageBubble, ChatInput, UserProfile, TypingMessage, Icon } from "../Componets/index.js"
+import { RecentChatItem, WelcomeScreen, MessageBubble, ChatInput, UserProfile, TypingMessage, Icon, Button } from "../Componets/index.js"
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
@@ -141,14 +141,14 @@ export default function ChatApp() {
           <div className="sidebar-logo">
             AI Project
           </div>
-          <button className="icon-btn" onClick={() => setSidebarOpen(false)} title="Close sidebar">
+          <Button className="icon-btn" onClick={() => setSidebarOpen(false)} title="Close sidebar">
             <Icon.MenuOpen />
-          </button>
+          </Button>
         </div>
 
-        <button className="new-chat-btn" onClick={startNewChat}>
+        <Button className="new-chat-btn" onClick={startNewChat}>
           <Icon.Plus /> New chat
-        </button>
+        </Button>
 
         <div className="sidebar-section-label">Recent</div>
 
@@ -181,6 +181,21 @@ export default function ChatApp() {
                 <Icon.MenuOpen />
               </button>
             )}
+            <div className="auth-buttons">
+              <Button
+                className="login-btn"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </Button>
+
+              <Button
+                className="signup-btn"
+                onClick={() => navigate("/signup")}
+              >
+                Sign Up
+              </Button>
+            </div>
           </div>
         </div>
         {/* Messages */}
@@ -207,9 +222,9 @@ export default function ChatApp() {
 
         {/* Stop generating */}
         {isTyping && (
-          <button className="stop-btn" onClick={() => setIsTyping(false)}>
+          <Button className="stop-btn" onClick={() => setIsTyping(false)}>
             <Icon.Stop /> Stop generating
-          </button>
+          </Button>
         )}
 
         {/* Input */}
