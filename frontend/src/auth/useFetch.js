@@ -8,11 +8,12 @@ const request = async (url,options) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: options.body,
+      body: options?.body,
     });
 
     const data = await res.json();
-
+    console.log(data);
+    
     if (!res.ok) {
       throw new Error(data.message || "Request Failed");
     }

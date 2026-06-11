@@ -4,7 +4,7 @@ import { Button } from "./index.js"
 //get data form usecontext to know user login or not'
 // get data form chat.jsx use usecontext
 function UserProfile({
-  username = "User",
+  username,
   onLogout,
 }) {
   return (

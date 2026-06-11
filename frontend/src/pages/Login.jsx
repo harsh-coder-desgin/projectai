@@ -5,6 +5,7 @@ import auth from "../auth/auth.js";
 import "../styles/login.css"
 
 export default function LoginForm() {
+      const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [toast, setToast] = useState({ visible: false, message: "" });

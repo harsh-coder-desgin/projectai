@@ -21,8 +21,8 @@ function AuthLayout({ children }) {
         console.log(data);
 
         setUser({
-          username: data.username,
-          email: data.email,
+          username: data.data.username,
+          email: data.data.email,
         });
         //save data in usecontect and make api for getuser
         setIsLoggedIn(true);

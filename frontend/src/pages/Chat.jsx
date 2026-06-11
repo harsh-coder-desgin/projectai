@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import { RecentChatItem, WelcomeScreen, MessageBubble, ChatInput, UserProfile, TypingMessage ,Icon } from "../Componets/index.js"
+import { RecentChatItem, WelcomeScreen, MessageBubble, ChatInput, UserProfile, TypingMessage, Icon } from "../Componets/index.js"
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
+import { useNavigate } from "react-router-dom";
 import chat from "../auth/chat.js"
+import auth from "../auth/auth.js"
 import "../styles/Chat.css"
 
 // const CHAT_HISTORY = [
@@ -38,7 +40,8 @@ function TypingIndicator() {
 }
 
 export default function ChatApp() {
-  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -63,7 +66,7 @@ export default function ChatApp() {
     const text = input.trim();
     if (!text || isTyping) return;
     const data = localStorage.getItem("techSkills")
-    const res = await chat.demoChat({tech:data,message:text})
+    const res = await chat.demoChat({ tech: data, message: text })
     console.log(res.data.response);
 
     const userMsg = { id: Date.now(), role: "user", text };
@@ -79,7 +82,7 @@ export default function ChatApp() {
 
     setIsTyping(true);
     const delay = 1000 + Math.random() * 1200;
-    
+
     setTimeout(() => {
       setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", text: res.data.response }]);
       setIsTyping(false);
@@ -110,7 +113,15 @@ export default function ChatApp() {
     textareaRef.current?.focus();
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const res = await auth.logout()
+    console.log(res);
+
+    setUser({
+      username: "",
+      email: "",
+    });
+    navigate("/");
 
   }
 
@@ -155,7 +166,7 @@ export default function ChatApp() {
         </div>
 
         <UserProfile
-          username={user.username}
+          username={user.username || "User"}
           onLogout={handleLogout}
         />
       </aside>

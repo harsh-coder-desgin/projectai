@@ -150,7 +150,7 @@ const refreshToken = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  const userId = req.users._id
+  const userId = req.userId
 
   if (!userId) {
     throw new ApiError(401, "User authentication failed. Please log in again.");
@@ -161,10 +161,8 @@ const logout = async (req, res) => {
     $set: {
       refreshToken: ""
     }
-  },
-    {
-      new: true
-    }
+  },{ returnDocument: "after" }
+
   ).catch(() => {
     throw new ApiError(500, "Something went wrong while logging out. Please try again.");
   });
