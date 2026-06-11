@@ -20,12 +20,12 @@ function UserProfile({
           </div>
         </div>
 
-        <Button
+       {username !== "User" ? <Button
           className="logout-btn"
           onClick={onLogout}
         >
           Logout
-        </Button>
+        </Button> : null}
       </div>
     </div>
   );

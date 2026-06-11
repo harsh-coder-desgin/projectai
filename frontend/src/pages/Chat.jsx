@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import "../styles/Chat.css"
 import { RecentChatItem, WelcomeScreen, MessageBubble, ChatInput, UserProfile, TypingMessage ,Icon } from "../Componets/index.js"
+import { useContext } from "react";
+import { UserContext } from "../Context/UserContext.jsx";
 import chat from "../auth/chat.js"
+import "../styles/Chat.css"
 
 // const CHAT_HISTORY = [
 //   { id: 1, title: "React component architecture" },
@@ -36,6 +38,7 @@ function TypingIndicator() {
 }
 
 export default function ChatApp() {
+  const { user } = useContext(UserContext);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -152,7 +155,7 @@ export default function ChatApp() {
         </div>
 
         <UserProfile
-          username="Harsh"
+          username={user.username}
           onLogout={handleLogout}
         />
       </aside>

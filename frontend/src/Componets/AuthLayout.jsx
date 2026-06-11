@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../Context/UserContext.jsx";
 import auth from "../auth/auth.js"
 
 function AuthLayout({ children }) {
   const location = useLocation();
+  const { setUser, user } = useContext(UserContext);
 
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -11,9 +14,16 @@ function AuthLayout({ children }) {
   const techData = localStorage.getItem("tech");
 
   useEffect(() => {
+    // if (!user) {
     const verifyUser = async () => {
       try {
         const data = await auth.verify()
+        console.log(data);
+
+        setUser({
+          username: data.username,
+          email: data.email,
+        });
         //save data in usecontect and make api for getuser
         setIsLoggedIn(true);
       } catch (err) {
@@ -31,6 +41,8 @@ function AuthLayout({ children }) {
         setLoading(false);
       }
     };
+    // }
+    verifyUser()
   }, []);
 
   if (loading) {
@@ -38,9 +50,9 @@ function AuthLayout({ children }) {
   }
 
   // No tech selected
-  if (!isLoggedIn && !techData && location.pathname !== "/tech") {
-    return <Navigate to="/tech" replace />;
-  }
+  // if (!isLoggedIn && !techData && location.pathname !== "/tech") {
+  //   return <Navigate to="/tech" replace />;
+  // }
 
   // Tech already selected
   if (!isLoggedIn && techData && location.pathname === "/tech") {

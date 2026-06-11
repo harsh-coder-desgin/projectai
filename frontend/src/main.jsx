@@ -2,12 +2,13 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout } from "./Componets/index.js"
+import { UserProvider } from "./Context/UserContext.jsx";
 import App from './App.jsx'
 import Tech from './pages/Tech.jsx'
 import Login from './pages/Login.jsx'
-import Signup from './pages/Signup.jsx' 
-import Chat from './pages/Chat.jsx' 
-import Home from './pages/Home.jsx' 
+import Signup from './pages/Signup.jsx'
+import Chat from './pages/Chat.jsx'
+import Home from './pages/Home.jsx'
 import './index.css'
 
 const router = createBrowserRouter([
@@ -15,44 +16,44 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-       {
+      {
         path: "/",
         element: (
-          // <AuthLayout>
+          <AuthLayout>
             <Home />
-          // </AuthLayout>
+          </AuthLayout>
         ),
       },
       {
         path: "/tech",
         element: (
-          // <AuthLayout>
+          <AuthLayout>
             <Tech />
-          // </AuthLayout>
+          </AuthLayout>
         ),
       },
       {
         path: "/login",
         element: (
-          // <AuthLayout>
+          <AuthLayout>
             <Login />
-          // </AuthLayout>
+          </AuthLayout>
         )
       },
       {
         path: "/signup",
         element: (
-          // <AuthLayout>
+          <AuthLayout>
             <Signup />
-          // </AuthLayout>
+          </AuthLayout>
         ),
       },
       {
         path: "/chat",
         element: (
-          // <AuthLayout>
+          <AuthLayout>
             <Chat />
-          // </AuthLayout>
+          </AuthLayout>
         ),
       },
     ],
@@ -61,6 +62,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </StrictMode>,
 )
