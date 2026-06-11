@@ -3,208 +3,187 @@ import { ApiError } from "../utils/ApiError.js"
 import User from "../models/User.model.js"
 import jwt from "jsonwebtoken";
 
-const generateTokens = (user) => {
-  const accessToken = jwt.sign(
-    {
-      _id: user._id,
-      role: user.role
-    },
-    process.env.ACCESS_TOKEN_SECRET,
-    {
-      expiresIn: "15m"
-    }
-  );
-
-  const refreshToken = jwt.sign(
-    {
-      _id: user._id
-    },
-    process.env.REFRESH_TOKEN_SECRET,
-    {
-      expiresIn: "7d"
-    }
-  );
-
-  return {
+const generateTokens = async (userId) => {
+  try {
+    const user = await User.findById(userId)
+    const accessToken = user.generateAccessToken()
+    const refreshToken = user.generateRefreshToken()
+    user.refreshtoken = refreshToken
+    await user.save({ validateBeforeSave: false })
+    return {
     accessToken,
     refreshToken
-  };
+    };
+  } catch (error) {
+    throw new ApiError(500, "something went wrong while refresh and access token",error)
+  }
 };
 
 const login = async (req, res) => {
 
-    const { email, password } = req.body
+  const { email, password } = req.body
 
-    if (!email || !password) {
-        throw new ApiError(400, "Email and password are required")
-    }
+  if (!email || !password) {
+    throw new ApiError(400, "Email and password are required")
+  }
 
-    const emailRegex = /^[^s@]+@[^s@]+.[^s@]+$/
+  const emailRegex = /^[^s@]+@[^s@]+.[^s@]+$/
 
-    if (!emailRegex.test(email)) {
-        throw new ApiError(400, "Invalid email format")
-    }
+  if (!emailRegex.test(email)) {
+    throw new ApiError(400, "Invalid email format")
+  }
 
-    const user = await User.findOne({ email })
+  const user = await User.findOne({ email })
 
-    if (!user) {
-        throw new ApiError(404, "User not found")
-    }
+  if (!user) {
+    throw new ApiError(404, "User not found")
+  }
 
-    const isPasswordCorrect = await User.isPasswordCorrect(password);
+  const isPasswordCorrect = await user.isPasswordCorrect(password)
 
-    if (!isPasswordCorrect) {
-        throw new ApiError(401, "Invalid password")
-    }
+  if (!isPasswordCorrect) {
+    throw new ApiError(401, "Invalid password")
+  }
 
-    const { accessToken, refreshToken } = generateTokens(user._id)
+  const { accessToken, refreshToken } = await generateTokens(user._id)
+  const options = {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict"
+  }
 
-    const options = {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict"
-    }
-
-    res.cookie("refreshToken", refreshToken, options)
-
-    res.status(200).json(
-        new ApiResponse(200, { accessToken, user }, "Login successful")
+  return res.status(200)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+      new ApiResponse(
+        200,
+        "Login successfully"
+      )
     )
 }
 
 const registerUser = async (req, res) => {
-    const { username, email, password } = req.body;
+  const { username, email, password } = req.body;
 
-    if (!username || !email || !password) {
-        throw new ApiError(400, "All fields (username, email, password) are required");
-    }
+  if (!username || !email || !password) {
+    throw new ApiError(400, "All fields (username, email, password) are required");
+  }
 
-    const emailRegex = /^[^s@]+@[^s@]+.[^s@]+$/;
-    if (!emailRegex.test(email)) {
-        throw new ApiError(400, "Invalid email format");
-    }
+  const emailRegex = /^[^s@]+@[^s@]+.[^s@]+$/;
+  if (!emailRegex.test(email)) {
+    throw new ApiError(400, "Invalid email format");
+  }
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-        throw new ApiError(409, "User with this email already exists");
-    }
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    throw new ApiError(409, "User with this email already exists");
+  }
 
-    const hashedPassword = await User.hashPassword(password); 
+  const user = await User.create({
+    username,
+    email,
+    password,
+  });
 
-    const user = await User.create({
-        username,
-        email,
-        password: hashedPassword,
-    });
-
-    const { accessToken, refreshToken } = generateTokens(user._id);
-
-    const options = {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict"
-    };
-    res.cookie("refreshToken", refreshToken, options);
-
-    const userResponse = {
-        _id: user._id,
-        username: user.username,
-        email: user.email
-    };
-
-    res.status(201).json(new ApiResponse(201, { accessToken, user: userResponse }, "User registered successfully"));
+  const { accessToken, refreshToken } = await generateTokens(user._id.toString());
+  
+  const options = {
+    httpOnly: true,
+    secure: true,
+    // sameSite: "strict"
+  };
+  return res.status(200)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+      new ApiResponse(
+        200,
+        "Login successfully"
+      )
+    )
 };
 
 const refreshToken = async (req, res) => {
+  const incomeingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
+
+  if (!incomeingRefreshToken) {
+    throw new ApiError(400, "Refresh token is missing. Please log in again")
+  }
+
   try {
-    const refreshToken = req.cookies?.refreshToken;
-
-    if (!refreshToken) {
-      throw new ApiError(401, "Refresh token missing");
-    }
-
-    const decoded = jwt.verify(
-      refreshToken,
+    const decodeedtoken = jwt.verify(
+      incomeingRefreshToken,
       process.env.REFRESH_TOKEN_SECRET
-    );
+    )
 
-    const user = await User.findById(decoded._id);
+    const users = await User.findById(decodeedtoken?._id)
 
-    if (!user) {
-      throw new ApiError(404, "User not found");
+    if (!users) {
+      throw new ApiError(401, "Session is invalid or has expired. Please log in again.")
     }
 
-    const accessToken = jwt.sign(
-      {
-        _id: user._id,
-        role: user.role,
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      {
-        expiresIn: "15m",
-      }
-    );
+    if (incomeingRefreshToken !== users.refreshToken) {
+      throw new ApiError(401, "Session expired or token is invalid. Please log in again")
+    }
 
-    res.cookie("accessToken", accessToken, {
+    const options = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 15 * 60 * 1000,
-    });
+      secure: true
+    }
 
-    return res.status(200).json(
-      new ApiResponse(
-        200,
-        { accessToken },
-        "Access token refreshed"
+    const { accessToken, refreshToken } = await generateTokens(users._id)
+
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", refreshToken, options)
+      .json(
+        new ApiResponse(
+          200,
+          "Token refreshed successfully"
+        )
       )
-    );
   } catch (error) {
-    return res.status(401).json(
-      new ApiResponse(
-        401,
-        null,
-        "Invalid or expired refresh token"
-      )
-    );
+    throw new ApiError(401, "Invalid or expired refresh token. Please log in again")
   }
 };
 
 const logout = async (req, res) => {
-  try {
-    res.clearCookie("accessToken", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict"
-    });
+  const userId = req.users._id
 
-    res.clearCookie("refreshToken", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict"
-    });
-
-    return res.status(200).json(
-      new ApiResponse(
-        200,
-        null,
-        "Logged out successfully"
-      )
-    );
-  } catch (error) {
-    return res.status(500).json(
-      new ApiResponse(
-        500,
-        null,
-        "Failed to logout"
-      )
-    );
+  if (!userId) {
+    throw new ApiError(401, "User authentication failed. Please log in again.");
   }
+
+  await User.findByIdAndUpdate(
+    userId, {
+    $set: {
+      refreshToken: ""
+    }
+  },
+    {
+      new: true
+    }
+  ).catch(() => {
+    throw new ApiError(500, "Something went wrong while logging out. Please try again.");
+  });
+
+  const options = {
+    httpOnly: true,
+    secure: true
+  }
+
+  return res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
+    .json(new ApiResponse(200, {}, "User logged out successfully"))
 };
 
-export { 
-    logout,
-    login,
-    registerUser,
-    refreshToken
+export {
+  logout,
+  login,
+  registerUser,
+  refreshToken
 }

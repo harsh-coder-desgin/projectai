@@ -1,9 +1,11 @@
 import { useState } from "react";
-import "../styles/login.css"
+import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../Componets/index.js";
 import auth from "../auth/auth.js";
+import "../styles/login.css"
 
-export default function SignupForm() {
+export default function SignupForm() {    
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,14 +26,13 @@ export default function SignupForm() {
   };
 
   const handleSignup = async () => {
-    const res =  await auth.register(username,email,password)
-    console.log(res);
-    if (!username || !email || !password) {
-      showToast("Please fill in all fields");
-      return;
+    try {
+      const res =  await auth.register({username:username,email:email,password:password})
+      navigate("/chat")
+    } catch (error) {
+      console.log(error,error.message); 
+      showToast(error.message);
     }
-
-    showToast("Account created successfully");
   };
 
   return (

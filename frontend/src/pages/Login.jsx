@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, Input } from "../Componets/index.js"
+import auth from "../auth/auth.js";
 import "../styles/login.css"
-import { Button,Input } from "../Componets/index.js"
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
@@ -12,13 +14,15 @@ export default function LoginForm() {
         setTimeout(() => setToast({ visible: false, message: "" }), 2500);
     };
 
-    const handleLogin = () => {
-        // here handle password 
-        if (!email || !password) {
-            showToast("Please fill in all fields");
-            return;
+    const handleLogin = async () => {
+        try {
+            const res = await auth.login({ email: email, password: password })
+            console.log(res);
+            navigate("/chat")
+        } catch (error) {
+            console.log(error, error.message);
+            showToast(error.message);
         }
-        showToast("Signing you in…");
     };
 
     return (

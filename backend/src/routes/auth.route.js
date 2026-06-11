@@ -9,8 +9,8 @@ import {
 } from "../controllers/auth.controllers.js"
 
 // --- User Authentication Routes ---
-router.post('/user/register', verifyUser, registerUser);
-router.post('/user/login', verifyUser, login);
+router.post('/user/register', registerUser);
+router.post('/user/login', login);
 
 // --- Common Authentication Routes ---
 router.post('/refresh-token', verifyUser, refreshToken);
