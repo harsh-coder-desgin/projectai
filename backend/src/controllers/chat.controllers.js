@@ -90,6 +90,7 @@ const getOneChat = async (req, res) => {
 // save chat histroy
 // cheek msg ==0
 const sendChat = async (req, res) => {
+    console.log(req.body);
     const { chatId, message } = req.body;
 
     if (!message?.trim()) {
@@ -105,31 +106,31 @@ const sendChat = async (req, res) => {
     }
 
     // SAFETY CHECK
-    const blockedWords = ["hack", "malware"];
+    // const blockedWords = ["hack", "malware"];
 
-    const isUnsafe = blockedWords.some((word) =>
-        message.toLowerCase().includes(word)
-    );
+    // const isUnsafe = blockedWords.some((word) =>
+        // message.toLowerCase().includes(word)
+    // );
 
-    if (isUnsafe) {
-        throw new ApiError(
-            400,
-            "Unsafe message detected"
-        );
-    }
-    const userTech = userData.tech || {};
+    // if (isUnsafe) {
+    //     throw new ApiError(
+    //         400,
+    //         "Unsafe message detected"
+    //     );
+    // }
+    // const userTech = userData.tech || {};
 
-    const frontend =
-        userTech.frontend?.join(", ") || "Not specified";
+    // const frontend =
+        // userTech.frontend?.join(", ") || "Not specified";
 
-    const backend =
-        userTech.backend?.join(", ") || "Not specified";
+    // const backend =
+        // userTech.backend?.join(", ") || "Not specified";
 
-    const database =
-        userTech.database?.join(", ") || "Not specified";
+    // const database =
+        // userTech.database?.join(", ") || "Not specified";
 
-    const other =
-        userTech.other?.join(", ") || "Not specified";
+    // const other =
+        // userTech.other?.join(", ") || "Not specified";
 
     const prompt = `
         User Skills:
@@ -144,12 +145,11 @@ const sendChat = async (req, res) => {
 
         Generate a project idea based on the user's skills.
         `;
-    const aiResponse = await generateProjectIdea(
-        prompt
-    );
+    // const aiResponse = await generateProjectIdea(
+        // prompt
+    // );
     // YOUR AI LOGIC HERE
-    // const aiResponses =
-    //     "AI response generated here";
+    const aiResponses ="AI response generated her new chat fjksdhmflw";
 
     // NEW CHAT
     if (!chatId) {
@@ -175,7 +175,7 @@ const sendChat = async (req, res) => {
                 },
                 {
                     role: "ai",
-                    content: aiResponse,
+                    content: aiResponses,
                 },
             ],
         });
@@ -187,7 +187,7 @@ const sendChat = async (req, res) => {
                 200,
                 {
                     chatId: newChatId,
-                    response: aiResponse,
+                    response: aiResponses,
                 },
                 "Chat created successfully"
             )
@@ -210,7 +210,7 @@ const sendChat = async (req, res) => {
 
     chat.messages.push({
         role: "ai",
-        content: aiResponse,
+        content: aiResponses,
     });
 
     await userData.save();
@@ -220,7 +220,7 @@ const sendChat = async (req, res) => {
             200,
             {
                 chatId,
-                response: aiResponse,
+                response: aiResponses,
             },
             "Message sent successfully"
         )

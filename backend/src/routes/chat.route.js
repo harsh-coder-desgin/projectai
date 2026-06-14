@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/tech",verifyUser,saveUserTech);
 
 //demo send chat without login user
-router.post("/chats",demoChat);
+router.post("/chats/demo",demoChat);
 
 // Create/send a chat message
 router.post("/chats",verifyUser,sendChat);

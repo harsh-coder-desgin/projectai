@@ -20,7 +20,7 @@ const chat = {
   demoChat: async (data) => {
     console.log(data);
     try {
-      const res = await request(`${API}/chats`, {
+      const res = await request(`${API}/chats/demo`, {
         method: "POST",
         body: JSON.stringify(data),
       });
