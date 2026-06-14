@@ -63,7 +63,6 @@ export default function ChatApp() {
   // };
 
   const sendMessage = async () => {
-    console.log(user);
     const text = input.trim();
     if (!text || isTyping) return;
     const data = localStorage.getItem("techSkills")
@@ -96,7 +95,7 @@ export default function ChatApp() {
     const delay = 1000 + Math.random() * 1200;
 
     setTimeout(() => {
-      setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", text: res.data.response }]);
+      setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", text: res?.data?.response || "Error something wrong"}]);
       setIsTyping(false);
     }, delay);
   };
@@ -186,7 +185,7 @@ export default function ChatApp() {
       {/* ── MAIN ── */}
       <main className="chat-main">
         {/* Topbar */}
-        <div className="topbar">
+       {user.username.length === 0 && <div className="topbar">
           <div className="topbar-left">
             {!sidebarOpen && (
               <button className="icon-btn" onClick={() => setSidebarOpen(true)} title="Open sidebar">
@@ -209,7 +208,7 @@ export default function ChatApp() {
               </Button>
             </div>
           </div>
-        </div>
+        </div>}
         {/* Messages */}
         <div className="messages-area">
           {messages.length === 0 ? (

@@ -22,7 +22,6 @@ export default function LoginForm() {
     const handleLogin = async () => {
         try {
             const res = await auth.login({ email: email, password: password })
-            console.log(res);
             if (res) {
                 setUser({username: res.data,email: email})
                 navigate("/chat")

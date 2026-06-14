@@ -5,10 +5,8 @@ import UserData from "../models/UserData.model.js"
 import jwt from "jsonwebtoken";
 
 const saveUserTech = async (req, res) => {
-    console.log(req.body);
-    
-    const { frontend, backend, database, other } = req.body;
-
+    const { tech } = req.body;
+    const data = JSON.parse(tech);
     const existingData = await UserData.findOne({
         userId: req.userId,
     });
@@ -23,10 +21,10 @@ const saveUserTech = async (req, res) => {
     const userData = await UserData.create({
         userId: req.userId,
         tech: {
-            frontend: frontend || [],
-            backend: backend || [],
-            database: database || [],
-            other: other || [],
+            frontend: data.frontend || [],
+            backend: data.backend || [],
+            database: data.database || [],
+            other: data.other || [],
         },
     });
 
