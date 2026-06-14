@@ -58,6 +58,7 @@ const login = async (req, res) => {
     .json(
       new ApiResponse(
         200,
+        user.username,
         "Login successfully"
       )
     )

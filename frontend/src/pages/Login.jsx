@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../Componets/index.js"
+import { useContext } from "react";
+import { UserContext } from "../Context/UserContext.jsx";
 import auth from "../auth/auth.js";
 import "../styles/login.css"
 
 export default function LoginForm() {
-      const navigate = useNavigate();
+    const { user, setUser } = useContext(UserContext);
+
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [toast, setToast] = useState({ visible: false, message: "" });
@@ -19,7 +23,10 @@ export default function LoginForm() {
         try {
             const res = await auth.login({ email: email, password: password })
             console.log(res);
-            navigate("/chat")
+            if (res) {
+                setUser({username: res.data,email: email})
+                navigate("/chat")
+            }
         } catch (error) {
             console.log(error, error.message);
             showToast(error.message);

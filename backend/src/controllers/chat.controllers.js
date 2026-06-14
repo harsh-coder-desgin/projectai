@@ -5,6 +5,8 @@ import UserData from "../models/UserData.model.js"
 import jwt from "jsonwebtoken";
 
 const saveUserTech = async (req, res) => {
+    console.log(req.body);
+    
     const { frontend, backend, database, other } = req.body;
 
     const existingData = await UserData.findOne({

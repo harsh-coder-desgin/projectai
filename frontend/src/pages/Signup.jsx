@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../Componets/index.js";
+import { useContext } from "react";
+import { UserContext } from "../Context/UserContext.jsx";
 import auth from "../auth/auth.js";
 import "../styles/login.css"
 
-export default function SignupForm() {    
+export default function SignupForm() {
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -27,13 +30,17 @@ export default function SignupForm() {
 
   const handleSignup = async () => {
     try {
-      const res =  await auth.register({username:username,email:email,password:password})
-      navigate("/chat")
+      const res = await auth.register({ username: username, email: email, password: password })
+      if (res) {
+        setUser({ username: username, email: email })
+        navigate("/chat")
+      }
     } catch (error) {
-      console.log(error,error.message); 
+      console.log(error, error.message);
       showToast(error.message);
     }
   };
+
 
   return (
     <div className="login-body">

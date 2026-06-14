@@ -63,12 +63,24 @@ export default function ChatApp() {
   // };
 
   const sendMessage = async () => {
+    console.log(user);
     const text = input.trim();
     if (!text || isTyping) return;
     const data = localStorage.getItem("techSkills")
-    const res = await chat.demoChat({ tech: data, message: text })
-    console.log(res.data.response);
-
+    if (data && user.username.length !== 0) {
+      const saveskills = await chat.saveTech({tech:data})
+      console.log(saveskills);
+      if (saveskills) {
+        localStorage.removeItem("techSkills")
+      }
+    }
+    let res;
+    if (user.username.length === 0) {
+      res = await chat.demoChat({ tech: data, message: text })
+    }else{
+      res = await chat.sendChat({})
+    }
+    
     const userMsg = { id: Date.now(), role: "user", text };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");

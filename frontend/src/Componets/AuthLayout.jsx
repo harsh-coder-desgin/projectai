@@ -11,7 +11,7 @@ function AuthLayout({ children }) {
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const techData = localStorage.getItem("tech");
+  const techData = localStorage.getItem("techSkills");
 
   useEffect(() => {
     // if (!user) {
@@ -57,6 +57,10 @@ function AuthLayout({ children }) {
   // Tech already selected
   if (!isLoggedIn && techData && location.pathname === "/tech") {
     return <Navigate to="/login" replace />;
+  }
+
+  if (!isLoggedIn && !techData && location.pathname === "/chat") {
+    return <Navigate to="/tech" replace />;
   }
 
   // Logged in user cannot access auth pages
