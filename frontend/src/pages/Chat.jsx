@@ -57,7 +57,7 @@ export default function ChatApp() {
 
    useEffect(() => {
     chat.getAllChats().then((data)=>{
-      console.log(data);
+      // console.log(data);
       setChats(data.data);
     }).catch((err)=>{
       console.log(err);
@@ -71,6 +71,7 @@ export default function ChatApp() {
   //   ta.style.height = Math.min(ta.scrollHeight, 180) + "px";
   // };
 // console.log(chats);
+console.log(activeChat);
 
   const sendMessage = async () => {
     const text = input.trim();
@@ -85,6 +86,9 @@ export default function ChatApp() {
       res = await chat.demoChat({ tech: data, message: text })
     }else{
       res = await chat.sendChat({ message:text,chatId:activeChat })
+      if (res) {
+        setActiveChat(res.data.chatId);
+      }
     }
 
     const userMsg = { id: Date.now(), role: "user", text };
@@ -95,7 +99,6 @@ export default function ChatApp() {
     if (!activeChat) {
       const newChat = { id: Date.now(), title: text.slice(0, 36) + (text.length > 36 ? "…" : "") };
       setChats((prev) => [newChat, ...prev]);
-      setActiveChat(newChat.id);
     }
 
     setIsTyping(true);
@@ -104,7 +107,6 @@ export default function ChatApp() {
     setTimeout(() => {
       setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", text: res?.data?.response || "Error something wrong"}]);
       chat.getAllChats().then((data)=>{
-      // console.log(data);
       setChats(data.data);
       }).catch((err)=>{
       console.log(err);
@@ -179,7 +181,7 @@ export default function ChatApp() {
           {
             chats.map((chat) => (
               <RecentChatItem
-                key={chat._id}
+                key={chat.id || chat._id}
                 chat={chat}
                 activeChat={activeChat}
                 loadChat={loadChat}

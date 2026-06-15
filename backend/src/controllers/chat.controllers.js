@@ -94,6 +94,7 @@ const getOneChat = async (req, res) => {
 // cheek msg ==0
 const sendChat = async (req, res) => {
     const { chatId, message } = req.body;
+    console.log(req.body);
 
     if (!message?.trim()) {
         throw new ApiError(400, "Message is required");

@@ -1,12 +1,15 @@
 import { Icon } from "./index.js"
 
 function RecentChatItem({ chat, activeChat, loadChat }) {
+  // console.log(activeChat);
+
+  
   return (
     <div
       className={`chat-item ${
-        activeChat === chat._id ? "active" : ""
+        activeChat === chat?.chatId ? "active" : ""
       }`}
-      onClick={() => loadChat(chat._id)}
+      onClick={() => loadChat(chat?.chatId)}
     >
       <Icon.Chat />
       <span className="chat-item-text">{chat.title}</span>
