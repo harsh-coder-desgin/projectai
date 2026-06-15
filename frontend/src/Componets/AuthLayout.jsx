@@ -53,6 +53,16 @@ function AuthLayout({ children }) {
   // if (!isLoggedIn && !techData && location.pathname !== "/tech") {
   //   return <Navigate to="/tech" replace />;
   // }
+  
+  // user with techskills
+  // user with techskills and login
+
+  // user send chat and delete techskills annd user logout
+  // 
+
+  // if (techData === "true" && location.pathname === "/tech") {
+  //   return <Navigate to="/login" replace />;
+  // }
 
   // Tech already selected
   if (!isLoggedIn && techData && location.pathname === "/tech") {

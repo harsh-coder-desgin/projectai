@@ -68,14 +68,11 @@ export default function ChatApp() {
     const data = localStorage.getItem("techSkills")
     if (data && user.username.length !== 0) {
       const saveskills = await chat.saveTech({tech:data})
-      if (saveskills) {
-        localStorage.removeItem("techSkills")
-      }
     }
     let res;
     console.log(user.username);
     if (user.username.length === 0) {
-      // res = await chat.demoChat({ tech: data, message: text })
+      res = await chat.demoChat({ tech: data, message: text })
       console.log("demo");
     }else{
       res = await chat.sendChat({ message:text })
@@ -128,8 +125,7 @@ export default function ChatApp() {
 
   const handleLogout = async () => {
     const res = await auth.logout()
-    console.log(res);
-
+    // localStorage.setItem("techSkills","true")
     setUser({
       username: "",
       email: "",

@@ -12,9 +12,12 @@ const saveUserTech = async (req, res) => {
     });
 
     if (existingData) {
-        throw new ApiError(
-            400,
-            "Technologies already submitted"
+        return res.status(400).json(
+            new ApiResponse(
+                400,
+                null,
+                "Technologies already submitted"
+            )
         );
     }
 
@@ -90,7 +93,6 @@ const getOneChat = async (req, res) => {
 // save chat histroy
 // cheek msg ==0
 const sendChat = async (req, res) => {
-    console.log(req.body);
     const { chatId, message } = req.body;
 
     if (!message?.trim()) {
@@ -109,7 +111,7 @@ const sendChat = async (req, res) => {
     // const blockedWords = ["hack", "malware"];
 
     // const isUnsafe = blockedWords.some((word) =>
-        // message.toLowerCase().includes(word)
+    // message.toLowerCase().includes(word)
     // );
 
     // if (isUnsafe) {
@@ -121,24 +123,24 @@ const sendChat = async (req, res) => {
     // const userTech = userData.tech || {};
 
     // const frontend =
-        // userTech.frontend?.join(", ") || "Not specified";
+    // userTech.frontend?.join(", ") || "Not specified";
 
     // const backend =
-        // userTech.backend?.join(", ") || "Not specified";
+    // userTech.backend?.join(", ") || "Not specified";
 
     // const database =
-        // userTech.database?.join(", ") || "Not specified";
+    // userTech.database?.join(", ") || "Not specified";
 
     // const other =
-        // userTech.other?.join(", ") || "Not specified";
+    // userTech.other?.join(", ") || "Not specified";
 
     const prompt = `
         User Skills:
 
-        Frontend: ${frontend}
-        Backend: ${backend}
-        Database: ${database}
-        Other: ${other}
+        Frontend: frontend
+        Backend: backend
+        Database: database
+        Other: other
 
         User Question:
         ${message}
@@ -146,10 +148,10 @@ const sendChat = async (req, res) => {
         Generate a project idea based on the user's skills.
         `;
     // const aiResponse = await generateProjectIdea(
-        // prompt
+    // prompt
     // );
     // YOUR AI LOGIC HERE
-    const aiResponses ="AI response generated her new chat fjksdhmflw";
+    const aiResponses = "AI response generated her new chat fjksdhmflw";
 
     // NEW CHAT
     if (!chatId) {
