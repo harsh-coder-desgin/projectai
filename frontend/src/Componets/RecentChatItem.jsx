@@ -4,9 +4,9 @@ function RecentChatItem({ chat, activeChat, loadChat }) {
   return (
     <div
       className={`chat-item ${
-        activeChat === chat.id ? "active" : ""
+        activeChat === chat._id ? "active" : ""
       }`}
-      onClick={() => loadChat(chat.id)}
+      onClick={() => loadChat(chat._id)}
     >
       <Icon.Chat />
       <span className="chat-item-text">{chat.title}</span>

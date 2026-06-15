@@ -55,12 +55,22 @@ export default function ChatApp() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
+   useEffect(() => {
+    chat.getAllChats().then((data)=>{
+      console.log(data);
+      setChats(data.data);
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }, []);
+
   // const autoResize = () => {
   //   const ta = textareaRef.current;
   //   if (!ta) return;
   //   ta.style.height = "auto";
   //   ta.style.height = Math.min(ta.scrollHeight, 180) + "px";
   // };
+// console.log(chats);
 
   const sendMessage = async () => {
     const text = input.trim();
@@ -73,12 +83,10 @@ export default function ChatApp() {
     console.log(user.username);
     if (user.username.length === 0) {
       res = await chat.demoChat({ tech: data, message: text })
-      console.log("demo");
     }else{
-      res = await chat.sendChat({ message:text })
-      console.log("chat");
+      res = await chat.sendChat({ message:text,chatId:activeChat })
     }
-    
+
     const userMsg = { id: Date.now(), role: "user", text };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
@@ -95,6 +103,12 @@ export default function ChatApp() {
 
     setTimeout(() => {
       setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", text: res?.data?.response || "Error something wrong"}]);
+      chat.getAllChats().then((data)=>{
+      // console.log(data);
+      setChats(data.data);
+      }).catch((err)=>{
+      console.log(err);
+      })
       setIsTyping(false);
     }, delay);
   };
@@ -165,7 +179,7 @@ export default function ChatApp() {
           {
             chats.map((chat) => (
               <RecentChatItem
-                key={chat.id}
+                key={chat._id}
                 chat={chat}
                 activeChat={activeChat}
                 loadChat={loadChat}
