@@ -43,8 +43,12 @@ const saveUserTech = async (req, res) => {
 const getAllChats = async (req, res) => {
     const userData = await UserData.findOne({
         userId: req.userId,
-    }).select("chatHistory");
+    }).select("chatHistory")
 
+    userData.chatHistory.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+    
     if (!userData) {
         throw new ApiError(404, "User data not found");
     }

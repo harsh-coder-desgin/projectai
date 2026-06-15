@@ -19,12 +19,12 @@ const userDataSchema = new mongoose.Schema(
       {
         chatId: {
           type: String,
-          required: true,
+          // required: true,
         },
 
         title: {
           type: String, // first user message or chat title
-          required: true,
+          // required: true,
         },
 
         messages: [
@@ -48,6 +48,14 @@ const userDataSchema = new mongoose.Schema(
       {
         chatId: String,
         title: String,
+        createdAt: {
+          type: Date,
+          default: Date.now
+        },
+        updatedAt: {
+          type: Date,
+          default: Date.now
+        }
       },
     ],
   },

@@ -1,9 +1,6 @@
 import { Icon } from "./index.js"
 
-function RecentChatItem({ chat, activeChat, loadChat }) {
-  // console.log(activeChat);
-
-  
+function RecentChatItem({ chat, activeChat, loadChat }) {  
   return (
     <div
       className={`chat-item ${
