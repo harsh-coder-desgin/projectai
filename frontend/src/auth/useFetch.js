@@ -1,6 +1,5 @@
 const request = async (url,options) => {
-  console.log(url,options);
-  
+
   try {
     const res = await fetch(url, {
       method:options.method,
@@ -12,7 +11,6 @@ const request = async (url,options) => {
     });
 
     const data = await res.json();
-    console.log(data);
     
     if (!res.ok) {
       throw new Error(data.message || "Request Failed");

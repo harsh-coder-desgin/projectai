@@ -3,12 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout } from "./Componets/index.js"
 import { UserProvider } from "./Context/UserContext.jsx";
-import App from './App.jsx'
-import Tech from './pages/Tech.jsx'
-import Login from './pages/Login.jsx'
-import Signup from './pages/Signup.jsx'
-import Chat from './pages/Chat.jsx'
-import Home from './pages/Home.jsx'
+import { Tech,Login,Signup,Chat,Home } from "./pages/index.js"
+import App from "../src/App.jsx"
 import './index.css'
 
 const router = createBrowserRouter([

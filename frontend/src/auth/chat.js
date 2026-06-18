@@ -3,7 +3,6 @@ import request from "./useFetch.js";
 const API = "/api/chat";
 
 const chat = {
-  // Save user's tech stack
   saveTech: async (data) => {
     try {
       const res = await request(`${API}/tech`, {
@@ -16,7 +15,6 @@ const chat = {
     }
   },
 
-  // Demo chat (without login)
   demoChat: async (data) => {
     console.log(data);
     try {
@@ -30,7 +28,6 @@ const chat = {
     }
   },
 
-  // Send chat (logged-in user)
   sendChat: async (data) => {
     try {
       const res = await request(`${API}/chats`, {
@@ -43,7 +40,6 @@ const chat = {
     }
   },
 
-  // Get all chats
   getAllChats: async () => {
     try {
       const res = await request(`${API}/chats`, {
@@ -55,7 +51,6 @@ const chat = {
     }
   },
 
-  // Get one chat
   getOneChat: async (chatId) => {
     try {
       const res = await request(`${API}/chats/${chatId}`, {
