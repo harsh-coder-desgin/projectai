@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import { RecentChatItem, WelcomeScreen, MessageBubble, ChatInput, UserProfile, TypingMessage, Icon, Button } from "../Componets/index.js"
+import { WelcomeScreen, MessageBubble, ChatInput, TypingMessage, Icon, Button } from "./index.js"
+import { useContext } from "react";
+import { UserContext } from "../Context/UserContext.jsx";
 import chat from "../auth/chat.js"
-import auth from "../auth/auth.js"
 import "../styles/Chat.css"
 
 function TypingIndicator() {
@@ -14,12 +15,19 @@ function TypingIndicator() {
     );
 }
 
-function MainChat() {
+// const SUGGESTIONS = [
+//   { title: "Give me project idea of Html,css,js", subtitle: "For core pratice" },
+//   { title: "Project idea of Backend", subtitle: "To learn" },
+// ];
+
+function MainChat({ activeChat = '', setChats = [], chats = '' }) {
+    // here i want activechat state and setChats state also
+    const { user, setUser } = useContext(UserContext);
+    const messagesEndRef = useRef(null);
+    const textareaRef = useRef(null);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
-    const messagesEndRef = useRef(null);
-    const textareaRef = useRef(null);
 
     const sendMessage = async () => {
         const text = input.trim();
@@ -29,7 +37,6 @@ function MainChat() {
             const saveskills = await chat.saveTech({ tech: data })
         }
         let res;
-        console.log(user.username);
         if (user.username.length === 0) {
             res = await chat.demoChat({ tech: data, message: text })
         } else {
@@ -63,7 +70,6 @@ function MainChat() {
         }, delay);
     };
 
-    //no need 
     const handleKeyDown = (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
@@ -75,31 +81,40 @@ function MainChat() {
         setInput(title);
         textareaRef.current?.focus();
     };
+    
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages, isTyping]);
-    return (
-        <div>        <div className="messages-area">
 
-            <div className="messages-inner">
-                {messages.map((msg) => (
-                    <MessageBubble key={msg.id} msg={msg} />
-                ))}
-                {isTyping && (
-                    <TypingMessage
-                        appName="AI Project"
+    return (
+        <div>
+            <>
+                {messages.length === 0 &&
+                    <WelcomeScreen
+                        // suggestions={SUGGESTIONS}
+                        handleSuggestion={handleSuggestion}
                     />
-                )}
-                <div ref={messagesEndRef} />
+                }
+            </>
+            <div className="messages-area">
+                <div className="messages-inner">
+                    {messages.map((msg) => (
+                        <MessageBubble key={msg.id} msg={msg} />
+                    ))}
+                    {isTyping && (
+                        <TypingMessage
+                            appName="AI Project"
+                        />
+                    )}
+                    <div ref={messagesEndRef} />
+                </div>
             </div>
-        </div>
             {isTyping && (
                 <Button className="stop-btn" onClick={() => setIsTyping(false)}>
                     <Icon.Stop /> Stop generating
                 </Button>
             )}
 
-            {/* Input */}
             <ChatInput
                 input={input}
                 setInput={setInput}
@@ -108,8 +123,7 @@ function MainChat() {
                 textareaRef={textareaRef}
                 // autoResize={autoResize}
                 handleKeyDown={handleKeyDown}
-                Icon={Icon}
-            />
+                Icon={Icon} />
         </div>
     )
 }

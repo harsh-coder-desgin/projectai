@@ -10,7 +10,9 @@ import ChatInput from "./ChatInput.jsx"
 import UserProfile from "./UserProfile.jsx"
 import TypingMessage from "./TypingMessage.jsx"
 import { skillCategories } from "./skillCategories.js"
+import MainChat from "./MainChat.jsx"
 import * as Icon from "./Icons";
+import Navbar from "./Navbar.jsx"
 
 export {
     AuthLayout,
@@ -25,5 +27,7 @@ export {
     ChatInput,
     UserProfile,
     TypingMessage,
-    Icon
+    Icon,
+    MainChat,
+    Navbar
 }
