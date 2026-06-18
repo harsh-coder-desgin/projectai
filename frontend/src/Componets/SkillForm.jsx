@@ -63,8 +63,7 @@ function SkillForm({
         <Button
           className="btn-prev"
           onClick={onPrevious}
-          disabled={!showPrevious}
-        >
+          disabled={!showPrevious}>
           Previous
         </Button>
 
@@ -78,16 +77,14 @@ function SkillForm({
           <Button
             className="btn-next"
             onClick={onSubmit}
-            disabled={selectedSkills.length === 0}
-          >
+            disabled={selectedSkills.length === 0}>
             Next
           </Button>
         ) : (
           <Button
             className="btn-next"
             onClick={onNext}
-            disabled={selectedSkills.length === 0}
-          >
+            disabled={selectedSkills.length === 0}>
             Next
           </Button>
         )}

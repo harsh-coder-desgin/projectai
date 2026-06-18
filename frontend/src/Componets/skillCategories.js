@@ -14,7 +14,7 @@ export const skillCategories = [
       { id: "angular", label: "Angular", icon: "🔴" },
       { id: "tailwind", label: "Tailwind CSS", icon: "🌊" },
       { id: "nextjs", label: "Next.js", icon: "▲" },
-      { id: "sass", label: "Sass", icon: "🎨" },
+      { id: "None", label: "None", icon: "🔴" },
     ],
   },
   {
@@ -32,6 +32,7 @@ export const skillCategories = [
       { id: "express", label: "Express", icon: "🚂" },
       { id: "django", label: "Django", icon: "🎯" },
       { id: "graphql", label: "GraphQL", icon: "🔗" },
+      { id: "None", label: "None", icon: "🔴" },
     ],
   },
   {
@@ -46,6 +47,7 @@ export const skillCategories = [
       { id: "redis", label: "Redis", icon: "🔴" },
       { id: "firebase", label: "Firebase", icon: "🔥" },
       { id: "sqlite", label: "SQLite", icon: "💾" },
+      { id: "None", label: "None", icon: "🔴" },
     ],
   },
   {
@@ -60,6 +62,7 @@ export const skillCategories = [
       { id: "linux", label: "Linux", icon: "🐧" },
       { id: "nginx", label: "Nginx", icon: "🌐" },
       { id: "vercel", label: "Vercel", icon: "▲" },
+      { id: "None", label: "None", icon: "🔴" },
     ],
   },
 ];

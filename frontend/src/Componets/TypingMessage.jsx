@@ -1,4 +1,4 @@
-function TypingMessage({ appName = "AI Project" }) {
+function TypingMessage() {
   return (
     <div className="message-row ai">
       <div className="msg-avatar ai">
@@ -7,7 +7,7 @@ function TypingMessage({ appName = "AI Project" }) {
 
       <div className="msg-content">
         <div className="msg-sender">
-          {appName}
+          AI Project
         </div>
 
         <div className="msg-bubble">

@@ -34,8 +34,7 @@ function ChatInput({
               className="send-btn"
               onClick={sendMessage}
               disabled={!input.trim() || isTyping}
-              title="Send message"
-            >
+              title="Send message">
               <Icon.Send />
             </Button>
           </div>

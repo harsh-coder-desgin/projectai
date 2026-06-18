@@ -1,12 +1,7 @@
 import "../styles/Form.css"
 import { Button } from "./index.js"
 
-//get data form usecontext to know user login or not'
-// get data form chat.jsx use usecontext
-function UserProfile({
-  username,
-  onLogout,
-}) {
+function UserProfile({ username,onLogout }) {
   return (
     <div className="sidebar-footer">
       <div className="user-profile">
@@ -22,8 +17,7 @@ function UserProfile({
 
        {username !== "User" ? <Button
           className="logout-btn"
-          onClick={onLogout}
-        >
+          onClick={onLogout}>
           Logout
         </Button> : null}
       </div>
