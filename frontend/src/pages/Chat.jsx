@@ -29,6 +29,7 @@ import "../styles/Chat.css"
 //   "Absolutely! Here's a concise breakdown:\n\n- **Performance**: Optimized for speed with lazy loading.\n- **Scalability**: Designed to handle millions of requests.\n- **Developer experience**: Clean API with great documentation.\n\nLet me know if you need code examples or further details.",
 // ];
 
+
 function TypingIndicator() {
   return (
     <div className="typing-indicator">
@@ -38,16 +39,18 @@ function TypingIndicator() {
     </div>
   );
 }
-
+//no need uper fun
 export default function ChatApp() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeChat, setActiveChat] = useState(null);
+  const [chats, setChats] = useState([]);
+  //no need if make componet of mainchat
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [chats, setChats] = useState([]);
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
 
@@ -71,8 +74,8 @@ export default function ChatApp() {
   //   ta.style.height = Math.min(ta.scrollHeight, 180) + "px";
   // };
 // console.log(chats);
-console.log(activeChat);
 
+//no need 
   const sendMessage = async () => {
     const text = input.trim();
     if (!text || isTyping) return;
@@ -115,6 +118,7 @@ console.log(activeChat);
     }, delay);
   };
 
+  //no need 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -133,7 +137,7 @@ console.log(activeChat);
     setMessages([]);
     if (window.innerWidth <= 640) setSidebarOpen(false);
   };
-
+//no need 
   const handleSuggestion = (title) => {
     setInput(title);
     textareaRef.current?.focus();
