@@ -4,7 +4,6 @@ import "../styles/home.css"
 
 function Home() {
     const navigate = useNavigate();
-
     return (
         <div className="home">
             <section className="hero">

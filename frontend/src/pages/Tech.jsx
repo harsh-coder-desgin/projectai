@@ -17,13 +17,10 @@ function TechForm() {
   const handleSkillChange = (skill) => {
     setFormData((prev) => {
       const list = prev[currentForm.id];
-
       const exists = list.includes(skill.id);
-
       const updated = exists
         ? list.filter((id) => id !== skill.id)
         : [...list, skill.id];
-
       return {
         ...prev,
         [currentForm.id]: updated,
@@ -40,7 +37,6 @@ function TechForm() {
   };
 
   const handleSubmit = () => {
-    console.log("Step 1 Saved:", formData);
     setShowExtraForm(true);
   };
 
@@ -50,8 +46,6 @@ function TechForm() {
       other: [...formData.other, ...extraSkills],
     };
     localStorage.setItem("techSkills", JSON.stringify(finalData));
-    console.log("FINAL SAVED DATA:");
-    console.log(finalData);
     navigate("/chat")
   };
 
@@ -77,8 +71,7 @@ function TechForm() {
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             letterSpacing: "-1px",
-          }}
-        >
+          }}>
           Choose Your Tech Stack
         </h1>
 
@@ -90,8 +83,7 @@ function TechForm() {
             maxWidth: "650px",
             marginLeft: "450px",
             lineHeight: "1.6",
-          }}
-        >
+          }}>
           Select your technology to continue and generate AI-powered project ideas.
         </p>
       </div>

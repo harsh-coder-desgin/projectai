@@ -12,19 +12,12 @@ export default function SignupForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [toast, setToast] = useState({
-    visible: false,
-    message: "",
-  });
+  const [toast, setToast] = useState({ visible: false,message: "" });
 
   const showToast = (message) => {
     setToast({ visible: true, message });
-
     setTimeout(() => {
-      setToast({
-        visible: false,
-        message: "",
-      });
+      setToast({ visible: false,message: ""});
     }, 2500);
   };
 
@@ -36,11 +29,9 @@ export default function SignupForm() {
         navigate("/chat")
       }
     } catch (error) {
-      console.log(error, error.message);
       showToast(error.message);
     }
   };
-
 
   return (
     <div className="login-body">
@@ -48,23 +39,12 @@ export default function SignupForm() {
         <div className="login-card">
           <div className="login-logo">
             <svg viewBox="0 0 24 24" fill="none">
-              <path
-                d="M12 2L3 7v10l9 5 9-5V7L12 2z"
-                stroke="#fff"
-                strokeWidth="1.8"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M12 2v20M3 7l9 5 9-5"
-                stroke="#fff"
-                strokeWidth="1.8"
-                strokeLinejoin="round"
-              />
+              <path d="M12 2L3 7v10l9 5 9-5V7L12 2z" stroke="#fff" strokeWidth="1.8" strokeLinejoin="round"/>
+              <path d="M12 2v20M3 7l9 5 9-5" stroke="#fff" strokeWidth="1.8" strokeLinejoin="round"/>
             </svg>
           </div>
 
           <h1 className="login-title">Create Account</h1>
-
           <p className="login-subtitle">
             Join us and start building your profile
           </p>
@@ -84,10 +64,7 @@ export default function SignupForm() {
                 id="username"
                 placeholder="john_doe"
                 value={username}
-                onChange={(e) =>
-                  setUsername(e.target.value)
-                }
-              />
+                onChange={(e) => setUsername(e.target.value)}/>
             </div>
           </div>
 
@@ -100,10 +77,7 @@ export default function SignupForm() {
                 id="email"
                 placeholder="you@example.com"
                 value={email}
-                onChange={(e) =>
-                  setEmail(e.target.value)
-                }
-              />
+                onChange={(e) => setEmail(e.target.value)}/>
             </div>
           </div>
 
@@ -116,17 +90,12 @@ export default function SignupForm() {
                 id="password"
                 placeholder="••••••••"
                 value={password}
-                onChange={(e) =>
-                  setPassword(e.target.value)
-                }
-              />
+                onChange={(e) => setPassword(e.target.value)}/>
             </div>
           </div>
 
-          <Button
-            className="login-btn-primary"
-            onClick={handleSignup}
-          >
+          <Button className="login-btn-primary"
+            onClick={handleSignup}>
             Create Account
           </Button>
 

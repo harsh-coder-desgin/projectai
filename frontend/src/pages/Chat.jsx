@@ -7,26 +7,9 @@ import chat from "../auth/chat.js"
 import auth from "../auth/auth.js"
 import "../styles/Chat.css"
 
-// const CHAT_HISTORY = [
-//   { id: 1, title: "React component architecture" },
-//   { id: 2, title: "Python data analysis tips" },
-//   { id: 3, title: "CSS Grid vs Flexbox" },
-//   { id: 4, title: "JWT authentication flow" },
-//   { id: 5, title: "Docker setup guide" },
-// ];
-
 // const SUGGESTIONS = [
-//   { title: "Explain quantum computing", subtitle: "in simple terms" },
-//   { title: "Write a Python script", subtitle: "to scrape web data" },
-//   { title: "Debug my React app", subtitle: "help fix common errors" },
-//   { title: "Plan a trip to Japan", subtitle: "for 10 days in spring" },
-// ];
-
-// const AI_RESPONSES = [
-//   "Sure! Here's a clear explanation of that concept.\n\nThe key idea is to break the problem into smaller, manageable pieces. Each piece handles a specific responsibility, making the overall system easier to understand and maintain.\n\nHere's a quick example:\n```js\nconst result = items\n  .filter(x => x.active)\n  .map(x => x.value);\n```\n\nThis pattern is widely used in modern development because it keeps logic clean and testable.",
-//   "Great question! There are several approaches you can take here.\n\n1. **Option A** — Simple and straightforward, works well for small projects.\n2. **Option B** — More scalable, better for larger codebases.\n3. **Option C** — Best performance, but requires more setup.\n\nFor most use cases, I'd recommend starting with Option A and migrating as your needs grow.",
-//   "I can help with that! Let me walk you through the key points step by step.\n\nFirst, understand the core concept. Then apply it in a controlled environment. Finally, iterate based on real feedback.\n\nWould you like me to dive deeper into any specific part?",
-//   "Absolutely! Here's a concise breakdown:\n\n- **Performance**: Optimized for speed with lazy loading.\n- **Scalability**: Designed to handle millions of requests.\n- **Developer experience**: Clean API with great documentation.\n\nLet me know if you need code examples or further details.",
+//   { title: "Give me project idea of Html,css,js", subtitle: "For core pratice" },
+//   { title: "Project idea of Backend", subtitle: "To learn" },
 // ];
 
 
@@ -39,6 +22,7 @@ function TypingIndicator() {
     </div>
   );
 }
+
 //no need uper fun
 export default function ChatApp() {
   const navigate = useNavigate();

@@ -8,7 +8,6 @@ import "../styles/login.css"
 
 export default function LoginForm() {
     const { user, setUser } = useContext(UserContext);
-
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -16,7 +15,8 @@ export default function LoginForm() {
 
     const showToast = (message) => {
         setToast({ visible: true, message });
-        setTimeout(() => setToast({ visible: false, message: "" }), 2500);
+        setTimeout(() => setToast({ visible: false, message: "" })
+        ,2500);
     };
 
     const handleLogin = async () => {
@@ -27,7 +27,6 @@ export default function LoginForm() {
                 navigate("/chat")
             }
         } catch (error) {
-            console.log(error, error.message);
             showToast(error.message);
         }
     };
@@ -63,8 +62,7 @@ export default function LoginForm() {
                                 placeholder="you@example.com"
                                 autoComplete="email"
                                 value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
+                                onChange={(e) => setEmail(e.target.value)}/>
                         </div>
                     </div>
 
@@ -77,8 +75,7 @@ export default function LoginForm() {
                                 placeholder="••••••••"
                                 autoComplete="current-password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
+                                onChange={(e) => setPassword(e.target.value)}/>
                         </div>
                     </div>
 
