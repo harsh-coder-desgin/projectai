@@ -1,13 +1,8 @@
 import express from "express"
 import verifyUser from "../middleware/user.middleware.js"
+import { logout,login,registerUser,refreshToken,verify } from "../controllers/auth.controllers.js"
+
 const router = express.Router();
-import {
-    logout,
-    login,
-    registerUser,
-    refreshToken,
-    verify
-} from "../controllers/auth.controllers.js"
 
 // --- User Authentication Routes ---
 router.post('/user/register', registerUser);

@@ -4,6 +4,9 @@ import User from "../models/User.model.js"
 import UserData from "../models/UserData.model.js"
 import jwt from "jsonwebtoken";
 
+// Before makeing AI tools need to check any security issue in user messafe then after save in mogodb in database.if something woring then send res
+// then save in chat,chat history  (cheek msg ==0) = ?
+
 const saveUserTech = async (req, res) => {
     const { tech } = req.body;
     const data = JSON.parse(tech);
@@ -46,9 +49,9 @@ const getAllChats = async (req, res) => {
     }).select("chatHistory")
 
     userData.chatHistory.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
-    
+
     if (!userData) {
         throw new ApiError(404, "User data not found");
     }
@@ -56,7 +59,7 @@ const getAllChats = async (req, res) => {
     return res.status(200).json(
         new ApiResponse(
             200,
-            userData.chatHistory,   
+            userData.chatHistory,
             "Chats fetched successfully"
         )
     );
@@ -90,15 +93,8 @@ const getOneChat = async (req, res) => {
     );
 };
 
-// AI security check it is save to use in usermsg
-// Ai -->
-// res 
-// save chat
-// save chat histroy
-// cheek msg ==0
 const sendChat = async (req, res) => {
     const { chatId, message } = req.body;
-    console.log(req.body);
 
     if (!message?.trim()) {
         throw new ApiError(400, "Message is required");
@@ -113,31 +109,7 @@ const sendChat = async (req, res) => {
     }
 
     // SAFETY CHECK
-    // const blockedWords = ["hack", "malware"];
-
-    // const isUnsafe = blockedWords.some((word) =>
-    // message.toLowerCase().includes(word)
-    // );
-
-    // if (isUnsafe) {
-    //     throw new ApiError(
-    //         400,
-    //         "Unsafe message detected"
-    //     );
-    // }
-    // const userTech = userData.tech || {};
-
-    // const frontend =
-    // userTech.frontend?.join(", ") || "Not specified";
-
-    // const backend =
-    // userTech.backend?.join(", ") || "Not specified";
-
-    // const database =
-    // userTech.database?.join(", ") || "Not specified";
-
-    // const other =
-    // userTech.other?.join(", ") || "Not specified";
+    // Here check user message was safe or not
 
     const prompt = `
         User Skills:
@@ -151,14 +123,11 @@ const sendChat = async (req, res) => {
         ${message}
 
         Generate a project idea based on the user's skills.
-        `;
-    // const aiResponse = await generateProjectIdea(
-    // prompt
-    // );
-    // YOUR AI LOGIC HERE
-    const aiResponses = "AI response generated her new chat fjksdhmflw";
+    `;
 
-    // NEW CHAT
+    // YOUR AI LOGIC HERE
+    const aiResponses = "AI response generated her new chat of this after this is res.";
+
     if (!chatId) {
         const newChatId = Date.now().toString();
 
@@ -201,7 +170,6 @@ const sendChat = async (req, res) => {
         );
     }
 
-    // EXISTING CHAT
     const chat = userData.chats.find(
         (chat) => chat.chatId === chatId
     );
@@ -247,22 +215,8 @@ const demoChat = async (req, res) => {
         throw new ApiError(400, "Message is required");
     }
 
-    // AI Security Check
-    // const blockedWords = [
-    //     "hack",
-    //     "malware",
-    // ];
-
-    // const isUnsafe = blockedWords.some((word) =>
-    //     message.toLowerCase().includes(word)
-    // );
-
-    // if (isUnsafe) {
-    //     throw new ApiError(
-    //         400,
-    //         "Unsafe prompt detected"
-    //     );
-    // }
+    // SAFETY CHECK
+    // Here check user message was safe or not
 
     const prompt = `
         User Technologies:
@@ -279,8 +233,7 @@ const demoChat = async (req, res) => {
         `;
 
     // Call your AI here
-    const aiResponse =
-        "AI response generated here";
+    const aiResponse = "AI response generated here";
 
     return res.status(200).json(
         new ApiResponse(
@@ -293,4 +246,10 @@ const demoChat = async (req, res) => {
     );
 };
 
-export { saveUserTech, getAllChats, getOneChat, sendChat, demoChat };
+export { 
+    saveUserTech, 
+    getAllChats, 
+    getOneChat, 
+    sendChat, 
+    demoChat 
+};

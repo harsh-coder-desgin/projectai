@@ -11,16 +11,15 @@ const generateTokens = async (userId) => {
     user.refreshtoken = refreshToken
     await user.save({ validateBeforeSave: false })
     return {
-    accessToken,
-    refreshToken
+      accessToken,
+      refreshToken
     };
   } catch (error) {
-    throw new ApiError(500, "something went wrong while refresh and access token",error)
+    throw new ApiError(500, "something went wrong while refresh and access token", error)
   }
 };
 
 const login = async (req, res) => {
-
   const { email, password } = req.body
 
   if (!email || !password) {
@@ -62,7 +61,7 @@ const login = async (req, res) => {
         "Login successfully"
       )
     )
-}
+};
 
 const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
@@ -88,12 +87,13 @@ const registerUser = async (req, res) => {
   });
 
   const { accessToken, refreshToken } = await generateTokens(user._id.toString());
-  
+
   const options = {
     httpOnly: true,
     secure: true,
     // sameSite: "strict"
   };
+  
   return res.status(200)
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
@@ -162,7 +162,7 @@ const logout = async (req, res) => {
     $set: {
       refreshToken: ""
     }
-  },{ returnDocument: "after" }
+  }, { returnDocument: "after" }
 
   ).catch(() => {
     throw new ApiError(500, "Something went wrong while logging out. Please try again.");
@@ -194,7 +194,7 @@ const verify = async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, userData,"User Fetch successfully"))
+    .json(new ApiResponse(200, userData, "User Fetch successfully"))
 };
 
 export {

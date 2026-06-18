@@ -1,27 +1,16 @@
 import express from "express";
 import verifyUser from "../middleware/user.middleware.js"
-import {
-  saveUserTech,
-  sendChat,
-  getAllChats,
-  getOneChat,
-  demoChat,
-} from "../controllers/chat.controllers.js";
+import { saveUserTech,sendChat,getAllChats,getOneChat,demoChat } from "../controllers/chat.controllers.js";
 
 const router = express.Router();
 
-router.post("/tech",verifyUser,saveUserTech);
-
-//demo send chat without login user
+// --- Demo User Routes ----------
 router.post("/chats/demo",demoChat);
 
-// Create/send a chat message
+// --- User Authentication Routes ---
+router.post("/tech",verifyUser,saveUserTech);
 router.post("/chats",verifyUser,sendChat);
-
-// Get all chats
 router.get("/chats",verifyUser,getAllChats);
-
-// Get one chat
 router.get("/chats/:chatId",verifyUser,getOneChat);
 
 export default router;

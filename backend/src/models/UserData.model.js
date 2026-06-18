@@ -19,12 +19,10 @@ const userDataSchema = new mongoose.Schema(
       {
         chatId: {
           type: String,
-          // required: true,
         },
 
         title: {
-          type: String, // first user message or chat title
-          // required: true,
+          type: String,
         },
 
         messages: [
@@ -64,11 +62,9 @@ const userDataSchema = new mongoose.Schema(
   }
 );
 
-// Optional: Limit total chats to 15
 userDataSchema.path("chats").validate(function (value) {
   return value.length <= 15;
 }, "Maximum 15 chats allowed");
 
 const UserData = mongoose.model("UserData", userDataSchema);
-
 export default UserData;
