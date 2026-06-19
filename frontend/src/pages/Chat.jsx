@@ -14,9 +14,8 @@ export default function ChatApp() {
   const [activeChat, setActiveChat] = useState(null);
   const [chats, setChats] = useState([]);
 
-   useEffect(() => {
+  useEffect(() => {
     chat.getAllChats().then((data)=>{
-      // console.log(data);
       setChats(data.data);
     }).catch((err)=>{
       console.log(err);
@@ -91,7 +90,7 @@ export default function ChatApp() {
       </aside>
 
       <main className="chat-main">
-       {user.username.length === 0 && <Navbar sidebar={sidebarOpen}/>}
+       {user.username.length === 0 && <Navbar sidebar={sidebarOpen} setSidebarOpen={setSidebarOpen}/>}
 
         {/* Messages */}
         <div className="messages-area">

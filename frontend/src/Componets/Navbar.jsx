@@ -1,8 +1,7 @@
 import React from 'react'
 import { Icon, Button } from "../Componets/index.js"
 
-function Navbar({sidebar}) {
-  //here setsidebar is need
+function Navbar({sidebar,setSidebarOpen}) {
   return (
     <div className="topbar">
       <div className="topbar-left">
