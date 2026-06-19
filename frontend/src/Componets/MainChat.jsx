@@ -20,12 +20,10 @@ function TypingIndicator() {
 //   { title: "Project idea of Backend", subtitle: "To learn" },
 // ];
 
-function MainChat({ activeChat = '', setChats = [], chats = '' }) {
-    // here i want activechat state and setChats state also
+function MainChat({ setActiveChat,setChats,activeChat,messages,setMessages }) {
     const { user, setUser } = useContext(UserContext);
     const messagesEndRef = useRef(null);
     const textareaRef = useRef(null);
-    const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
 

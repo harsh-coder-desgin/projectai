@@ -13,6 +13,7 @@ export default function ChatApp() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeChat, setActiveChat] = useState(null);
   const [chats, setChats] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     chat.getAllChats().then((data)=>{
@@ -94,8 +95,7 @@ export default function ChatApp() {
 
         {/* Messages */}
         <div className="messages-area">
-          <MainChat activeChat = ""/> 
-          {/* here i have to send ativechat id also need to send chats and setchats */}
+          <MainChat setActiveChat={setActiveChat} setChats={setChats} activeChat={activeChat} messages={messages} setMessages={setMessages}/> 
         </div>
 
       </main>
