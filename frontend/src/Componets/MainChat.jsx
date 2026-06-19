@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from "react";
-import { WelcomeScreen, MessageBubble, ChatInput, TypingMessage, Icon, Button } from "./index.js"
+import { useState, useRef } from "react";
+import { WelcomeScreen, ChatInput, Icon, Button } from "./index.js"
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
 import chat from "../auth/chat.js"

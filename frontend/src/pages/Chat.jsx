@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { RecentChatItem, WelcomeScreen, MessageBubble, ChatInput, UserProfile, TypingMessage, Icon, Button, MainChat,Navbar } from "../Componets/index.js"
+import { RecentChatItem, MessageBubble, UserProfile, TypingMessage, Icon, Button, MainChat,Navbar } from "../Componets/index.js"
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +13,6 @@ export default function ChatApp() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeChat, setActiveChat] = useState(null);
   const [chats, setChats] = useState([]);
-  //no need if make componet of mainchat
-
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
