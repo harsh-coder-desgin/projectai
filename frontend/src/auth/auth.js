@@ -1,4 +1,4 @@
-import request from "./useFetch.js";
+import request from "../hooks/useFetch.js";
 
 const API = "/api/auth";
 

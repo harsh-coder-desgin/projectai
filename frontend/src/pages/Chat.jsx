@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { RecentChatItem, UserProfile, TypingMessage, Icon, Button, MainChat,Navbar } from "../Componets/index.js"
+import { RecentChatItem, WelcomeScreen, MessageBubble, ChatInput, UserProfile, TypingMessage, Icon, Button, MainChat,Navbar } from "../Componets/index.js"
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
@@ -13,15 +13,24 @@ export default function ChatApp() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeChat, setActiveChat] = useState(null);
   const [chats, setChats] = useState([]);
+  //no need if make componet of mainchat
+
   const [messages, setMessages] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    chat.getAllChats().then((data)=>{
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isTyping]);
+
+  useEffect(() => {
+    chat.getAllChats().then((data) => {
       setChats(data.data);
-    }).catch((err)=>{
+    }).catch((err) => {
       console.log(err);
     })
   }, []);
+
 
   const startNewChat = () => {
     setActiveChat(null);
@@ -44,17 +53,17 @@ export default function ChatApp() {
     });
     navigate("/");
 
-  };
+  }
 
   const isMobile = () => window.innerWidth <= 640;
 
   return (
     <div className="chat-app">
       {/* Mobile overlay */}
-      <div
-        className={`sidebar-overlay ${sidebarOpen && isMobile() ? "visible" : ""}`}
+      <div className={`sidebar-overlay ${sidebarOpen && isMobile() ? "visible" : ""}`}
         onClick={() => setSidebarOpen(false)}/>
 
+      {/* ── SIDEBAR ── */}
       <aside className={`sidebar ${sidebarOpen ? "" : "collapsed"}`}>
         <div className="sidebar-header">
           <div className="sidebar-logo">
@@ -91,13 +100,31 @@ export default function ChatApp() {
       </aside>
 
       <main className="chat-main">
-       {user.username.length === 0 && <Navbar sidebar={sidebarOpen} setSidebarOpen={setSidebarOpen}/>}
-
-        {/* Messages */}
+        {user.username.length === 0 && <Navbar setSidebarOpen={setSidebarOpen} sidebar={sidebarOpen}/>}
         <div className="messages-area">
-          <MainChat setActiveChat={setActiveChat} setChats={setChats} activeChat={activeChat} messages={messages} setMessages={setMessages}/> 
+          {messages.length !== 0 && (
+            <div className="messages-inner">
+              {messages.map((msg) => (
+                <MessageBubble key={msg.id} msg={msg} />
+              ))}
+              {isTyping && (
+                <TypingMessage
+                  appName="AI Project"
+                />
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+          )}
         </div>
-
+        <MainChat
+          activeChat={activeChat}
+          setActiveChat={setActiveChat}
+          setChats={setChats}
+          Typing={isTyping}
+          setMessages={setMessages}
+          setIsTyping={setIsTyping}
+          welcome={messages.length}
+        />
       </main>
     </div>
   );

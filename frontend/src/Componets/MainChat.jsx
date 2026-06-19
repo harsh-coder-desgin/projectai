@@ -15,21 +15,21 @@ function TypingIndicator() {
     );
 }
 
-// const SUGGESTIONS = [
-//   { title: "Give me project idea of Html,css,js", subtitle: "For core pratice" },
-//   { title: "Project idea of Backend", subtitle: "To learn" },
-// ];
+const SUGGESTIONS = [
+    { title: "Give me project idea of Html,css,js", subtitle: "For core pratice" },
+    { title: "Give me project idea of Html,css,js", subtitle: "For core pratice" },
+    { title: "Give me project idea of Html,css,js", subtitle: "For core pratice" },
+    { title: "Project idea of Backend", subtitle: "To learn" },
+];
 
-function MainChat({ setActiveChat,setChats,activeChat,messages,setMessages }) {
+function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, setIsTyping, welcome }) {
     const { user, setUser } = useContext(UserContext);
-    const messagesEndRef = useRef(null);
     const textareaRef = useRef(null);
     const [input, setInput] = useState("");
-    const [isTyping, setIsTyping] = useState(false);
 
     const sendMessage = async () => {
         const text = input.trim();
-        if (!text || isTyping) return;
+        if (!text || Typing) return;
         const data = localStorage.getItem("techSkills")
         if (data && user.username.length !== 0) {
             const saveskills = await chat.saveTech({ tech: data })
@@ -79,35 +79,25 @@ function MainChat({ setActiveChat,setChats,activeChat,messages,setMessages }) {
         setInput(title);
         textareaRef.current?.focus();
     };
-    
-    useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages, isTyping]);
 
     return (
-        <div>
-            <>
-                {messages.length === 0 &&
+        <>
+            {welcome === 0 && (
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginBottom: "150px",
+                    }}>
                     <WelcomeScreen
-                        // suggestions={SUGGESTIONS}
+                        suggestions={SUGGESTIONS}
                         handleSuggestion={handleSuggestion}
                     />
-                }
-            </>
-            <div className="messages-area">
-                <div className="messages-inner">
-                    {messages.map((msg) => (
-                        <MessageBubble key={msg.id} msg={msg} />
-                    ))}
-                    {isTyping && (
-                        <TypingMessage
-                            appName="AI Project"
-                        />
-                    )}
-                    <div ref={messagesEndRef} />
                 </div>
-            </div>
-            {isTyping && (
+            )}
+
+            {Typing && (
                 <Button className="stop-btn" onClick={() => setIsTyping(false)}>
                     <Icon.Stop /> Stop generating
                 </Button>
@@ -117,12 +107,12 @@ function MainChat({ setActiveChat,setChats,activeChat,messages,setMessages }) {
                 input={input}
                 setInput={setInput}
                 sendMessage={sendMessage}
-                isTyping={isTyping}
+                isTyping={Typing}
                 textareaRef={textareaRef}
                 // autoResize={autoResize}
                 handleKeyDown={handleKeyDown}
                 Icon={Icon} />
-        </div>
+        </>
     )
 }
 
