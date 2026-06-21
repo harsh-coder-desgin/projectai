@@ -7,16 +7,18 @@ import chat from "../auth/chat.js"
 import auth from "../auth/auth.js"
 import "../styles/Chat.css"
 
-export default function ChatApp() {
+export default function Chat({olddata}) {
+  console.log(olddata);
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeChat, setActiveChat] = useState(null);
+  const [messages, setMessages] = useState(olddata || []);
   const [chats, setChats] = useState([]);
-  const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
-
+  console.log(messages,"here");
+  
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
@@ -28,7 +30,14 @@ export default function ChatApp() {
       console.log(err);
     })
   }, []);
-
+  
+  useEffect(()=>{
+    console.log(olddata);
+    
+    if (olddata && olddata.length > 0) {
+      setMessages(olddata);
+    }
+  },[olddata])
 
   const startNewChat = () => {
     setActiveChat(null);
@@ -36,10 +45,11 @@ export default function ChatApp() {
     setIsTyping(false);
   };
 
-  const loadChat = (id) => {
+  const loadChat = (id) => {    
     setActiveChat(id);
     setMessages([]);
     if (window.innerWidth <= 640) setSidebarOpen(false);
+    navigate(`/chat/${id}`)
   };
 
   const handleLogout = async () => {
@@ -103,7 +113,7 @@ export default function ChatApp() {
           {messages.length !== 0 && (
             <div className="messages-inner">
               {messages.map((msg) => (
-                <MessageBubble key={msg.id} msg={msg} />
+                <MessageBubble key={msg._id} msg={msg} />
               ))}
               {isTyping && (
                 <TypingMessage

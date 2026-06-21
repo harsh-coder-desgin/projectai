@@ -47,8 +47,7 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
         const userMsg = { id: Date.now(), role: "user", text };
         setMessages((prev) => [...prev, userMsg]);
         setInput("");
-        if (textareaRef.current) textareaRef.current.style.height = "auto";
-
+        if (textareaRef.current) textareaRef.current.style.height = "auto";        
         if (!activeChat) {
             const newChat = { id: Date.now(), title: text.slice(0, 36) + (text.length > 36 ? "…" : "") };
             setChats((prev) => [newChat, ...prev]);
@@ -64,6 +63,7 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
             }).catch((err) => {
                 console.log(err);
             })
+            //navagie to chat id 
             setIsTyping(false);
         }, delay);
     };

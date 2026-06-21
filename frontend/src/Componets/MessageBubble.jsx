@@ -10,15 +10,15 @@ function MessageBubble({ msg }) {
   };
 
   const renderText = (text) => {
-    const parts = text.split(/(```[\s\S]*?```)/g);
-    return parts.map((part, i) => {
+    const parts = text?.split(/(```[\s\S]*?```)/g);
+    return parts?.map((part, i) => {
       if (part.startsWith("```")) {
-        const code = part.replace(/^```[^\n]*\n?/, "").replace(/```$/, "");
+        const code = part?.replace(/^```[^\n]*\n?/, "")?.replace(/```$/, "");
         return <pre key={i}><code>{code}</code></pre>;
       }
-      const lines = part.split("\n").filter(Boolean);
-      return lines.map((line, j) => {
-        const bold = line.replace(/\*\*(.*?)\*\*/g, (_, m) => `<strong>${m}</strong>`);
+      const lines = part?.split("\n").filter(Boolean);
+      return lines?.map((line, j) => {
+        const bold = line?.replace(/\*\*(.*?)\*\*/g, (_, m) => `<strong>${m}</strong>`);
         return <p key={`${i}-${j}`} dangerouslySetInnerHTML={{ __html: bold }} />;
       });
     });
@@ -31,7 +31,7 @@ function MessageBubble({ msg }) {
       </div>
       <div className="msg-content">
         <div className="msg-sender">{msg.role === "ai" ? "AI Project" : "You"}</div>
-        <div className="msg-bubble">{renderText(msg.text)}</div>
+        <div className="msg-bubble">{renderText(msg.text || msg.content)}</div>
       </div>
     </div>
   );

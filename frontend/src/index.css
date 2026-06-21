@@ -1,0 +1,10 @@
+/* 
+get all chat per id
+make like chatgpt UI in id
+Styles css clean up code
+
+
+make SideAllChat compoent
+and now all msg in ViewChat use useEffect and if params and get all chats and all sendchat fun come with Main chat componet
+now for new chat if i use send chat and get res then navigate and res have id and navigate that componet also get chat alls
+*/
