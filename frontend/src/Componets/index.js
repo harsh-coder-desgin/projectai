@@ -13,6 +13,7 @@ import { skillCategories } from "./skillCategories.js"
 import MainChat from "./MainChat.jsx"
 import * as Icon from "./Icons";
 import Navbar from "./Navbar.jsx"
+import AllChat from "./AllChat.jsx"
 
 export {
     AuthLayout,
@@ -29,5 +30,6 @@ export {
     TypingMessage,
     Icon,
     MainChat,
-    Navbar
+    Navbar,
+    AllChat
 }

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { RecentChatItem, MessageBubble, UserProfile, TypingMessage, Icon, Button, MainChat,Navbar } from "../Componets/index.js"
+import { RecentChatItem, MessageBubble, UserProfile, TypingMessage, Icon, Button, MainChat,Navbar,AllChat } from "../Componets/index.js"
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
@@ -11,10 +11,10 @@ export default function Chat({olddata}) {
   console.log(olddata);
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [activeChat, setActiveChat] = useState(null);
+  // const [sidebarOpen, setSidebarOpen] = useState(true);
+  // const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState(olddata || []);
-  const [chats, setChats] = useState([]);
+  // const [chats, setChats] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
   console.log(messages,"here");
@@ -23,13 +23,13 @@ export default function Chat({olddata}) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  useEffect(() => {
-    chat.getAllChats().then((data) => {
-      setChats(data.data);
-    }).catch((err) => {
-      console.log(err);
-    })
-  }, []);
+  // useEffect(() => {
+  //   chat.getAllChats().then((data) => {
+  //     setChats(data.data);
+  //   }).catch((err) => {
+  //     console.log(err);
+  //   })
+  // }, []);
   
   useEffect(()=>{
     console.log(olddata);
@@ -68,11 +68,11 @@ export default function Chat({olddata}) {
   return (
     <div className="chat-app">
       {/* Mobile overlay */}
-      <div className={`sidebar-overlay ${sidebarOpen && isMobile() ? "visible" : ""}`}
+      <div className={`sidebar-overlay`}
         onClick={() => setSidebarOpen(false)}/>
 
       {/* ── SIDEBAR ── */}
-      <aside className={`sidebar ${sidebarOpen ? "" : "collapsed"}`}>
+      {/* <aside className={`sidebar ${sidebarOpen ? "" : "collapsed"}`}>
         <div className="sidebar-header">
           <div className="sidebar-logo">
             AI Project
@@ -105,10 +105,13 @@ export default function Chat({olddata}) {
           username={user.username || "User"}
           onLogout={handleLogout}
         />
-      </aside>
+      </aside> */}
+      <AllChat/>
 
       <main className="chat-main">
-        {user.username.length === 0 && <Navbar setSidebarOpen={setSidebarOpen} sidebar={sidebarOpen}/>}
+        {user.username.length === 0 && <Navbar 
+        // setSidebarOpen={setSidebarOpen} sidebar={sidebarOpen}
+        />}
         <div className="messages-area">
           {messages.length !== 0 && (
             <div className="messages-inner">
@@ -125,9 +128,9 @@ export default function Chat({olddata}) {
           )}
         </div>
         <MainChat
-          activeChat={activeChat}
-          setActiveChat={setActiveChat}
-          setChats={setChats}
+          // activeChat={activeChat}
+          // setActiveChat={setActiveChat}
+          // setChats={setChats}
           Typing={isTyping}
           setMessages={setMessages}
           setIsTyping={setIsTyping}
