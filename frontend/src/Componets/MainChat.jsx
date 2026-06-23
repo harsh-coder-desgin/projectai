@@ -2,8 +2,11 @@ import { useState, useRef } from "react";
 import { WelcomeScreen, ChatInput, Icon, Button } from "./index.js"
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import chat from "../auth/chat.js"
 import "../styles/Chat.css"
+
 
 function TypingIndicator() {
     return (
@@ -22,8 +25,10 @@ const SUGGESTIONS = [
     { title: "Project idea of Backend", subtitle: "To learn" },
 ];
 
-function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, setIsTyping, welcome }) {
-    const { user, setUser } = useContext(UserContext);
+function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, setIsTyping, welcome,chatid }) {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { user, setUser,chatdata,setchatdata } = useContext(UserContext);
     const textareaRef = useRef(null);
     const [input, setInput] = useState("");
 
@@ -38,9 +43,13 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
         if (user.username.length === 0) {
             res = await chat.demoChat({ tech: data, message: text })
         } else {
-            res = await chat.sendChat({ message: text, chatId: activeChat })
+            res = await chat.sendChat({ message: text, chatId: chatid || null })
             if (res) {
-                setActiveChat(res.data.chatId);
+                if (location.pathname === "/chat") {
+                    setchatdata({chatId:res.data.chatId,title: text,_id: res.data._id})
+                    navigate(`/chat/${res.data.chatId}`)
+                }
+                // setActiveChat(res.data.chatId);
             }
         }
 
@@ -48,21 +57,21 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
         setMessages((prev) => [...prev, userMsg]);
         setInput("");
         if (textareaRef.current) textareaRef.current.style.height = "auto";        
-        if (!activeChat) {
-            const newChat = { id: Date.now(), title: text.slice(0, 36) + (text.length > 36 ? "…" : "") };
-            setChats((prev) => [newChat, ...prev]);
-        }
+        // if (!activeChat) {
+        //     const newChat = { id: Date.now(), title: text.slice(0, 36) + (text.length > 36 ? "…" : "") };
+        //     setChats((prev) => [newChat, ...prev]);
+        // }
 
         setIsTyping(true);
         const delay = 1000 + Math.random() * 1200;
 
         setTimeout(() => {
             setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", text: res?.data?.response || "Error something wrong" }]);
-            chat.getAllChats().then((data) => {
-                setChats(data.data);
-            }).catch((err) => {
-                console.log(err);
-            })
+            // chat.getAllChats().then((data) => {
+            //     setChats(data.data);
+            // }).catch((err) => {
+            //     console.log(err);
+            // })
             //navagie to chat id 
             setIsTyping(false);
         }, delay);

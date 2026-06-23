@@ -3,8 +3,9 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout } from "./Componets/index.js"
 import { UserProvider } from "./Context/UserContext.jsx";
-import { Tech,Login,Signup,Chat,Home,ViewChat } from "./pages/index.js"
+import { Tech, Login, Signup, Chat, Home, ViewChat } from "./pages/index.js"
 import App from "../src/App.jsx"
+import ChatLayout from './layout/ChatLayout.jsx';
 import './index.css'
 
 const router = createBrowserRouter([
@@ -44,6 +45,13 @@ const router = createBrowserRouter([
           </AuthLayout>
         ),
       },
+      // i wil make a page and use url and send api data to chat.jsx // 
+    ],
+  },
+  {
+    path: "/chat",
+    element: <ChatLayout />,
+    children: [
       {
         path: "/chat",
         element: (
@@ -52,7 +60,7 @@ const router = createBrowserRouter([
           </AuthLayout>
         ),
       },
-       {
+      {
         path: "/chat/:id",
         element: (
           <AuthLayout>

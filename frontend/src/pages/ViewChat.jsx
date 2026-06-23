@@ -15,11 +15,11 @@ function ViewChat() {
         }).catch((err) => {
             console.log(err);
         })
-    }, [])
+    }, id ? [id] : [])
     return (
         <>
         {/* <AllChat/> */}
-           {oldchats.length > 0 ? <Chat olddata={oldchats ? oldchats : []}/> : <Chat/>}
+           {oldchats.length > 0 ? <Chat olddata={oldchats ? oldchats : []} chatid={id}/> : <Chat/>}
         </>
     )
 }

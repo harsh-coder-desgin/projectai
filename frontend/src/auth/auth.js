@@ -4,15 +4,15 @@ const API = "/api/auth";
 
 const auth = {
   register: async (data) => {
-    try {
+    // try {
       const res = await request(`${API}/user/register`, {
         method: "POST",
         body: JSON.stringify(data),
       });
       return res;
-    } catch (error) {
+    // } catch (error) {
       console.log(error);
-    }
+    // }
   },
 
   login: async (data) => {

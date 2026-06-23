@@ -7,7 +7,7 @@ import chat from "../auth/chat.js"
 import auth from "../auth/auth.js"
 import "../styles/Chat.css"
 
-export default function Chat({olddata}) {
+export default function Chat({olddata,chatid}) {
   console.log(olddata);
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
@@ -71,43 +71,6 @@ export default function Chat({olddata}) {
       <div className={`sidebar-overlay`}
         onClick={() => setSidebarOpen(false)}/>
 
-      {/* ── SIDEBAR ── */}
-      {/* <aside className={`sidebar ${sidebarOpen ? "" : "collapsed"}`}>
-        <div className="sidebar-header">
-          <div className="sidebar-logo">
-            AI Project
-          </div>
-          <Button className="icon-btn" onClick={() => setSidebarOpen(false)} title="Close sidebar">
-            <Icon.MenuOpen />
-          </Button>
-        </div>
-
-        <Button className="new-chat-btn" onClick={startNewChat}>
-          <Icon.Plus /> New chat
-        </Button>
-
-        <div className="sidebar-section-label">Recent</div>
-
-        <div className="sidebar-chats">
-          {
-            chats.map((chat) => (
-              <RecentChatItem
-                key={chat.id || chat._id}
-                chat={chat}
-                activeChat={activeChat}
-                loadChat={loadChat}
-              />
-            ))
-          }
-        </div>
-
-        <UserProfile
-          username={user.username || "User"}
-          onLogout={handleLogout}
-        />
-      </aside> */}
-      <AllChat/>
-
       <main className="chat-main">
         {user.username.length === 0 && <Navbar 
         // setSidebarOpen={setSidebarOpen} sidebar={sidebarOpen}
@@ -115,8 +78,10 @@ export default function Chat({olddata}) {
         <div className="messages-area">
           {messages.length !== 0 && (
             <div className="messages-inner">
-              {messages.map((msg) => (
-                <MessageBubble key={msg._id} msg={msg} />
+              {messages.map((msg,index) => (
+                <div key={index}>
+                <MessageBubble msg={msg} />
+                  </div>
               ))}
               {isTyping && (
                 <TypingMessage
@@ -131,6 +96,7 @@ export default function Chat({olddata}) {
           // activeChat={activeChat}
           // setActiveChat={setActiveChat}
           // setChats={setChats}
+          chatid={chatid}
           Typing={isTyping}
           setMessages={setMessages}
           setIsTyping={setIsTyping}

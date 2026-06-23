@@ -5,13 +5,12 @@ import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
 import chat from "../auth/chat.js"
 import "../styles/Chat.css"
-import { memo } from "react";
+
 
 function AllChat() {
     const startNewChat = () => {
         setActiveChat(null);
-        setMessages([]);
-        setIsTyping(false);
+        navigate("/chat")
     };
 
     const handleLogout = async () => {
@@ -25,26 +24,31 @@ function AllChat() {
     }
 
     const loadChat = (id) => {    
-    // setActiveChat(id);
-    // setMessages([]);
-    // if (window.innerWidth <= 640) setSidebarOpen(false);
-    navigate(`/chat/${id}`)
+        setActiveChat(id);
+        navigate(`/chat/${id}`)
     };
 
     const navigate = useNavigate();
-    const { user, setUser } = useContext(UserContext);
-    
+    const { user, setUser,chatdata,setchatdata } = useContext(UserContext);
+    console.log(chatdata)
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const [activeChat, setActiveChat] = useState(null);
     const [chats, setChats] = useState([]);
 
     useEffect(() => {
-        chat.getAllChats().then((data) => {
-            setChats(data.data);
-        }).catch((err) => {
-            console.log(err);
-        })
-    }, []);
+        if (chats.length === 0) {
+            chat.getAllChats().then((data) => {
+                console.log(data);
+                
+                setChats(data.data);
+            }).catch((err) => {
+                console.log(err);
+            })
+        }else{
+            setChats((prev)=>[chatdata,...prev])
+            setActiveChat(chatdata.chatId)
+        }
+    }, [chatdata]);
     return (
         <div>
             <div className={`sidebar ${sidebarOpen ? "" : "collapsed"}`}>
@@ -65,9 +69,9 @@ function AllChat() {
 
                 <div className="sidebar-chats">
                     {
-                        chats.map((chat) => (
+                        chats.map((chat,index) => (
                             <RecentChatItem
-                                key={chat.id || chat._id}
+                                key={index}
                                 chat={chat}
                                 activeChat={activeChat}
                                 loadChat={loadChat}
@@ -85,4 +89,4 @@ function AllChat() {
     )
 }
 
-export default  memo(AllChat);
+export default AllChat
