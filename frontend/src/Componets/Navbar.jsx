@@ -2,7 +2,7 @@ import React from 'react'
 import { Icon, Button } from "../Componets/index.js"
 import { useNavigate } from "react-router-dom";
 
-function Navbar({ sidebar, setSidebarOpen }) {
+function Navbar({ sidebar, setSidebarOpen,userdata }) {  
   const navigate = useNavigate();
   return (
     <div className="topbar">

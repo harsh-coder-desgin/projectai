@@ -1,16 +1,62 @@
+/* =========================================================
+   Design tokens (scoped to this page)
+   ========================================================= */
+:root {
+  --bg: #111827;
+  --surface: #1f2937;
+  --surface-2: #374151;
+  --surface-3: #4b5563;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-lit: #4b5563;
+
+  --blue: #2563eb;
+  --blue-dark: #1d4ed8;
+  --blue-light-text: #60a5fa;
+  --blue-glow: rgba(37, 99, 235, 0.15);
+
+  --green: #16a34a;
+  --green-glow: rgba(22, 163, 74, 0.12);
+  --green-text: #4ade80;
+
+  --red: #dc2626;
+  --red-glow: rgba(220, 38, 38, 0.12);
+  --red-text: #f87171;
+
+  --text: #f9fafb;
+  --text-2: #d1d5db;
+  --text-3: #9ca3af;
+
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+  --radius-xs: 8px;
+
+  --shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 12px 32px rgba(0, 0, 0, 0.4);
+
+  --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-body * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* =========================================================
+   Page shell
+   ========================================================= */
 .login-body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  font-family: "Plus Jakarta Sans", sans-serif;
-  background: linear-gradient(
-    135deg,
-    #111827 0%,
-    #1f2937 50%,
-    #111827 100%
-  );
+  font-family: var(--font);
+  background: linear-gradient(135deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%);
 }
 
 .login-wrapper {
@@ -20,24 +66,21 @@
 }
 
 .login-card {
-  background: #1f2937;
-  border-radius: 20px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
   padding: 2.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.3),
-    0 12px 32px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 
+/* =========================================================
+   Logo / header
+   ========================================================= */
 .login-logo {
   width: 52px;
   height: 52px;
-  border-radius: 14px;
-  background: linear-gradient(
-    135deg,
-    #2563eb,
-    #1d4ed8
-  );
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,17 +95,20 @@
 .login-title {
   font-size: 1.7rem;
   font-weight: 700;
-  color: #f9fafb;
+  color: var(--text);
   margin-bottom: 0.35rem;
 }
 
 .login-subtitle {
   font-size: 0.95rem;
-  color: #9ca3af;
+  color: var(--text-3);
   margin-bottom: 2rem;
   line-height: 1.5;
 }
 
+/* =========================================================
+   Fields
+   ========================================================= */
 .login-field {
   margin-bottom: 1.25rem;
 }
@@ -72,7 +118,7 @@
   margin-bottom: 0.45rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #d1d5db;
+  color: var(--text-2);
 }
 
 .login-input-wrap {
@@ -83,10 +129,10 @@
   width: 100%;
   box-sizing: border-box;
   padding: 12px 14px;
-  border: 1.5px solid #4b5563;
-  border-radius: 10px;
-  background: #374151;
-  color: #f9fafb;
+  border: 1.5px solid var(--border-lit);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--text);
   font-size: 0.95rem;
   font-family: inherit;
   outline: none;
@@ -94,15 +140,23 @@
 }
 
 .login-input-wrap input::placeholder {
-  color: #9ca3af;
+  color: var(--text-3);
 }
 
 .login-input-wrap input:focus {
-  background: #4b5563;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+  background: var(--surface-3);
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px var(--blue-glow);
 }
 
+.login-input-wrap input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   Remember me / forgot password row
+   ========================================================= */
 .login-row-flex {
   display: flex;
   align-items: center;
@@ -115,7 +169,7 @@
   align-items: center;
   gap: 0.45rem;
   font-size: 0.875rem;
-  color: #d1d5db;
+  color: var(--text-2);
   cursor: pointer;
   user-select: none;
 }
@@ -123,7 +177,7 @@
 .login-remember input[type="checkbox"] {
   width: 15px;
   height: 15px;
-  accent-color: #2563eb;
+  accent-color: var(--blue);
   cursor: pointer;
 }
 
@@ -131,7 +185,7 @@
   background: none;
   border: none;
   padding: 0;
-  color: #60a5fa;
+  color: var(--blue-light-text);
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
@@ -141,13 +195,22 @@
   text-decoration: underline;
 }
 
+.login-forgot:focus-visible {
+  outline: 2px solid var(--blue-light-text);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* =========================================================
+   Primary button
+   ========================================================= */
 .login-btn-primary {
   width: 100%;
   padding: 12px;
   border: none;
-  border-radius: 10px;
-  background: #2563eb;
-  color: white;
+  border-radius: var(--radius-sm);
+  background: var(--blue);
+  color: var(--text);
   font-size: 0.95rem;
   font-weight: 600;
   font-family: inherit;
@@ -155,17 +218,64 @@
   transition: all 0.2s ease;
 }
 
-.login-btn-primary:hover {
-  background: #1d4ed8;
+.login-btn-primary:hover:not(:disabled) {
+  background: var(--blue-dark);
   transform: translateY(-1px);
 }
 
+.login-btn-primary:focus-visible {
+  outline: 2px solid var(--blue-light-text);
+  outline-offset: 3px;
+}
+
+.login-btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading state: apply alongside .login-btn-primary, e.g.
+   <button className="login-btn-primary login-btn-primary--loading" disabled> */
+.login-btn-primary--loading {
+  position: relative;
+  color: transparent;
+}
+
+.login-btn-primary--loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: var(--text);
+  border-radius: 50%;
+  animation: login-spin 0.6s linear infinite;
+}
+
+@keyframes login-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-btn-primary--loading::after {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   Divider
+   ========================================================= */
 .login-divider {
   display: flex;
   align-items: center;
   gap: 12px;
   margin: 1.5rem 0;
-  color: #9ca3af;
+  color: var(--text-3);
   font-size: 0.8rem;
 }
 
@@ -174,18 +284,21 @@
   content: "";
   flex: 1;
   height: 1px;
-  background: #374151;
+  background: var(--surface-2);
 }
 
+/* =========================================================
+   Sign-up row
+   ========================================================= */
 .login-signup-row {
   margin-top: 1.5rem;
   text-align: center;
   font-size: 0.9rem;
-  color: #9ca3af;
+  color: var(--text-3);
 }
 
 .login-signup-row a {
-  color: #60a5fa;
+  color: var(--blue-light-text);
   font-weight: 600;
   text-decoration: none;
 }
@@ -194,12 +307,58 @@
   text-decoration: underline;
 }
 
+.login-signup-row a:focus-visible {
+  outline: 2px solid var(--blue-light-text);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* =========================================================
+   Toast — base + variants
+   Default (no modifier) keeps the original error styling.
+   Add --success or --info for other states.
+   ========================================================= */
 .login-toast {
-  background: rgba(220, 38, 38, 0.12);
-  color: #f87171;
+  background: var(--red-glow);
+  color: var(--red-text);
   border: 1px solid rgba(220, 38, 38, 0.25);
   padding: 10px 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-xs);
   font-size: 14px;
   margin-bottom: 2rem;
+}
+
+.login-toast--error {
+  background: var(--red-glow);
+  color: var(--red-text);
+  border-color: rgba(220, 38, 38, 0.25);
+}
+
+.login-toast--success {
+  background: var(--green-glow);
+  color: var(--green-text);
+  border-color: rgba(22, 163, 74, 0.25);
+}
+
+.login-toast--info {
+  background: var(--blue-glow);
+  color: var(--blue-light-text);
+  border-color: rgba(37, 99, 235, 0.25);
+}
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+@media (max-width: 480px) {
+  .login-body {
+    padding: 1.25rem;
+  }
+
+  .login-card {
+    padding: 1.75rem;
+  }
+
+  .login-title {
+    font-size: 1.45rem;
+  }
 }

@@ -1,13 +1,16 @@
 import { Outlet } from "react-router-dom";
 import { AllChat } from "../Componets/index.js";
+import  "../App.css"
 
 function ChatLayout() {
   return (
     <div className="chat-layout">
-      <AllChat />
-      <div className="chat-area">
+      <aside className="all-chat">
+        <AllChat />
+      </aside>
+      <main className="chat-area">
         <Outlet />
-      </div>
+      </main>
     </div>
   );
 }

@@ -4,60 +4,40 @@ const API = "/api/auth";
 
 const auth = {
   register: async (data) => {
-    // try {
-      const res = await request(`${API}/user/register`, {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      return res;
-    // } catch (error) {
-      console.log(error);
-    // }
+    const res = await request(`${API}/user/register`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    return res;
   },
 
   login: async (data) => {
-    try {
-      const res = await request(`${API}/user/login`, {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await request(`${API}/user/login`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    return res;
   },
 
   refreshToken: async () => {
-    try {
-      const res = await request(`${API}/refresh-token`, {
-        method: "POST",
-      });
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await request(`${API}/refresh-token`, {
+      method: "POST",
+    });
+    return res;
   },
 
   logout: async () => {
-    try {
-      const res = await request(`${API}/logout`, {
-        method: "POST",
-      });
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await request(`${API}/logout`, {
+      method: "POST",
+    });
+    return res;
   },
 
   verify: async () => {
-    try {
-      const res = await request(`${API}/user/auth`, {
-        method: "GET",
-      });
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await request(`${API}/user/auth`, {
+      method: "GET",
+    });
+    return res;
   }
 };
 

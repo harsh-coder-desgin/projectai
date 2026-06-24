@@ -1,26 +1,32 @@
 import { useState, useEffect } from "react";
-import { RecentChatItem, UserProfile, Icon, Button } from "../Componets/index.js"
+import { RecentChatItem, UserProfile, Icon, Button,Navbar } from "../Componets/index.js"
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
 import chat from "../auth/chat.js"
+import auth from "../auth/auth.js"
 import "../styles/Chat.css"
 
-
 function AllChat() {
+    const navigate = useNavigate();
+    const { user, setUser,chatdata } = useContext(UserContext);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [activeChat, setActiveChat] = useState(null);
+    const [chats, setChats] = useState([]);
+
     const startNewChat = () => {
         setActiveChat(null);
         navigate("/chat")
     };
 
     const handleLogout = async () => {
-        const res = await auth.logout()
-        setUser({
-            username: "",
-            email: "",
-        });
+        try {
+            const res = await auth.logout()
+        } catch (error) {
+            console.log(error);
+        }
+        setUser({username: "",email: ""});
         navigate("/");
-
     }
 
     const loadChat = (id) => {    
@@ -28,18 +34,9 @@ function AllChat() {
         navigate(`/chat/${id}`)
     };
 
-    const navigate = useNavigate();
-    const { user, setUser,chatdata,setchatdata } = useContext(UserContext);
-    console.log(chatdata)
-    const [sidebarOpen, setSidebarOpen] = useState(true);
-    const [activeChat, setActiveChat] = useState(null);
-    const [chats, setChats] = useState([]);
-
     useEffect(() => {
         if (chats.length === 0) {
-            chat.getAllChats().then((data) => {
-                console.log(data);
-                
+            chat.getAllChats().then((data) => {                
                 setChats(data.data);
             }).catch((err) => {
                 console.log(err);
@@ -51,6 +48,11 @@ function AllChat() {
     }, [chatdata]);
     return (
         <div>
+           {!sidebarOpen && <div className="btn-open">
+            <Button className="icon-btn" onClick={() => setSidebarOpen(true)} title="Close sidebar">
+                        <Icon.MenuOpen />
+                    </Button>
+            </div> }
             <div className={`sidebar ${sidebarOpen ? "" : "collapsed"}`}>
                 <div className="sidebar-header">
                     <div className="sidebar-logo">
@@ -69,21 +71,20 @@ function AllChat() {
 
                 <div className="sidebar-chats">
                     {
-                        chats.map((chat,index) => (
+                        chats?.map((chat,index) => (
                             <RecentChatItem
-                                key={index}
-                                chat={chat}
-                                activeChat={activeChat}
-                                loadChat={loadChat}
+                            key={index}
+                            chat={chat}
+                            activeChat={activeChat}
+                            loadChat={loadChat}
                             />
                         ))
                     }
-                </div>
-
+                </div>                    
                 <UserProfile
                     username={user.username || "User"}
                     onLogout={handleLogout}
-                />
+                    />
             </div>
         </div>
     )

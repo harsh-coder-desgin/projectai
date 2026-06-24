@@ -1,87 +1,43 @@
 import { useState, useRef, useEffect } from "react";
-import { RecentChatItem, MessageBubble, UserProfile, TypingMessage, Icon, Button, MainChat,Navbar,AllChat } from "../Componets/index.js"
+import { MessageBubble, TypingMessage, Icon, Button, MainChat, Navbar } from "../Componets/index.js"
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
-import { useNavigate } from "react-router-dom";
-import chat from "../auth/chat.js"
-import auth from "../auth/auth.js"
 import "../styles/Chat.css"
 
-export default function Chat({olddata,chatid}) {
-  console.log(olddata);
-  const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
-  // const [sidebarOpen, setSidebarOpen] = useState(true);
-  // const [activeChat, setActiveChat] = useState(null);
-  const [messages, setMessages] = useState(olddata || []);
-  // const [chats, setChats] = useState([]);
-  const [isTyping, setIsTyping] = useState(false);
+export default function Chat({ olddata, chatid }) {
   const messagesEndRef = useRef(null);
-  console.log(messages,"here");
-  
+  const { user, setUser } = useContext(UserContext);
+  const [messages, setMessages] = useState(olddata || []);
+  const [isTyping, setIsTyping] = useState(false);
+  // const [sidebarOpen, setSidebarOpen] = useState(true);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  // useEffect(() => {
-  //   chat.getAllChats().then((data) => {
-  //     setChats(data.data);
-  //   }).catch((err) => {
-  //     console.log(err);
-  //   })
-  // }, []);
-  
-  useEffect(()=>{
-    console.log(olddata);
-    
+  useEffect(() => {
     if (olddata && olddata.length > 0) {
       setMessages(olddata);
     }
-  },[olddata])
-
-  const startNewChat = () => {
-    setActiveChat(null);
-    setMessages([]);
-    setIsTyping(false);
-  };
-
-  const loadChat = (id) => {    
-    setActiveChat(id);
-    setMessages([]);
-    if (window.innerWidth <= 640) setSidebarOpen(false);
-    navigate(`/chat/${id}`)
-  };
-
-  const handleLogout = async () => {
-    const res = await auth.logout()
-    // localStorage.setItem("techSkills","true")
-    setUser({
-      username: "",
-      email: "",
-    });
-    navigate("/");
-
-  }
+  }, [olddata])
 
   const isMobile = () => window.innerWidth <= 640;
 
   return (
     <div className="chat-app">
-      {/* Mobile overlay */}
-      <div className={`sidebar-overlay`}
-        onClick={() => setSidebarOpen(false)}/>
+      <div className={`sidebar-overlay`} onClick={() => setSidebarOpen(false)} />
 
       <main className="chat-main">
-        {user.username.length === 0 && <Navbar 
+        {user.username.length === 0 && <Navbar
         // setSidebarOpen={setSidebarOpen} sidebar={sidebarOpen}
         />}
         <div className="messages-area">
           {messages.length !== 0 && (
             <div className="messages-inner">
-              {messages.map((msg,index) => (
+              {messages.map((msg, index) => (
                 <div key={index}>
-                <MessageBubble msg={msg} />
-                  </div>
+                  <MessageBubble msg={msg} />
+                </div>
               ))}
               {isTyping && (
                 <TypingMessage
@@ -93,9 +49,6 @@ export default function Chat({olddata,chatid}) {
           )}
         </div>
         <MainChat
-          // activeChat={activeChat}
-          // setActiveChat={setActiveChat}
-          // setChats={setChats}
           chatid={chatid}
           Typing={isTyping}
           setMessages={setMessages}

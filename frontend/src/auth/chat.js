@@ -12,11 +12,11 @@ const chat = {
       return res;
     } catch (error) {
       console.log(error);
+      return error
     }
   },
 
   demoChat: async (data) => {
-    console.log(data);
     try {
       const res = await request(`${API}/chats/demo`, {
         method: "POST",
@@ -25,6 +25,7 @@ const chat = {
       return res;
     } catch (error) {
       console.log(error);
+      return error
     }
   },
 
@@ -37,6 +38,7 @@ const chat = {
       return res;
     } catch (error) {
       console.log(error);
+      return error
     }
   },
 
@@ -48,6 +50,7 @@ const chat = {
       return res;
     } catch (error) {
       console.log(error);
+      return error
     }
   },
 
@@ -59,6 +62,7 @@ const chat = {
       return res;
     } catch (error) {
       console.log(error);
+      return error
     }
   },
 };

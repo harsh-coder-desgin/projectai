@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import chat from "../auth/chat.js"
 import "../styles/Chat.css"
 
-
 function TypingIndicator() {
     return (
         <div className="typing-indicator">
@@ -19,17 +18,29 @@ function TypingIndicator() {
 }
 
 const SUGGESTIONS = [
-    { title: "Give me project idea of Html,css,js", subtitle: "For core pratice" },
-    { title: "Give me project idea of Html,css,js", subtitle: "For core pratice" },
-    { title: "Give me project idea of Html,css,js", subtitle: "For core pratice" },
-    { title: "Project idea of Backend", subtitle: "To learn" },
+  {
+    title: "Suggest me a unique AI project idea",
+    subtitle: "Build something innovative"
+  },
+  {
+    title: "Suggest beginner friendly projects",
+    subtitle: "Improve my coding skills"
+  },
+  {
+    title: "Suggest an AI agent project",
+    subtitle: "Build smart automation tools"
+  },
+  {
+    title: "Give me startup ideas using AI",
+    subtitle: "Create real-world products"
+  }
 ];
 
 function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, setIsTyping, welcome,chatid }) {
     const navigate = useNavigate();
     const location = useLocation();
-    const { user, setUser,chatdata,setchatdata } = useContext(UserContext);
     const textareaRef = useRef(null);
+    const { user, setUser,chatdata,setchatdata } = useContext(UserContext);
     const [input, setInput] = useState("");
 
     const sendMessage = async () => {
@@ -49,7 +60,6 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
                     setchatdata({chatId:res.data.chatId,title: text,_id: res.data._id})
                     navigate(`/chat/${res.data.chatId}`)
                 }
-                // setActiveChat(res.data.chatId);
             }
         }
 
@@ -57,22 +67,12 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
         setMessages((prev) => [...prev, userMsg]);
         setInput("");
         if (textareaRef.current) textareaRef.current.style.height = "auto";        
-        // if (!activeChat) {
-        //     const newChat = { id: Date.now(), title: text.slice(0, 36) + (text.length > 36 ? "…" : "") };
-        //     setChats((prev) => [newChat, ...prev]);
-        // }
 
         setIsTyping(true);
         const delay = 1000 + Math.random() * 1200;
 
         setTimeout(() => {
             setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", text: res?.data?.response || "Error something wrong" }]);
-            // chat.getAllChats().then((data) => {
-            //     setChats(data.data);
-            // }).catch((err) => {
-            //     console.log(err);
-            // })
-            //navagie to chat id 
             setIsTyping(false);
         }, delay);
     };
@@ -120,7 +120,8 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
                 textareaRef={textareaRef}
                 // autoResize={autoResize}
                 handleKeyDown={handleKeyDown}
-                Icon={Icon} />
+                Icon={Icon} 
+            />
         </>
     )
 }

@@ -45,7 +45,6 @@ const router = createBrowserRouter([
           </AuthLayout>
         ),
       },
-      // i wil make a page and use url and send api data to chat.jsx // 
     ],
   },
   {
@@ -67,7 +66,7 @@ const router = createBrowserRouter([
             <ViewChat />
           </AuthLayout>
         ),
-      }, // i wil make a page and use url and send api data to chat.jsx // 
+      },
     ],
   },
 ]);

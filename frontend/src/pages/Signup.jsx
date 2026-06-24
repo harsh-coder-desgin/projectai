@@ -23,15 +23,12 @@ export default function SignupForm() {
 
   const handleSignup = async () => {
     try {
-      const res = await auth.register({ username: username, email: email, password: password })
-      console.log(res);
-      
+      const res = await auth.register({ username: username, email: email, password: password })      
       if (res) {
         setUser({ username: username, email: email })
         navigate("/chat")
       }
     } catch (error) {
-      console.log(error);
       showToast(error.message);
     }
   };
