@@ -24,6 +24,109 @@
   --header-height: 52px;
 }
 
+:root {
+  --bg: #111827;
+  --surface: #1f2937;
+  --surface-2: #374151;
+  --surface-3: #4b5563;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-lit: #4b5563;
+
+  --blue: #2563eb;
+  --blue-dark: #1d4ed8;
+  --blue-light-text: #60a5fa;
+  --blue-glow: rgba(37, 99, 235, 0.15);
+
+  --green: #16a34a;
+  --green-glow: rgba(22, 163, 74, 0.12);
+  --green-text: #4ade80;
+
+  --red: #dc2626;
+  --red-glow: rgba(220, 38, 38, 0.12);
+  --red-text: #f87171;
+
+  --text: #f9fafb;
+  --text-2: #d1d5db;
+  --text-3: #9ca3af;
+
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+  --radius-xs: 8px;
+
+  --shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 12px 32px rgba(0, 0, 0, 0.4);
+
+  --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+:root {
+  --bg: #0f172a;
+  --surface: #111827;
+  --border: #1e293b;
+  --border-lit: #334155;
+
+  --blue: #2563eb;
+  --blue-dark: #1d4ed8;
+  --blue-light-text: #60a5fa;
+  --blue-text: #93c5fd;
+  --blue-glow: rgba(37, 99, 235, 0.15);
+
+  --text: #ffffff;
+  --text-2: #cbd5e1;
+  --text-3: #94a3b8;
+
+  --radius-lg: 24px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
+  --radius-xs: 12px;
+
+  --transition: 0.3s;
+}
+
+:root {
+  /* surfaces */
+  --bg: #111827;
+  --surface: #1f2937;
+  --surface-2: #374151;
+  --surface-3: #4b5563;
+
+  /* borders */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-lit: #4b5563;
+
+  /* brand / accent */
+  --blue: #2563eb;
+  --blue-light: rgba(37, 99, 235, 0.15);
+  --blue-dark: #1d4ed8;
+  --blue-text: #93c5fd;
+
+  /* status */
+  --green: #16a34a;
+  --green-dark: #15803d;
+  --red: #dc2626;
+  --red-dark: #b91c1c;
+
+  /* text */
+  --text: #f9fafb;
+  --text-2: #d1d5db;
+  --text-3: #9ca3af;
+
+  /* shape */
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-pill: 50%;
+
+  /* elevation */
+  --shadow:
+    0 4px 12px rgba(0, 0, 0, 0.25),
+    0 12px 32px rgba(0, 0, 0, 0.35);
+
+  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 .chat-layout {
   display: flex;
   height: 100vh;

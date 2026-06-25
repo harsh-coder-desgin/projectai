@@ -35,7 +35,7 @@ function AllChat() {
     };
 
     useEffect(() => {
-        if (chats.length === 0) {
+        if (chats?.length === 0) {
             chat.getAllChats().then((data) => {                
                 setChats(data.data);
             }).catch((err) => {

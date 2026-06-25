@@ -2,7 +2,7 @@ import { useState } from "react";
 import { skillCategories, AddOtherSkills, SkillForm } from "../Componets/index.js";
 import { useNavigate } from "react-router-dom";
 
-function TechForm() {    
+function TechForm() {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [showExtraForm, setShowExtraForm] = useState(false);
@@ -14,20 +14,32 @@ function TechForm() {
   });
 
   const currentForm = skillCategories[step];
+
   const handleSkillChange = (skill) => {
     setFormData((prev) => {
       const list = prev[currentForm.id];
-      const exists = list.includes(skill.id);
+      if (skill.id === "None") {
+        const exists = list.includes("None");
+
+        return {
+          ...prev,
+          [currentForm.id]: exists ? [] : ["None"],
+        };
+      }
+
+      const newList = list.filter((id) => id !== "None");
+      const exists = newList.includes(skill.id);
       const updated = exists
-        ? list.filter((id) => id !== skill.id)
-        : [...list, skill.id];
+        ? newList.filter((id) => id !== skill.id)
+        : [...newList, skill.id];
+
       return {
         ...prev,
         [currentForm.id]: updated,
       };
     });
   };
-
+  
   const handleNext = () => {
     setStep((prev) => prev + 1);
   };

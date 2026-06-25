@@ -10,3 +10,33 @@ less api call
 /* 
 here test trry catch all auth and chat auth 
 */
+
+/*
+ stop generted --
+ fix none in form --
+ fix css file 
+ check all api and error handle
+ logo add
+ optimaztion
+ less api call
+ backend more user optmiaztaion
+ AI tools add
+ clean up
+ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+ html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg-main);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}

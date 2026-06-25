@@ -37,19 +37,27 @@ function SkillForm({
         <div className="skill-grid">
           {skills.map((skill) => {
             const isActive = selectedSkills.includes(skill.id);
+
+            const isDisabled =
+              selectedSkills.includes("None") && skill.id !== "None";
+
             return (
               <div
                 key={skill.id}
-                className={`skill-card ${isActive ? "skill-card--on" : ""}`}
-                onClick={() => handleSkillChange(skill)}
-              >
+                style={{
+                  cursor: isDisabled ? "not-allowed" : "pointer",
+                  pointerEvents: isDisabled ? "None" : "auto",
+                  opacity: isDisabled ? 0.5 : 1,
+                }}
+                className={`skill-card ${isActive && !isDisabled ? "skill-card--on" : ""}`}
+                onClick={() => handleSkillChange(skill)}>
                 <div className="skill-top">
                   <div className="skill-icon">{skill.icon}</div>
 
                   <div className="skill-name">{skill.label}</div>
 
-                  <div className={`skill-check ${isActive ? "skill-check--on" : ""}`}>
-                    {isActive ? "✓" : ""}
+                  <div className={`skill-check ${isActive && !isDisabled ? "skill-check--on" : ""}`}>
+                    {isActive && !isDisabled ? "✓" : "" }
                   </div>
                 </div>
               </div>
