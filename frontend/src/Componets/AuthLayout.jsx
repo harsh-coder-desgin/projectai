@@ -39,17 +39,21 @@ function AuthLayout({ children }) {
   }, []);
 
   if (loading) {
-    return <div></div>;
+    return null;
+  }
+
+  if (!techData && ["/login", "/signup"].includes(location.pathname)) {
+    return <Navigate to="/tech" replace />;
   }
 
   if (!isLoggedIn && techData && location.pathname === "/tech") {
     return <Navigate to="/login" replace />;
   }
 
-  if (!isLoggedIn && !techData && location.pathname === "/chat") {
+  if (!isLoggedIn && !techData && (location.pathname === "/chat" || location.pathname.startsWith("/chat/"))) {
     return <Navigate to="/tech" replace />;
   }
-
+  
   if (
     isLoggedIn &&
     ["/tech", "/login", "/signup"].includes(location.pathname)

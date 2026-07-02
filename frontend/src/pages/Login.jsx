@@ -62,6 +62,7 @@ export default function LoginForm() {
                                 placeholder="you@example.com"
                                 autoComplete="email"
                                 value={email}
+                                maxLength={40}
                                 onChange={(e) => setEmail(e.target.value)}/>
                         </div>
                     </div>
@@ -75,6 +76,7 @@ export default function LoginForm() {
                                 placeholder="••••••••"
                                 autoComplete="current-password"
                                 value={password}
+                                maxLength={8}
                                 onChange={(e) => setPassword(e.target.value)}/>
                         </div>
                     </div>

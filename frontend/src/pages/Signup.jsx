@@ -64,6 +64,7 @@ export default function SignupForm() {
                 id="username"
                 placeholder="john_doe"
                 value={username}
+                maxLength={20}
                 onChange={(e) => setUsername(e.target.value)}/>
             </div>
           </div>
@@ -77,6 +78,7 @@ export default function SignupForm() {
                 id="email"
                 placeholder="you@example.com"
                 value={email}
+                maxLength={40}
                 onChange={(e) => setEmail(e.target.value)}/>
             </div>
           </div>
@@ -90,6 +92,7 @@ export default function SignupForm() {
                 id="password"
                 placeholder="••••••••"
                 value={password}
+                maxLength={8}
                 onChange={(e) => setPassword(e.target.value)}/>
             </div>
           </div>

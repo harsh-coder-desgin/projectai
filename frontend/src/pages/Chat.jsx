@@ -9,7 +9,6 @@ export default function Chat({ olddata, chatid }) {
   const { user, setUser } = useContext(UserContext);
   const [messages, setMessages] = useState(olddata || []);
   const [isTyping, setIsTyping] = useState(false);
-  // const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -24,38 +23,38 @@ export default function Chat({ olddata, chatid }) {
   const isMobile = () => window.innerWidth <= 640;
 
   return (
-    <div className="chat-app">
-      <div className={`sidebar-overlay`} onClick={() => setSidebarOpen(false)} />
+    <>
+      <div className="chat-app">
+        <div className={`sidebar-overlay`} onClick={() => setSidebarOpen(false)} />
 
-      <main className="chat-main">
-        {user.username.length === 0 && <Navbar
-        // setSidebarOpen={setSidebarOpen} sidebar={sidebarOpen}
-        />}
-        <div className="messages-area">
-          {messages.length !== 0 && (
-            <div className="messages-inner">
-              {messages.map((msg, index) => (
-                <div key={index}>
-                  <MessageBubble msg={msg} />
-                </div>
-              ))}
-              {isTyping && (
-                <TypingMessage
-                  appName="AI Project"
-                />
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-          )}
-        </div>
-        <MainChat
-          chatid={chatid}
-          Typing={isTyping}
-          setMessages={setMessages}
-          setIsTyping={setIsTyping}
-          welcome={messages.length}
-        />
-      </main>
-    </div>
+        <main className="chat-main">
+          {user.username.length === 0 && <Navbar />}
+          <div className="messages-area">
+            {messages.length !== 0 && (
+              <div className="messages-inner">
+                {messages.map((msg, index) => (
+                  <div key={index}>
+                    <MessageBubble msg={msg} />
+                  </div>
+                ))}
+                {isTyping && (
+                  <TypingMessage
+                    appName="AI Project"
+                  />
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+            )}
+          </div>
+          <MainChat
+            chatid={chatid}
+            Typing={isTyping}
+            setMessages={setMessages}
+            setIsTyping={setIsTyping}
+            welcome={messages.length}
+          />
+        </main>
+      </div>
+    </>
   );
 }

@@ -38,8 +38,8 @@ function AllChat() {
         if (chats?.length === 0) {
             chat.getAllChats().then((data) => {                
                 setChats(data.data);
-            }).catch((err) => {
-                console.log(err);
+            }).catch((error) => {
+                console.log(error.message);
             })
         }else{
             setChats((prev)=>[chatdata,...prev])

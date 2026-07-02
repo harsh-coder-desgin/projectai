@@ -9,9 +9,10 @@ export const UserProvider = ({ children }) => {
   });
 
   const [chatdata, setchatdata] = useState();
+  const [skills, setskills] = useState(true);
 
   return (
-    <UserContext.Provider value={{ user, setUser ,chatdata , setchatdata}}>
+    <UserContext.Provider value={{ user, setUser ,chatdata , setchatdata, skills, setskills}}>
       {children}
     </UserContext.Provider>
   );

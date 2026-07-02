@@ -14,6 +14,7 @@ import MainChat from "./MainChat.jsx"
 import * as Icon from "./Icons";
 import Navbar from "./Navbar.jsx"
 import AllChat from "./AllChat.jsx"
+import ChatNotFound from "./ChatNotFound.jsx"
 
 export {
     AuthLayout,
@@ -31,5 +32,6 @@ export {
     Icon,
     MainChat,
     Navbar,
-    AllChat
+    AllChat,
+    ChatNotFound
 }

@@ -9,7 +9,13 @@ import jwt from "jsonwebtoken";
 
 const saveUserTech = async (req, res) => {
     const { tech } = req.body;
-    const data = JSON.parse(tech);
+
+    if (!tech) {
+        throw new ApiError(400, "Tech data is required");
+    }
+    
+    const data = JSON?.parse(tech);
+
     const existingData = await UserData.findOne({
         userId: req.userId,
     });
@@ -48,13 +54,13 @@ const getAllChats = async (req, res) => {
         userId: req.userId,
     }).select("chatHistory")
 
-    userData.chatHistory.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    );
-
     if (!userData) {
         throw new ApiError(404, "User data not found");
     }
+
+    userData.chatHistory.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
 
     return res.status(200).json(
         new ApiResponse(
@@ -169,13 +175,19 @@ const sendChat = async (req, res) => {
             )
         );
     }
-
+    
+        
+    
     const chat = userData.chats.find(
         (chat) => chat.chatId === chatId
     );
-
+    
     if (!chat) {
         throw new ApiError(404, "Chat not found");
+    }
+    
+    if (chat?.messages?.length >= 30) {
+        throw new ApiError(404, "Maximum 15 chats allowed");        
     }
 
     chat.messages.push({

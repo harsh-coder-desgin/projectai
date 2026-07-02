@@ -40,21 +40,38 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
     const navigate = useNavigate();
     const location = useLocation();
     const textareaRef = useRef(null);
-    const { user, setUser,chatdata,setchatdata } = useContext(UserContext);
+    const { user, setUser,chatdata,setchatdata,skills,setskills } = useContext(UserContext);
     const [input, setInput] = useState("");
-
     const sendMessage = async () => {
         const text = input.trim();
         if (!text || Typing) return;
         const data = localStorage.getItem("techSkills")
-        if (data && user.username.length !== 0) {
-            const saveskills = await chat.saveTech({ tech: data })
+        if (data && user.username.length !== 0 && skills) {
+            try {
+                const saveskills = await chat.saveTech({ tech: data })
+                setskills(false)
+            } catch (error) {
+                if (error.message != "internal server error") {
+                    setskills(false)
+                }
+                console.log(error.message);
+            }
         }
         let res;
+        let errormsg;
         if (user.username.length === 0) {
-            res = await chat.demoChat({ tech: data, message: text })
+            try {
+                res = await chat.demoChat({ tech: data, message: text })
+            } catch (error) {
+                console.log(error.message);
+            }
         } else {
-            res = await chat.sendChat({ message: text, chatId: chatid || null })
+            try {
+                res = await chat.sendChat({ message: text, chatId: chatid || null })
+            } catch (error) {
+                errormsg = error.message
+                console.log(error.message);
+            }
             if (res) {
                 if (location.pathname === "/chat") {
                     setchatdata({chatId:res.data.chatId,title: text,_id: res.data._id})
@@ -72,7 +89,7 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
         const delay = 1000 + Math.random() * 1200;
 
         setTimeout(() => {
-            setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", text: res?.data?.response || "Error something wrong" }]);
+            setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", text: res?.data?.response || errormsg || "Error something wrong" }]);
             setIsTyping(false);
         }, delay);
     };

@@ -62,9 +62,9 @@ const userDataSchema = new mongoose.Schema(
   }
 );
 
-userDataSchema.path("chats").validate(function (value) {
-  return value.length <= 15;
-}, "Maximum 15 chats allowed");
+// userDataSchema.path("chats").validate(function (value) {
+//   return value.length <= 15;
+// }, "Maximum 15 chats allowed");
 
 const UserData = mongoose.model("UserData", userDataSchema);
 export default UserData;

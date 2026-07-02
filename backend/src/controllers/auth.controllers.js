@@ -26,10 +26,14 @@ const login = async (req, res) => {
     throw new ApiError(400, "Email and password are required")
   }
 
-  const emailRegex = /^[^s@]+@[^s@]+.[^s@]+$/
+  const emailRegex = /^[^\s@]+@[^\s@]+\.(com|in|org)$/;
 
   if (!emailRegex.test(email)) {
     throw new ApiError(400, "Invalid email format")
+  }
+
+  if (password.length > 8 || password.length < 8) {
+    throw new ApiError(400, "Password was too small or too big");  
   }
 
   const user = await User.findOne({ email })
@@ -70,9 +74,18 @@ const registerUser = async (req, res) => {
     throw new ApiError(400, "All fields (username, email, password) are required");
   }
 
-  const emailRegex = /^[^s@]+@[^s@]+.[^s@]+$/;
+  if (username.length < 3 || username.length >= 20) {
+    throw new ApiError(400, "Username must be at least 3 characters and less than 20 characters");  
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.(com|in|org)$/;
+
   if (!emailRegex.test(email)) {
-    throw new ApiError(400, "Invalid email format");
+    throw new ApiError(400, "Invalid email format")
+  }
+
+  if (password.length > 8 || password.length < 8) {
+    throw new ApiError(400, "Password was too small or too big");  
   }
 
   const existingUser = await User.findOne({ email });
@@ -152,22 +165,22 @@ const refreshToken = async (req, res) => {
 
 const logout = async (req, res) => {
   const userId = req.userId
-
+  
   if (!userId) {
     throw new ApiError(401, "User authentication failed. Please log in again.");
   }
 
-  await User.findByIdAndUpdate(
+  const resuser = await User.findByIdAndUpdate(
     userId, {
     $set: {
-      refreshToken: ""
+      refreshtoken: ""
     }
-  }, { returnDocument: "after" }
+  },
 
   ).catch(() => {
     throw new ApiError(500, "Something went wrong while logging out. Please try again.");
   });
-
+  
   const options = {
     httpOnly: true,
     secure: true

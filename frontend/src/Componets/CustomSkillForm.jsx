@@ -5,6 +5,7 @@ function AddOtherSkills({ onBack, onSubmit }) {
   const [input, setInput] = useState("");
   const [skills, setSkills] = useState([]);
   const [error, setError] = useState("");
+
   const addSkills = () => {
     const existingSkills = skillCategories.flatMap((category) =>
       category.skills.map((skill) => skill.label.toLowerCase())
@@ -21,13 +22,23 @@ function AddOtherSkills({ onBack, onSubmit }) {
         skills.some((s) => s.toLowerCase() === skill.toLowerCase())
     );
 
-    const validSkills = enteredSkills.filter(
+    let validSkills = enteredSkills.filter(
       (skill) =>
         !existingSkills.includes(skill.toLowerCase()) &&
         !skills.some((s) => s.toLowerCase() === skill.toLowerCase())
     );
 
-    if (duplicates.length > 0) {
+    const remainingSlots = 15 - skills.length;
+
+    if (remainingSlots <= 0) {
+      setError("Maximum 15 skills allowed");
+      return;
+    }
+
+    if (validSkills.length > remainingSlots) {
+      validSkills = validSkills.slice(0, remainingSlots);
+      setError(`Only ${remainingSlots} more skills can be added`);
+    } else if (duplicates.length > 0) {
       setError(`${duplicates.join(", ")} already exists`);
     } else {
       setError("");
@@ -50,6 +61,7 @@ function AddOtherSkills({ onBack, onSubmit }) {
           type="text"
           placeholder="e.g. Python, AI, Blockchain"
           value={input}
+          maxLength={30}
           onChange={(e) => setInput(e.target.value)}
         />
         <Button onClick={addSkills} className="btn-add" >Add</Button>
