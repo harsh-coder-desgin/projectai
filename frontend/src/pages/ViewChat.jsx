@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { Chat } from './index.js'
 import { ChatNotFound,Navbar } from "../Componets/index.js"
-import chat from '../auth/chat'
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
+import chat from '../auth/chat'
 
 function ViewChat() {
     const { user, setUser } = useContext(UserContext);
