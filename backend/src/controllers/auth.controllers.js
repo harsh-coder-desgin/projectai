@@ -39,13 +39,13 @@ const login = async (req, res) => {
   const user = await User.findOne({ email })
 
   if (!user) {
-    throw new ApiError(404, "User not found")
+    throw new ApiError(404, "Invalid email or password")
   }
 
   const isPasswordCorrect = await user.isPasswordCorrect(password)
 
   if (!isPasswordCorrect) {
-    throw new ApiError(401, "Invalid password")
+    throw new ApiError(401, "Invalid email or password")
   }
 
   const { accessToken, refreshToken } = await generateTokens(user._id)
@@ -104,7 +104,7 @@ const registerUser = async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    // sameSite: "strict"
+    sameSite: "strict"
   };
   
   return res.status(200)

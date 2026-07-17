@@ -130,7 +130,7 @@ const sendChat = async (req, res) => {
 
         Generate a project idea based on the user's skills.
     `;
-
+    
     // YOUR AI LOGIC HERE
     const aiResponses = "AI response generated her new chat of this after this is res.";
 
@@ -174,9 +174,7 @@ const sendChat = async (req, res) => {
                 "Chat created successfully"
             )
         );
-    }
-    
-        
+    }    
     
     const chat = userData.chats.find(
         (chat) => chat.chatId === chatId
