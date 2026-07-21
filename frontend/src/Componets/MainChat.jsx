@@ -43,12 +43,20 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
     const { user, setUser,chatdata,setchatdata,skills,setskills } = useContext(UserContext);
     const [input, setInput] = useState("");
     const sendMessage = async () => {
+        setInput("");
+        setIsTyping(true);
+        const delay = 1000 + Math.random() * 1200;
         const text = input.trim();
+        const userMsg = { id: Date.now(), role: "user", content:{ text:text } };
+        setMessages((prev) => [...prev, userMsg]);
+        if (textareaRef.current) textareaRef.current.style.height = "auto";    
+
         if (!text || Typing) return;
         const data = localStorage.getItem("techSkills")
         if (data && user.username.length !== 0 && skills) {
             try {
                 const saveskills = await chat.saveTech({ tech: data })
+                console.log(saveskills);
                 setskills(false)
             } catch (error) {
                 if (error.message != "internal server error") {
@@ -68,6 +76,7 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
         } else {
             try {
                 res = await chat.sendChat({ message: text, chatId: chatid || null })
+                console.log(res);
             } catch (error) {
                 errormsg = error.message
                 console.log(error.message);
@@ -78,18 +87,10 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
                     navigate(`/chat/${res.data.chatId}`)
                 }
             }
-        }
-
-        const userMsg = { id: Date.now(), role: "user", text };
-        setMessages((prev) => [...prev, userMsg]);
-        setInput("");
-        if (textareaRef.current) textareaRef.current.style.height = "auto";        
-
-        setIsTyping(true);
-        const delay = 1000 + Math.random() * 1200;
+        }    
 
         setTimeout(() => {
-            setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", text: res?.data?.response || errormsg || "Error something wrong" }]);
+            setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", content: res?.data?.aires || errormsg || "Error something wrong" }]);
             setIsTyping(false);
         }, delay);
     };
