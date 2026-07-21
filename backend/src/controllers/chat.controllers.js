@@ -1,11 +1,40 @@
+import { GoogleGenAI } from "@google/genai"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { ApiError } from "../utils/ApiError.js"
 import User from "../models/User.model.js"
 import UserData from "../models/UserData.model.js"
+import { System_prompt_AI_security } from "../utils/system_promot.js"
+import AItool from "./Aitool.js"
 import jwt from "jsonwebtoken";
 
-// Before makeing AI tools need to check any security issue in user messafe then after save in mogodb in database.if something woring then send res
-// then save in chat,chat history  (cheek msg ==0) = ?
+const ai = new GoogleGenAI({
+    apiKey: process.env.Gemini_API,
+});
+
+async function check(userinput = '') {
+    try {
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: [
+                {
+                    role: "user",
+                    parts: [{ text: userinput }],
+                }
+            ],
+            config: {
+                systemInstruction: System_prompt_AI_security,
+            },
+        });
+        const text = response.text;
+        console.log(text);
+        const result = text.replace(/```json/g, "").replace(/```/g, "").trim();
+        const res = JSON.parse(result);
+        return res.output
+        const ans = JSON.parse(text.replace(/```json/g, "").replace(/```/g, "").trim());
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 const saveUserTech = async (req, res) => {
     const { tech } = req.body;
@@ -13,7 +42,7 @@ const saveUserTech = async (req, res) => {
     if (!tech) {
         throw new ApiError(400, "Tech data is required");
     }
-    
+
     const data = JSON?.parse(tech);
 
     const existingData = await UserData.findOne({
@@ -115,7 +144,19 @@ const sendChat = async (req, res) => {
     }
 
     // SAFETY CHECK
-    // Here check user message was safe or not
+    // Here check user message was safe or 
+    // const checking = await check(message)
+
+    // if (checking === "false") {
+    //     return res.status(200).json(
+    //         new ApiResponse(200, "Something wrong")
+    //     );
+    // }
+
+    const aires = await AItool(message)
+    console.log(aires);
+    console.log(aires?.features);
+    const aires_string = JSON?.stringify(aires)
 
     const prompt = `
         User Skills:
@@ -130,8 +171,7 @@ const sendChat = async (req, res) => {
 
         Generate a project idea based on the user's skills.
     `;
-    
-    // YOUR AI LOGIC HERE
+
     const aiResponses = "AI response generated her new chat of this after this is res.";
 
     if (!chatId) {
@@ -153,11 +193,27 @@ const sendChat = async (req, res) => {
             messages: [
                 {
                     role: "user",
-                    content: message,
+                    content: {
+                        text: message
+                    },
                 },
                 {
                     role: "ai",
-                    content: aiResponses,
+                    content: {
+                        project_title: aires?.project_title,
+                        project_description: aires?.project_description,
+                        key_features: aires?.key_features,
+                        security_considerations: aires?.security_considerations,
+                        technology_stack: {
+                            frontend: aires?.technology_stack.frontend,
+                            backend: aires?.technology_stack.backend,
+                            database: aires?.technology_stack.database,
+                            other: aires?.technology_stack.other,
+                        },
+                        feature_group: aires?.feature_group,
+                        features: aires?.features,
+                        text: aires?.text,
+                    },
                 },
             ],
         });
@@ -170,32 +226,49 @@ const sendChat = async (req, res) => {
                 {
                     chatId: newChatId,
                     response: aiResponses,
+                    aires: aires
                 },
                 "Chat created successfully"
             )
         );
-    }    
-    
+    }
+
     const chat = userData.chats.find(
         (chat) => chat.chatId === chatId
     );
-    
+
     if (!chat) {
         throw new ApiError(404, "Chat not found");
     }
-    
+
     if (chat?.messages?.length >= 30) {
-        throw new ApiError(404, "Maximum 15 chats allowed");        
+        throw new ApiError(404, "Maximum 15 chats allowed");
     }
 
     chat.messages.push({
         role: "user",
-        content: message,
+        content: {
+            text: message
+        },
     });
 
     chat.messages.push({
         role: "ai",
-        content: aiResponses,
+        content: {
+            project_title: aires?.project_title,
+            project_description: aires?.project_description,
+            key_features: aires?.key_features,
+            security_considerations: aires?.security_considerations,
+            technology_stack: {
+                frontend: aires?.technology_stack.frontend,
+                backend: aires?.technology_stack.backend,
+                database: aires?.technology_stack.database,
+                other: aires?.technology_stack.other,
+            },
+            feature_group: aires?.feature_group,
+            features: aires?.features,
+            text: aires?.text,
+        },
     });
 
     await userData.save();
@@ -206,6 +279,7 @@ const sendChat = async (req, res) => {
             {
                 chatId,
                 response: aiResponses,
+                aires: aires
             },
             "Message sent successfully"
         )
@@ -256,10 +330,10 @@ const demoChat = async (req, res) => {
     );
 };
 
-export { 
-    saveUserTech, 
-    getAllChats, 
-    getOneChat, 
-    sendChat, 
-    demoChat 
+export {
+    saveUserTech,
+    getAllChats,
+    getOneChat,
+    sendChat,
+    demoChat
 };
