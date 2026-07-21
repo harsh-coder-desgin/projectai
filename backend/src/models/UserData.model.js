@@ -33,10 +33,77 @@ const userDataSchema = new mongoose.Schema(
               required: true,
             },
 
+            textuser: String,
+
             content: {
-              type: String,
-              required: true,
-            },
+              project_title: {
+                type: String,
+                default: undefined,
+              },
+
+              project_description: {
+                type: String,
+                default: undefined,
+              },
+
+              key_features: {
+                type: [String],
+                default: undefined,
+              },
+
+              security_considerations: {
+                type: [String],
+                default: undefined,
+              },
+
+              technology_stack: {
+                type: {
+                  frontend: {
+                    type: [String],
+                    default: undefined,
+                  },
+                  backend: {
+                    type: [String],
+                    default: undefined,
+                  },
+                  database: {
+                    type: [String],
+                    default: undefined,
+                  },
+                  other: {
+                    type: [String],
+                    default: undefined,
+                  },
+                },
+                default: undefined,
+              },
+
+              feature_group: {
+                type: [String],
+                default: undefined,
+              },
+
+              features: {
+                type: [
+                  {
+                    group: {
+                      type: String,
+                      // default: undefined,
+                    },
+                    item: {
+                      type: [String],
+                      // default: undefined,
+                    },
+                  },
+                ],
+                default: undefined,
+              },
+
+              text: {
+                type: String,
+                default: undefined,
+              },
+            }
           },
         ],
       },
