@@ -5,19 +5,18 @@ const rateLimiter = (req, res, next) => {
   const currentTime = Date.now();
 
   const WINDOW_TIME = 60 * 1000;
-  const MAX_REQUESTS = 5;
+  const MAX_REQUESTS = 52;
 
   if (!requestMap.has(ip)) {
     requestMap.set(ip, {
       count: 1,
       startTime: currentTime,
     });
-
     return next();
   }
-
+  
   const user = requestMap.get(ip);
-
+  
   if (currentTime - user.startTime > WINDOW_TIME) {
     user.count = 1;
     user.startTime = currentTime;

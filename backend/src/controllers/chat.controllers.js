@@ -28,11 +28,16 @@ async function check(userinput = '') {
         const text = response.text;
         console.log(text);
         const result = text.replace(/```json/g, "").replace(/```/g, "").trim();
-        const res = JSON.parse(result);
+        try {
+            const res = JSON.parse(result);
+        } catch (error) {
+            console.log(error)     
+            return false           
+        }
         return res.output
-        const ans = JSON.parse(text.replace(/```json/g, "").replace(/```/g, "").trim());
     } catch (error) {
         console.log(error)
+        return false
     }
 }
 
@@ -153,26 +158,15 @@ const sendChat = async (req, res) => {
     //     );
     // }
 
-    const aires = await AItool(message)
-    console.log(aires);
-    console.log(aires?.features);
+    const userskills = userData.tech
+    const aires = await AItool(`${message} User skills:${userskills}`)
     const aires_string = JSON?.stringify(aires)
 
-    const prompt = `
-        User Skills:
-
-        Frontend: frontend
-        Backend: backend
-        Database: database
-        Other: other
-
-        User Question:
-        ${message}
-
-        Generate a project idea based on the user's skills.
-    `;
-
-    const aiResponses = "AI response generated her new chat of this after this is res.";
+    if (aires === "Error something wrong") {
+        return res.status(200).json(
+            new ApiResponse(200, "Something wrong")
+        );
+    }
 
     if (!chatId) {
         const newChatId = Date.now().toString();

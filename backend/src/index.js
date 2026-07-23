@@ -1,17 +1,12 @@
-import dotenv from "dotenv"
-import connectDB from "./db/index.js";
+import "./config/config.js"; 
 import dns from "dns";
-
-dotenv.config({
-   path: "./.env",
-});
+import app from "./app.js"
+import connectDB from "./db/index.js";
 
 dns.setServers([
-  "1.1.1.1", 
-  "8.8.8.8" 
+   "1.1.1.1", 
+   "8.8.8.8" 
 ]);
-
-import app from "./app.js"
 
 connectDB()
    .then(() => {
