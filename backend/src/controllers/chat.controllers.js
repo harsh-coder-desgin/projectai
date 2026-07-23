@@ -148,24 +148,17 @@ const sendChat = async (req, res) => {
         throw new ApiError(404, "User data not found");
     }
 
-    // SAFETY CHECK
-    // Here check user message was safe or 
-    // const checking = await check(message)
+    const checking = await check(message)
 
-    // if (checking === "false") {
-    //     return res.status(200).json(
-    //         new ApiResponse(200, "Something wrong")
-    //     );
-    // }
+    if (checking === "false") {
+        throw new ApiError(500,"Error something wrong")
+    }
 
     const userskills = userData.tech
     const aires = await AItool(`${message} User skills:${userskills}`)
-    const aires_string = JSON?.stringify(aires)
 
     if (aires === "Error something wrong") {
-        return res.status(200).json(
-            new ApiResponse(200, "Something wrong")
-        );
+        throw new ApiError(500,"Error something wrong")
     }
 
     if (!chatId) {
@@ -219,7 +212,7 @@ const sendChat = async (req, res) => {
                 200,
                 {
                     chatId: newChatId,
-                    response: aiResponses,
+                    // response: aiResponses,
                     aires: aires
                 },
                 "Chat created successfully"
@@ -272,7 +265,7 @@ const sendChat = async (req, res) => {
             200,
             {
                 chatId,
-                response: aiResponses,
+                // response: aiResponses,
                 aires: aires
             },
             "Message sent successfully"
@@ -281,43 +274,29 @@ const sendChat = async (req, res) => {
 };
 
 const demoChat = async (req, res) => {
-    const {
-        frontend = [],
-        backend = [],
-        database = [],
-        other = [],
-        message,
-    } = req.body;
+    const { tech,message } = req.body;
 
     if (!message?.trim()) {
         throw new ApiError(400, "Message is required");
     }
 
-    // SAFETY CHECK
-    // Here check user message was safe or not
+    const checking = await check(message)
 
-    const prompt = `
-        User Technologies:
+    if (checking === "false") {
+       throw new ApiError(500,"Error something wrong")
+    }
 
-        Frontend: ${frontend.join(", ")}
-        Backend: ${backend.join(", ")}
-        Database: ${database.join(", ")}
-        Other: ${other.join(", ")}
+    const aires = await AItool(`${message} User skills:${tech}`)
 
-        User Question:
-        ${message}
-
-        Generate a project idea based on the user's skills.
-        `;
-
-    // Call your AI here
-    const aiResponse = "AI response generated here";
+    if (aires === false) {
+       throw new ApiError(500,"Error something wrong")
+    }
 
     return res.status(200).json(
         new ApiResponse(
             200,
             {
-                response: aiResponse,
+                aires: aires,
             },
             "Response generated successfully"
         )

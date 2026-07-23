@@ -77,7 +77,7 @@ async function AItool(msg = '') {
             });
             const text = response.text;
             messages.push({ role: "model", parts: [{ text }], });
-            // console.log(text);
+            console.log(text);
             const lines = text.replace(/```json/g, "").replace(/```/g, "").trim();
             let allchats = [];
             try {
@@ -90,7 +90,7 @@ async function AItool(msg = '') {
                             finalans = JSON?.parse(allchat.output)
                         } catch (error) {
                             console.log(error);
-                            return "Error something wrong"
+                            return false
                         }
                         finished = true;
                         break;
@@ -105,7 +105,7 @@ async function AItool(msg = '') {
                                 }
                                 const ans = await fn(step.input);
                                 if (ans === false) {
-                                    return "Error something wrong"
+                                    return false
                                 }
                                 const obs = {
                                     type: "observation",
@@ -123,6 +123,7 @@ async function AItool(msg = '') {
 
                             }
                         } catch (error) {
+                            return false
                             console.log("Action Error:", error.message);
                         }
                     }
@@ -132,11 +133,11 @@ async function AItool(msg = '') {
                 }
             } catch (error) {
                 console.log(error);
-                return "Error something wrong"
+                return false
             }
         } catch (error) {
             console.log(error);
-            return "Error something wrong"
+            return false
         }
     }
     return finalans

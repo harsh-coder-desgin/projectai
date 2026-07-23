@@ -140,7 +140,8 @@ Rules:
 -You have to use project_idea_generator output and use in input also and call project_detail_maker.
 -In output you have to give as per Format ouput.
 -You have to combine both tools output.give output as per format output.
--if other is empty do not send None send ouput empty string.
+-Do not not send None in technology_stack if frontend,backend,database,other are empty send empty string. 
+-Give more priority of user message skills more then User skills provide.
 
 Example 1:
 User:i want to todo app idea skills frontend["html","css","js"],backend[""],other[""]
