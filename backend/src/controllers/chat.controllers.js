@@ -3,12 +3,22 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import { ApiError } from "../utils/ApiError.js"
 import User from "../models/User.model.js"
 import UserData from "../models/UserData.model.js"
-import { System_prompt_AI_security } from "../utils/system_promot.js"
+import { System_prompt_AI_security } from "../utils/System prompt.js"
 import AItool from "./Aitool.js"
 import jwt from "jsonwebtoken";
 
+let oldkey
+let allkeys
+if (oldkey === "A") {
+    allkeys = process.env.Gemini_API
+    oldkey = "B"
+} else {
+    allkeys = process.env.Gemini_API_2
+    oldkey = "A"
+}
+
 const ai = new GoogleGenAI({
-    apiKey: process.env.Gemini_API,
+    apiKey: allkeys,
 });
 
 async function check(userinput = '') {
@@ -26,15 +36,14 @@ async function check(userinput = '') {
             },
         });
         const text = response.text;
-        console.log(text);
         const result = text.replace(/```json/g, "").replace(/```/g, "").trim();
         try {
             const res = JSON.parse(result);
+            return res.output
         } catch (error) {
             console.log(error)     
             return false           
         }
-        return res.output
     } catch (error) {
         console.log(error)
         return false
@@ -212,7 +221,6 @@ const sendChat = async (req, res) => {
                 200,
                 {
                     chatId: newChatId,
-                    // response: aiResponses,
                     aires: aires
                 },
                 "Chat created successfully"
@@ -265,7 +273,6 @@ const sendChat = async (req, res) => {
             200,
             {
                 chatId,
-                // response: aiResponses,
                 aires: aires
             },
             "Message sent successfully"

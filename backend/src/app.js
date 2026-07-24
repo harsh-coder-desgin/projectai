@@ -16,9 +16,7 @@ app.use(express.json({limit: "10kb"}))
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(rateLimiter)
-// check secuirty in backend 
-// optimation frontend like re-render that all.
-//helemet app use
+
 app.use('/api/auth', authroute)
 app.use('/api/chat', chatroute)
 app.use(errorHandler)
