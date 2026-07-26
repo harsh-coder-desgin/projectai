@@ -1,5 +1,4 @@
 const request = async (url,options) => {
-
   try {
     const res = await fetch(url, {
       method:options.method,

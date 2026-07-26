@@ -20,7 +20,7 @@ function ChatInput({
             <textarea
               ref={textareaRef}
               className="chat-textarea"
-              placeholder='Message AI Project'
+              placeholder='Message to get Project'
               rows={1}
               value={input}
               onChange={(e) => {

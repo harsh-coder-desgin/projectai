@@ -1,6 +1,5 @@
-import React from 'react'
-import { Button } from "../Componets/index.js"
 import { useNavigate } from "react-router-dom";
+import { Button } from "../Componets/index.js"
 
 function Navbar() {  
   const navigate = useNavigate();

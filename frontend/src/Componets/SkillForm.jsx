@@ -1,5 +1,5 @@
-import "../styles/Form.css"
 import { Button } from "./index.js"
+import "../styles/Form.css"
 
 function SkillForm({
   title,

@@ -1,6 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect,useContext } from "react";
 import { MessageBubble, TypingMessage, Icon, Button, MainChat, Navbar } from "../Componets/index.js"
-import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
 import "../styles/Chat.css"
 
@@ -25,8 +24,6 @@ export default function Chat({ olddata, chatid }) {
   return (
     <>
       <div className="chat-app">
-        <div className={`sidebar-overlay`} onClick={() => setSidebarOpen(false)} />
-
         <main className="chat-main">
           {user.username.length === 0 && <Navbar />}
           <div className="messages-area">

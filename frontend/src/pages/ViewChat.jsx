@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState,useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import { Chat } from './index.js'
 import { ChatNotFound,Navbar } from "../Componets/index.js"
-import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
 import chat from '../auth/chat'
 
 function ViewChat() {
-    const { user, setUser } = useContext(UserContext);
     const { id } = useParams();
+    const { user, setUser } = useContext(UserContext);
     const [oldchats, setoldChats] = useState([]);
     const [errorpage, seterrorpage] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -18,9 +17,7 @@ function ViewChat() {
             setoldChats(data.data)
         }).catch((error) => {
             console.log(error.message);
-            // if (error.message === "Chat not found" || "User data not found") {
             if (error.message) {
-            // if  errror.message !== internal server 
                 seterrorpage(true)
             }            
         }).finally(() => {  

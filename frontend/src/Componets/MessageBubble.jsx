@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function MessageBubble(msg) {
-  console.log(msg);
+  // console.log(msg);
 
   const [copied, setCopied] = useState(false);
 
@@ -13,10 +13,9 @@ function MessageBubble(msg) {
 
   const renderText = (text) => {
     console.log(text.msg.content, "d");
-
     // console.log(text);
     // const parts = text?.split(/(```[\s\S]*?```)/g);
-    return text.msg.content.text
+    return text.msg.content.text || text
   };
 
   let aiData = null;
@@ -36,6 +35,9 @@ function MessageBubble(msg) {
     }
   }
 
+  console.log(aiData);
+  
+
   return (
     <div className={`message-row ${msg.msg.role}`}>
       <div
@@ -53,11 +55,11 @@ function MessageBubble(msg) {
         <div className="msg-bubble">
           {msg.msg.role === "ai" ? (
             <>
-              {/* {aiData?.content && (
+              {typeof aiData?.content !== "object"  && (
                 <>
                   <p>{aiData?.content}</p>
                 </>
-              )} */}
+              )}
 
               <div style={{ color: "#f3f4f6", lineHeight: 1.8 }}>
 
@@ -211,33 +213,41 @@ function MessageBubble(msg) {
 
                 {/* Technology Stack */}
 
-                <div style={{ marginTop: "25px" }}>
-                  <h3
-                    style={{
-                      borderLeft: "4px solid #4f46e5",
-                      paddingLeft: "10px",
-                      marginBottom: "12px",
-                    }}
-                  >
-                    💻 Technology Stack
-                  </h3>
+                {
+                  aiData?.content?.technology_stack &&
+                  (
+                    (aiData?.content?.technology_stack?.frontend.length > 0 ||
+                      aiData?.content?.technology_stack?.backend.length > 0 ||
+                      aiData?.content?.technology_stack?.database.length > 0 ||
+                      aiData?.content?.technology_stack?.other.length > 0)
+                    &&
+                    <div style={{ marginTop: "25px" }}>
+                      <h3
+                        style={{
+                          borderLeft: "4px solid #4f46e5",
+                          paddingLeft: "10px",
+                          marginBottom: "12px",
+                        }}
+                      >
+                        💻 Technology Stack
+                      </h3>
 
-                  <ul style={{ paddingLeft: "20px" }}>
-                    {[
-                      ["Frontend", aiData?.content?.technology_stack?.frontend],
-                      ["Backend", aiData?.content?.technology_stack?.backend],
-                      ["Database", aiData?.content?.technology_stack?.database],
-                      ["Other", aiData?.content?.technology_stack?.other],
-                    ].map(
-                      ([title, data]) =>
-                        data?.length > 0 && (
-                          <li key={title} style={{ marginBottom: "8px" }}>
-                            <strong>{title}:</strong> {data.join(", ")}
-                          </li>
-                        )
-                    )}
-                  </ul>
-                </div>
+                      <ul style={{ paddingLeft: "20px" }}>
+                        {[
+                          ["Frontend", aiData?.content?.technology_stack?.frontend],
+                          ["Backend", aiData?.content?.technology_stack?.backend],
+                          ["Database", aiData?.content?.technology_stack?.database],
+                          ["Other", aiData?.content?.technology_stack?.other],
+                        ].map(
+                          ([title, data]) =>
+                            data?.length > 0 && (
+                              <li key={title} style={{ marginBottom: "8px" }}>
+                                <strong>{title}:</strong> {data.join(", ")}
+                              </li>
+                            )
+                        )}
+                      </ul>
+                    </div>)}
               </div>
             </>
           ) : (

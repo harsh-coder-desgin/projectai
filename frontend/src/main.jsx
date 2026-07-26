@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { AuthLayout } from "./Componets/index.js"
 import { UserProvider } from "./Context/UserContext.jsx";
+import { AuthLayout } from "./Componets/index.js"
 import { Tech, Login, Signup, Chat, Home, ViewChat } from "./pages/index.js"
-import App from "../src/App.jsx"
 import ChatLayout from './layout/ChatLayout.jsx';
+import App from "../src/App.jsx"
 import './index.css'
 
 const router = createBrowserRouter([

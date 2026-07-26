@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { skillCategories, AddOtherSkills, SkillForm } from "../Componets/index.js";
 import { useNavigate } from "react-router-dom";
+import { skillCategories, AddOtherSkills, SkillForm } from "../Componets/index.js";
 
 function TechForm() {
   const navigate = useNavigate();

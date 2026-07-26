@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import { RecentChatItem, UserProfile, Icon, Button,Navbar } from "../Componets/index.js"
+import { useState, useEffect,useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { RecentChatItem, UserProfile, Icon, Button,Navbar } from "../Componets/index.js"
 import { UserContext } from "../Context/UserContext.jsx";
 import chat from "../auth/chat.js"
 import auth from "../auth/auth.js"
@@ -22,11 +21,11 @@ function AllChat() {
     const handleLogout = async () => {
         try {
             const res = await auth.logout()
+            setUser({username: "",email: ""});
+            navigate("/");
         } catch (error) {
             console.log(error);
         }
-        setUser({username: "",email: ""});
-        navigate("/");
     }
 
     const loadChat = (id) => {    
@@ -46,12 +45,13 @@ function AllChat() {
             setActiveChat(chatdata.chatId)
         }
     }, [chatdata]);
+
     return (
         <div>
            {!sidebarOpen && <div className="btn-open">
             <Button className="icon-btn" onClick={() => setSidebarOpen(true)} title="Close sidebar">
-                        <Icon.MenuOpen />
-                    </Button>
+                <Icon.MenuOpen />
+            </Button>
             </div> }
             <div className={`sidebar ${sidebarOpen ? "" : "collapsed"}`}>
                 <div className="sidebar-header">
@@ -73,18 +73,15 @@ function AllChat() {
                     {
                         chats?.map((chat,index) => (
                             <RecentChatItem
-                            key={index}
-                            chat={chat}
-                            activeChat={activeChat}
-                            loadChat={loadChat}
+                                key={index}
+                                chat={chat}
+                                activeChat={activeChat}
+                                loadChat={loadChat}
                             />
                         ))
                     }
                 </div>                    
-                <UserProfile
-                    username={user.username || "User"}
-                    onLogout={handleLogout}
-                    />
+               { user?.username && <UserProfile username={user.username || "User"} onLogout={handleLogout}/>}
             </div>
         </div>
     )

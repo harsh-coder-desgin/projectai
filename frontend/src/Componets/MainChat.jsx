@@ -1,9 +1,7 @@
-import { useState, useRef } from "react";
+import { useState, useRef , useContext} from "react";
 import { WelcomeScreen, ChatInput, Icon, Button } from "./index.js"
-import { useContext } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation ,useNavigate } from "react-router-dom";
 import chat from "../auth/chat.js"
 import "../styles/Chat.css"
 
@@ -42,6 +40,7 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
     const textareaRef = useRef(null);
     const { user, setUser,chatdata,setchatdata,skills,setskills } = useContext(UserContext);
     const [input, setInput] = useState("");
+
     const sendMessage = async () => {
         setInput("");
         setIsTyping(true);
@@ -70,8 +69,10 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
         if (user.username.length === 0) {
             try {
                 res = await chat.demoChat({ tech: data, message: text })
+                console.log(res);
             } catch (error) {
-                console.log(error.message);
+                errormsg = error.message
+                console.log(error);
             }
         } else {
             try {
