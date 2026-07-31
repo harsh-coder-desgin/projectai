@@ -32,7 +32,7 @@ const userDataSchema = new mongoose.Schema(
               enum: ["user", "ai"],
               required: true,
             },
-
+            // no need 
             textuser: String,
 
             content: {
@@ -126,6 +126,8 @@ const userDataSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+// userDataSchema.index({ userId: 1 })
 
 const UserData = mongoose.model("UserData", userDataSchema);
 export default UserData;
