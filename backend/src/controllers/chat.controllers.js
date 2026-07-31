@@ -3,22 +3,12 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import { ApiError } from "../utils/ApiError.js"
 import User from "../models/User.model.js"
 import UserData from "../models/UserData.model.js"
-import { System_prompt_AI_security } from "../utils/System prompt.js"
+import { System_prompt_AI_check } from "../utils/System prompt.js"
 import AItool from "./Aitool.js"
 import jwt from "jsonwebtoken";
 
-let oldkey
-let allkeys
-if (oldkey === "A") {
-    allkeys = process.env.Gemini_API
-    oldkey = "B"
-} else {
-    allkeys = process.env.Gemini_API_2
-    oldkey = "A"
-}
-
 const ai = new GoogleGenAI({
-    apiKey: allkeys,
+    apiKey: process.env.Gemini_API,
 });
 
 async function check(userinput = '') {
@@ -32,7 +22,7 @@ async function check(userinput = '') {
                 }
             ],
             config: {
-                systemInstruction: System_prompt_AI_security,
+                systemInstruction: System_prompt_AI_check,
             },
         });
         const text = response.text;
@@ -166,8 +156,8 @@ const sendChat = async (req, res) => {
     const userskills = userData.tech
     const aires = await AItool(`${message} User skills:${userskills}`)
 
-    if (aires === "Error something wrong") {
-        throw new ApiError(500,"Error something wrong")
+    if (aires === false) {
+        throw new ApiError(500,"Error something wrong or your limit over")
     }
 
     if (!chatId) {
@@ -281,22 +271,22 @@ const sendChat = async (req, res) => {
 };
 
 const demoChat = async (req, res) => {
-    const { tech,message } = req.body;
+    const { message } = req.body;
 
     if (!message?.trim()) {
         throw new ApiError(400, "Message is required");
     }
 
-    const checking = await check(message)
+    // const checking = await check(message)
 
-    if (checking === "false") {
-       throw new ApiError(500,"Error something wrong")
-    }
+    // if (checking === "false") {
+    //    throw new ApiError(500,"Error something wrong")
+    // }
 
-    const aires = await AItool(`${message} User skills:${tech}`)
+    const aires = await AItool(message)
 
     if (aires === false) {
-       throw new ApiError(500,"Error something wrong")
+        throw new ApiError(500,"Error something wrong or your limit over")
     }
 
     return res.status(200).json(
