@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { skillCategories, AddOtherSkills, SkillForm } from "../Componets/index.js";
+import chat from "../auth/chat.js"
 
 function TechForm() {
   const navigate = useNavigate();
@@ -39,32 +40,29 @@ function TechForm() {
       };
     });
   };
-  
-  const handleNext = () => {
-    setStep((prev) => prev + 1);
-  };
 
-  const handlePrevious = () => {
-    setStep((prev) => prev - 1);
-  };
-
-  const handleSubmit = () => {
-    setShowExtraForm(true);
-  };
-
-  const handleFinalSubmit = (extraSkills) => {
+  const handleFinalSubmit = async (extraSkills) => {
     const finalData = {
       ...formData,
       other: [...formData.other, ...extraSkills],
     };
-    localStorage.setItem("techSkills", JSON.stringify(finalData));
-    navigate("/chat")
+    // here call save tech api
+    try {
+      const techData = JSON.stringify(finalData)
+      const saveskills = await chat.saveTech({ tech: techData })
+      console.log(saveskills);
+      if (saveskills) {
+        localStorage.setItem("techSkills", techData); 
+        navigate("/chat")
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   if (showExtraForm) {
     return (
       <AddOtherSkills
-        existingSkills={formData.other}
         onBack={() => setShowExtraForm(false)}
         onSubmit={handleFinalSubmit}
       />
@@ -108,9 +106,9 @@ function TechForm() {
         showPrevious={step > 0}
         showNext={step < skillCategories.length - 1}
         showSubmit={step === skillCategories.length - 1}
-        onNext={handleNext}
-        onPrevious={handlePrevious}
-        onSubmit={handleSubmit}
+        onNext={()=> setStep((prev) => prev + 1)}
+        onPrevious={()=> setStep((prev) => prev - 1)}
+        onSubmit={()=> setShowExtraForm(true)}
         currentIcon={currentForm.icon}
         step={step}
         totalSteps={skillCategories.length}

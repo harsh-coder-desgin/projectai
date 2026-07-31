@@ -6,7 +6,7 @@ import auth from "../auth/auth.js";
 import "../styles/login.css"
 
 export default function LoginForm() {
-    const { user, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -23,7 +23,7 @@ export default function LoginForm() {
             const res = await auth.login({ email: email, password: password })
             if (res) {
                 setUser({username: res.data,email: email})
-                navigate("/chat")
+                navigate("/tech")
             }
         } catch (error) {
             showToast(error.message);
@@ -62,7 +62,8 @@ export default function LoginForm() {
                                 autoComplete="email"
                                 value={email}
                                 maxLength={40}
-                                onChange={(e) => setEmail(e.target.value)}/>
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
                         </div>
                     </div>
 
@@ -76,7 +77,8 @@ export default function LoginForm() {
                                 autoComplete="current-password"
                                 value={password}
                                 maxLength={8}
-                                onChange={(e) => setPassword(e.target.value)}/>
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
                         </div>
                     </div>
 

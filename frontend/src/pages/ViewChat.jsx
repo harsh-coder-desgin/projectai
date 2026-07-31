@@ -7,7 +7,7 @@ import chat from '../auth/chat'
 
 function ViewChat() {
     const { id } = useParams();
-    const { user, setUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [oldchats, setoldChats] = useState([]);
     const [errorpage, seterrorpage] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -16,7 +16,6 @@ function ViewChat() {
         chat.getOneChat(id).then((data) => {
             setoldChats(data.data)
         }).catch((error) => {
-            console.log(error.message);
             if (error.message) {
                 seterrorpage(true)
             }            
@@ -31,8 +30,8 @@ function ViewChat() {
 
     return (
         <>
-        {errorpage ? <>{user.username.length === 0 && <Navbar/>} <ChatNotFound/> </>:   
-         <> {oldchats?.length > 0 ? <Chat olddata={oldchats ? oldchats : []} chatid={id}/> : <Chat/>}</>} 
+        {errorpage ? <> { user.username.length === 0 && <Navbar/> } <ChatNotFound/> </> :   
+        <> {oldchats?.length > 0 ? <Chat olddata={oldchats ? oldchats : []} chatid={id}/> : <Chat/>} </>} 
         </>
     )
 }

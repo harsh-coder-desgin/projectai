@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect,useContext } from "react";
-import { MessageBubble, TypingMessage, Icon, Button, MainChat, Navbar } from "../Componets/index.js"
+import { MessageBubble, TypingMessage, MainChat, Navbar } from "../Componets/index.js"
 import { UserContext } from "../Context/UserContext.jsx";
 import "../styles/Chat.css"
 
-export default function Chat({ olddata, chatid }) {
+const Chat = ({ olddata, chatid }) => {
   const messagesEndRef = useRef(null);
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [messages, setMessages] = useState(olddata || []);
   const [isTyping, setIsTyping] = useState(false);
 
@@ -29,15 +29,14 @@ export default function Chat({ olddata, chatid }) {
           <div className="messages-area">
             {messages.length !== 0 && (
               <div className="messages-inner">
+                {/* if message change in useeffect then re-render only messagees */}
                 {messages.map((msg, index) => (
                   <div key={index}>
                     <MessageBubble msg={msg} />
                   </div>
                 ))}
                 {isTyping && (
-                  <TypingMessage
-                    appName="AI Project"
-                  />
+                  <TypingMessage/>
                 )}
                 <div ref={messagesEndRef} />
               </div>
@@ -55,3 +54,4 @@ export default function Chat({ olddata, chatid }) {
     </>
   );
 }
+export default Chat;

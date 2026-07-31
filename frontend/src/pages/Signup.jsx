@@ -6,7 +6,7 @@ import auth from "../auth/auth.js";
 import "../styles/login.css"
 
 export default function SignupForm() {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -25,7 +25,7 @@ export default function SignupForm() {
       const res = await auth.register({ username: username, email: email, password: password })      
       if (res) {
         setUser({ username: username, email: email })
-        navigate("/chat")
+        navigate("/tech")
       }
     } catch (error) {
       showToast(error.message);
@@ -64,7 +64,8 @@ export default function SignupForm() {
                 placeholder="john_doe"
                 value={username}
                 maxLength={20}
-                onChange={(e) => setUsername(e.target.value)}/>
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </div>
           </div>
 
@@ -78,7 +79,8 @@ export default function SignupForm() {
                 placeholder="you@example.com"
                 value={email}
                 maxLength={40}
-                onChange={(e) => setEmail(e.target.value)}/>
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
           </div>
 
@@ -92,7 +94,8 @@ export default function SignupForm() {
                 placeholder="••••••••"
                 value={password}
                 maxLength={8}
-                onChange={(e) => setPassword(e.target.value)}/>
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
           </div>
 
