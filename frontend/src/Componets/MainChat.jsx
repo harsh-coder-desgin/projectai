@@ -1,19 +1,9 @@
-import { useState, useRef , useContext} from "react";
+import { useState, useRef, useContext} from "react";
 import { WelcomeScreen, ChatInput, Icon, Button } from "./index.js"
 import { UserContext } from "../Context/UserContext.jsx";
 import { useLocation ,useNavigate } from "react-router-dom";
 import chat from "../auth/chat.js"
 import "../styles/Chat.css"
-
-function TypingIndicator() {
-    return (
-        <div className="typing-indicator">
-            <div className="typing-dot" />
-            <div className="typing-dot" />
-            <div className="typing-dot" />
-        </div>
-    );
-}
 
 const SUGGESTIONS = [
   {
@@ -34,64 +24,66 @@ const SUGGESTIONS = [
   }
 ];
 
-function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, setIsTyping, welcome,chatid }) {
+const MainChat = ({ Typing, setMessages, setIsTyping, welcome,chatid }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const textareaRef = useRef(null);
-    const { user, setUser,chatdata,setchatdata,skills,setskills } = useContext(UserContext);
+    const { user,setchatdata } = useContext(UserContext);
     const [input, setInput] = useState("");
 
     const sendMessage = async () => {
         setInput("");
         setIsTyping(true);
-        const delay = 1000 + Math.random() * 1200;
+        const delay = 1000 + Math.random() * 1200;        
         const text = input.trim();
         const userMsg = { id: Date.now(), role: "user", content:{ text:text } };
         setMessages((prev) => [...prev, userMsg]);
         if (textareaRef.current) textareaRef.current.style.height = "auto";    
-
         if (!text || Typing) return;
-        const data = localStorage.getItem("techSkills")
-        if (data && user.username.length !== 0 && skills) {
-            try {
-                const saveskills = await chat.saveTech({ tech: data })
-                console.log(saveskills);
-                setskills(false)
-            } catch (error) {
-                if (error.message != "internal server error") {
-                    setskills(false)
-                }
-                console.log(error.message);
-            }
-        }
+        // const data = localStorage.getItem("techSkills")
+        // if (data && user.username.length !== 0 && skills) {
+        //     try {
+        //         const saveskills = await chat.saveTech({ tech: data })
+        //         console.log(saveskills);
+        //         setskills(false)
+        //     } catch (error) {
+        //         if (error.message != "internal server error") {
+        //             setskills(false)
+        //         }
+        //         console.log(error.message);
+        //     }
+        // }
         let res;
-        let errormsg;
+        // let errormsg;
         if (user.username.length === 0) {
             try {
-                res = await chat.demoChat({ tech: data, message: text })
-                console.log(res);
+                res = await chat.demoChat({ message: text })
+                // res = await chat.demoChat({ tech: data, message: text })
+                // console.log(res);
             } catch (error) {
-                errormsg = error.message
+                // errormsg = error.message
                 console.log(error);
             }
         } else {
             try {
                 res = await chat.sendChat({ message: text, chatId: chatid || null })
-                console.log(res);
+                // console.log(res);
             } catch (error) {
-                errormsg = error.message
-                console.log(error.message);
+                // errormsg = error.message
+                console.log(error);
             }
             if (res) {
                 if (location.pathname === "/chat") {
-                    setchatdata({chatId:res.data.chatId,title: text,_id: res.data._id})
+                    setchatdata({ chatId:res.data.chatId,title: text,
+                        // _id: res.data._id 
+                    })
                     navigate(`/chat/${res.data.chatId}`)
                 }
             }
         }    
 
         setTimeout(() => {
-            setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", content: res?.data?.aires || errormsg || "Error something wrong" }]);
+            setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", content: res?.data?.aires || "Error something wrong" }]);
             setIsTyping(false);
         }, delay);
     };
@@ -111,8 +103,7 @@ function MainChat({ activeChat, setActiveChat, setChats, Typing, setMessages, se
     return (
         <>
             {welcome === 0 && (
-                <div
-                    style={{
+                <div style={{
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",

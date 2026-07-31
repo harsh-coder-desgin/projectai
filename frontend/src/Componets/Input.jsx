@@ -1,11 +1,4 @@
-function Input({
-  value,
-  onChange,
-  placeholder,
-  type = "text",
-  maxLength,
-  minLength,
-}) {
+const Input = ({ value, onChange, placeholder, type = "text", maxLength, minLength }) => {
   return (
     <input
       type={type}

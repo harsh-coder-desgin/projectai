@@ -1,7 +1,7 @@
 import { Button } from "./index.js"
 import "../styles/Form.css"
 
-function UserProfile({ username,onLogout }) {
+const UserProfile = ({ username,onLogout }) => {
   return (
     <div className="sidebar-footer">
       <div className="user-profile">
@@ -15,11 +15,8 @@ function UserProfile({ username,onLogout }) {
           </div>
         </div>
 
-       {username !== "User" ? <Button
-          className="logout-btn"
-          onClick={onLogout}>
-          Logout
-        </Button> : null}
+       {username !== "User" ? <Button className="logout-btn" onClick={onLogout}> Logout </Button> : null}
+
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../Componets/index.js"
 
-function Navbar() {  
+const Navbar = () => {  
   const navigate = useNavigate();
   return (
     <div className="topbar">

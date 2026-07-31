@@ -1,17 +1,7 @@
 import { Button } from "./index.js"
 import "../styles/Chat.css"
 
-function ChatInput({
-  input,
-  setInput,
-  sendMessage,
-  isTyping,
-  APP_NAME,
-  textareaRef,
-  // autoResize,
-  handleKeyDown,
-  Icon,
-}) {
+const ChatInput = ({ input, setInput, sendMessage, isTyping, textareaRef, handleKeyDown, Icon }) => {
   return (
     <div className="input-area">
       <div className="input-inner">

@@ -1,6 +1,6 @@
 import { Button } from "./index.js"
 
-function WelcomeScreen({ suggestions,handleSuggestion }) {
+const WelcomeScreen = ({ suggestions,handleSuggestion }) => {
   return (
     <div className="welcome-screen">
       <div className="welcome-logo">

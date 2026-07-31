@@ -1,4 +1,4 @@
-function TypingMessage() {
+const TypingMessage = () => {
   return (
     <div className="message-row ai">
       <div className="msg-avatar ai">

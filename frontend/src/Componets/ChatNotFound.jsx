@@ -1,6 +1,6 @@
 import "../styles/notpage.css"
 
-function ChatNotFound() {
+const ChatNotFound = () => {
   return (
     <div className="chat-error-page">
       <h1 className="chat-error-title">Chat not found</h1>

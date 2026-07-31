@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Input, skillCategories } from "./index.js"
 
-function AddOtherSkills({ onBack, onSubmit }) {
+const AddOtherSkills = ({ onBack, onSubmit }) => {
   const [input, setInput] = useState("");
   const [skills, setSkills] = useState([]);
   const [error, setError] = useState("");

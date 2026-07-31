@@ -1,15 +1,14 @@
-import { useState } from "react";
+// import { useState } from "react";
 
-function MessageBubble(msg) {
+const MessageBubble = (msg) => {
   // console.log(msg);
+  // const [copied, setCopied] = useState(false);
 
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(msg.text).catch(() => { });
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
+  // const handleCopy = () => {
+  //   navigator.clipboard.writeText(msg.text).catch(() => { });
+  //   setCopied(true);
+  //   setTimeout(() => setCopied(false), 1500);
+  // };
 
   const renderText = (text) => {
     console.log(text.msg.content, "d");
@@ -40,10 +39,7 @@ function MessageBubble(msg) {
 
   return (
     <div className={`message-row ${msg.msg.role}`}>
-      <div
-        className={`msg-avatar ${msg.msg.role === "ai" ? "ai" : "user-av"
-          }`}
-      >
+      <div className={`msg-avatar ${msg.msg.role === "ai" ? "ai" : "user-av"}`}>
         {msg.msg.role === "ai" ? "AI" : "U"}
       </div>
 
@@ -71,8 +67,7 @@ function MessageBubble(msg) {
                       borderRadius: "10px",
                       marginBottom: "20px",
                       color: "#d1d5db",
-                    }}
-                  >
+                    }}>
                     {aiData.content.text}
                   </p>
                 )}
@@ -84,8 +79,7 @@ function MessageBubble(msg) {
                       fontWeight: "700",
                       marginBottom: "10px",
                       color: "#fff",
-                    }}
-                  >
+                    }}>
                     {aiData.content.project_title}
                   </h2>
                 )}
@@ -96,8 +90,7 @@ function MessageBubble(msg) {
                       fontSize: "16px",
                       color: "#cbd5e1",
                       marginBottom: "25px",
-                    }}
-                  >
+                    }}>
                     {aiData.content.project_description}
                   </p>
                 )}
@@ -110,8 +103,7 @@ function MessageBubble(msg) {
                       style={{
                         borderLeft: "5px solid #3b82f6",
                         paddingLeft: "10px",
-                      }}
-                    >
+                      }}>
                       🎯Features
                     </h3>
 
@@ -133,8 +125,7 @@ function MessageBubble(msg) {
                       style={{
                         borderLeft: "5px solid #ef4444",
                         paddingLeft: "10px",
-                      }}
-                    >
+                      }}>
                       🔒 Security Considerations
                     </h3>
 
@@ -156,8 +147,7 @@ function MessageBubble(msg) {
                       style={{
                         borderLeft: "5px solid orange",
                         paddingLeft: "10px",
-                      }}
-                    >
+                      }}>
                       📑 Main Features
                     </h3>
 
@@ -177,8 +167,7 @@ function MessageBubble(msg) {
                       style={{
                         borderLeft: "5px solid #8b5cf6",
                         paddingLeft: "10px",
-                      }}
-                    >
+                      }}>
                       📋 Detailed Features
                     </h3>
 
@@ -190,14 +179,12 @@ function MessageBubble(msg) {
                           padding: "15px",
                           borderRadius: "10px",
                           marginBottom: "15px",
-                        }}
-                      >
+                        }}>
                         <h4
                           style={{
                             marginBottom: "10px",
                             color: "#60a5fa",
-                          }}
-                        >
+                          }}>
                           {value.group}
                         </h4>
 
@@ -227,8 +214,7 @@ function MessageBubble(msg) {
                           borderLeft: "4px solid #4f46e5",
                           paddingLeft: "10px",
                           marginBottom: "12px",
-                        }}
-                      >
+                        }}>
                         💻 Technology Stack
                       </h3>
 

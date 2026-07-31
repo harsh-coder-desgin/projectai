@@ -1,7 +1,7 @@
 import { Button } from "./index.js"
 import "../styles/Form.css"
 
-function SkillForm({
+const SkillForm = ({
   title,
   desc,
   skills,
@@ -16,7 +16,7 @@ function SkillForm({
   currentIcon,
   step,
   totalSteps,
-}) {
+}) => {
   return (
     <div className="form-wrap">
 

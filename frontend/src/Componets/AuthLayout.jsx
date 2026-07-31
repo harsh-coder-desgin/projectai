@@ -5,7 +5,7 @@ import auth from "../auth/auth.js"
 
 function AuthLayout({ children }) {
   const location = useLocation();
-  const { setUser, user } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const techData = localStorage.getItem("techSkills");
@@ -41,21 +41,29 @@ function AuthLayout({ children }) {
     return null;
   }
 
-  if (!techData && ["/login", "/signup"].includes(location.pathname)) {
-    return <Navigate to="/tech" replace />;
+  // if (!techData && ["/login", "/signup"].includes(location.pathname)) {
+  //   return <Navigate to="/tech" replace />;
+  // }
+
+  if (!isLoggedIn && !techData && location.pathname === "/tech") {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (isLoggedIn && techData && location.pathname === "/tech") {
+    return <Navigate to="/chat" replace />;
   }
 
   if (!isLoggedIn && techData && location.pathname === "/tech") {
     return <Navigate to="/login" replace />;
   }
 
-  if (!isLoggedIn && !techData && (location.pathname === "/chat" || location.pathname.startsWith("/chat/"))) {
-    return <Navigate to="/tech" replace />;
-  }
+  // if (!isLoggedIn && !techData && (location.pathname === "/chat" || location.pathname.startsWith("/chat/"))) {
+  //   return <Navigate to="/tech" replace />;
+  // }
   
   if (
     isLoggedIn &&
-    ["/tech", "/login", "/signup"].includes(location.pathname)
+    ["/login", "/signup"].includes(location.pathname)
   ) {
     return <Navigate to="/chat" replace />;
   }

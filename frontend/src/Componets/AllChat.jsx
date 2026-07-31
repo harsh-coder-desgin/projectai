@@ -1,6 +1,6 @@
 import { useState, useEffect,useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { RecentChatItem, UserProfile, Icon, Button,Navbar } from "../Componets/index.js"
+import { RecentChatItem, UserProfile, Icon, Button } from "../Componets/index.js"
 import { UserContext } from "../Context/UserContext.jsx";
 import chat from "../auth/chat.js"
 import auth from "../auth/auth.js"
@@ -13,10 +13,10 @@ function AllChat() {
     const [activeChat, setActiveChat] = useState(null);
     const [chats, setChats] = useState([]);
 
-    const startNewChat = () => {
-        setActiveChat(null);
-        navigate("/chat")
-    };
+    // const startNewChat = () => {
+    //     setActiveChat(null);
+    //     navigate("/chat")
+    // };
 
     const handleLogout = async () => {
         try {
@@ -52,7 +52,7 @@ function AllChat() {
             <Button className="icon-btn" onClick={() => setSidebarOpen(true)} title="Close sidebar">
                 <Icon.MenuOpen />
             </Button>
-            </div> }
+            </div>}
             <div className={`sidebar ${sidebarOpen ? "" : "collapsed"}`}>
                 <div className="sidebar-header">
                     <div className="sidebar-logo">
@@ -63,13 +63,14 @@ function AllChat() {
                     </Button>
                 </div>
 
-                <Button className="new-chat-btn" onClick={startNewChat}>
+                <Button className="new-chat-btn" onClick={()=>{ setActiveChat(null),navigate("/chat") }}>
                     <Icon.Plus /> New chat
                 </Button>
 
                 <div className="sidebar-section-label">Recent</div>
 
                 <div className="sidebar-chats">
+                    {/* when chatdata come only this comonet should re-render */}
                     {
                         chats?.map((chat,index) => (
                             <RecentChatItem
