@@ -1,4 +1,4 @@
-import { useState, useRef, useContext} from "react";
+import React, { useState, useRef, useContext} from "react";
 import { WelcomeScreen, ChatInput, Icon, Button } from "./index.js"
 import { UserContext } from "../Context/UserContext.jsx";
 import { useLocation ,useNavigate } from "react-router-dom";
@@ -24,7 +24,8 @@ const SUGGESTIONS = [
   }
 ];
 
-const MainChat = ({ Typing, setMessages, setIsTyping, welcome,chatid }) => {
+const MainChat = React.memo(function MainChat({ Typing, setMessages, setIsTyping, welcome,chatid }){
+
     const navigate = useNavigate();
     const location = useLocation();
     const textareaRef = useRef(null);
@@ -43,18 +44,18 @@ const MainChat = ({ Typing, setMessages, setIsTyping, welcome,chatid }) => {
         // const data = localStorage.getItem("techSkills")
         // if (data && user.username.length !== 0 && skills) {
         //     try {
-        //         const saveskills = await chat.saveTech({ tech: data })
-        //         console.log(saveskills);
-        //         setskills(false)
-        //     } catch (error) {
-        //         if (error.message != "internal server error") {
-        //             setskills(false)
-        //         }
-        //         console.log(error.message);
-        //     }
-        // }
-        let res;
-        // let errormsg;
+            //         const saveskills = await chat.saveTech({ tech: data })
+            //         console.log(saveskills);
+            //         setskills(false)
+            //     } catch (error) {
+                //         if (error.message != "internal server error") {
+                    //             setskills(false)
+                    //         }
+                    //         console.log(error.message);
+                    //     }
+                    // }
+                    let res;
+                    // let errormsg;
         if (user.username.length === 0) {
             try {
                 res = await chat.demoChat({ message: text })
@@ -81,20 +82,20 @@ const MainChat = ({ Typing, setMessages, setIsTyping, welcome,chatid }) => {
                 }
             }
         }    
-
+        
         setTimeout(() => {
             setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", content: res?.data?.aires || "Error something wrong" }]);
             setIsTyping(false);
         }, delay);
     };
-
+    
     const handleKeyDown = (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             sendMessage();
         }
     };
-
+    
     const handleSuggestion = (title) => {
         setInput(title);
         textareaRef.current?.focus();
@@ -104,7 +105,7 @@ const MainChat = ({ Typing, setMessages, setIsTyping, welcome,chatid }) => {
         <>
             {welcome === 0 && (
                 <div style={{
-                        display: "flex",
+                    display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
                         marginBottom: "150px",
@@ -134,6 +135,6 @@ const MainChat = ({ Typing, setMessages, setIsTyping, welcome,chatid }) => {
             />
         </>
     )
-}
+}) 
 
 export default MainChat

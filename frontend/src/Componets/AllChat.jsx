@@ -18,6 +18,7 @@ function AllChat() {
     //     navigate("/chat")
     // };
 
+    // {useCallback no need to re-render}
     const handleLogout = async () => {
         try {
             const res = await auth.logout()
