@@ -1,4 +1,4 @@
-import { useState, useEffect,useContext } from "react";
+import { useState, useEffect,useContext, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { RecentChatItem, UserProfile, Icon, Button } from "../Componets/index.js"
 import { UserContext } from "../Context/UserContext.jsx";
@@ -18,8 +18,7 @@ function AllChat() {
     //     navigate("/chat")
     // };
 
-    // {useCallback no need to re-render}
-    const handleLogout = async () => {
+    const handleLogout = useCallback( async() => {
         try {
             const res = await auth.logout()
             setUser({username: "",email: ""});
@@ -27,7 +26,7 @@ function AllChat() {
         } catch (error) {
             console.log(error);
         }
-    }
+    },[]);
 
     const loadChat = (id) => {    
         setActiveChat(id);

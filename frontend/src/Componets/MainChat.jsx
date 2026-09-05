@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext} from "react";
+import React, { useState, useRef, useContext, useCallback} from "react";
 import { WelcomeScreen, ChatInput, Icon, Button } from "./index.js"
 import { UserContext } from "../Context/UserContext.jsx";
 import { useLocation ,useNavigate } from "react-router-dom";
@@ -25,7 +25,6 @@ const SUGGESTIONS = [
 ];
 
 const MainChat = React.memo(function MainChat({ Typing, setMessages, setIsTyping, welcome,chatid }){
-
     const navigate = useNavigate();
     const location = useLocation();
     const textareaRef = useRef(null);
@@ -96,11 +95,11 @@ const MainChat = React.memo(function MainChat({ Typing, setMessages, setIsTyping
         }
     };
     
-    const handleSuggestion = (title) => {
+    const handleSuggestion = useCallback((title) => {
         setInput(title);
         textareaRef.current?.focus();
-    };
-
+    }, []);
+    
     return (
         <>
             {welcome === 0 && (
