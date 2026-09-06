@@ -30,7 +30,7 @@ const MainChat = React.memo(function MainChat({ Typing, setMessages, setIsTyping
     const textareaRef = useRef(null);
     const { user,setchatdata } = useContext(UserContext);
     const [input, setInput] = useState("");
-
+    
     const sendMessage = async () => {
         setInput("");
         setIsTyping(true);
@@ -88,10 +88,12 @@ const MainChat = React.memo(function MainChat({ Typing, setMessages, setIsTyping
         }, delay);
     };
     
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e) => {        
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
-            sendMessage();
+            if (!input.trim() === false && !Typing) {
+                sendMessage();
+            }
         }
     };
     
