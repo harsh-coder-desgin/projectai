@@ -2,6 +2,7 @@ import { useState,useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../Componets/index.js";
 import { UserContext } from "../Context/UserContext.jsx";
+import { Link } from "react-router-dom";
 import auth from "../auth/auth.js";
 import "../styles/login.css"
 
@@ -108,7 +109,7 @@ export default function SignupForm() {
 
           <div className="login-signup-row">
             Already have an account?{" "}
-            <a href="/login">Sign in</a>
+            <Link to="/login">Sign in</Link>
           </div>
         </div>
       </div>

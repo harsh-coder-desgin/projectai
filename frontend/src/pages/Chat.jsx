@@ -13,11 +13,13 @@ const Chat = ({ olddata, chatid }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  useEffect(() => {
-    if (olddata && olddata.length > 0) {
-      setMessages(olddata);
-    }
-  }, [olddata])
+  // useEffect(() => {
+  //   if (olddata && olddata.length > 0) {
+  //     setMessages(olddata);
+  //     console.log("Loding chat");
+      
+  //   }
+  // }, [olddata])
 
   const isMobile = () => window.innerWidth <= 640;
 
@@ -30,7 +32,7 @@ const Chat = ({ olddata, chatid }) => {
             {messages.length !== 0 && (
               <div className="messages-inner">
                 {/* if message change in useeffect then re-render only messagees */}
-                {messages.map((msg, index) => (
+                {messages?.map((msg, index) => (
                   <div key={index}>
                     <MessageBubble msg={msg} />
                   </div>

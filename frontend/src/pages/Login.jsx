@@ -2,6 +2,7 @@ import { useState,useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../Componets/index.js"
 import { UserContext } from "../Context/UserContext.jsx";
+import { Link } from "react-router-dom";
 import auth from "../auth/auth.js";
 import "../styles/login.css"
 
@@ -89,7 +90,7 @@ export default function LoginForm() {
                     <div className="login-divider">or</div>
 
                     <div className="login-signup-row">
-                        Don't have an account? <a href="/signup">Create one</a>
+                        Don't have an account? <Link to="/signup">Create one</Link>
                     </div>
 
                 </div>

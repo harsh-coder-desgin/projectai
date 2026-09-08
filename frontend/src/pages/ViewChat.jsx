@@ -25,9 +25,10 @@ function ViewChat() {
     }, id ? [id] : [])
 
     if (loading) {
+        // here lazy loading of  ChatNotFound and navbar
         return null;
     }
-
+        
     return (
         <>
         {errorpage ? <> { user.username.length === 0 && <Navbar/> } <ChatNotFound/> </> :   

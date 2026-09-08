@@ -1,6 +1,8 @@
 // import { useState } from "react";
 
 const MessageBubble = (msg) => {
+  // console.log("display chat");
+  
   // console.log(msg);
   // const [copied, setCopied] = useState(false);
 
@@ -11,7 +13,7 @@ const MessageBubble = (msg) => {
   // };
 
   const renderText = (text) => {
-    console.log(text.msg.content, "d");
+    // console.log(text.msg.content, "d");
     // console.log(text);
     // const parts = text?.split(/(```[\s\S]*?```)/g);
     return text.msg.content.text || text
@@ -34,7 +36,7 @@ const MessageBubble = (msg) => {
     }
   }
 
-  console.log(aiData);
+  // console.log(aiData);
   
 
   return (

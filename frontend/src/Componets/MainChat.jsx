@@ -118,11 +118,11 @@ const MainChat = React.memo(function MainChat({ Typing, setMessages, setIsTyping
                 </div>
             )}
 
-            {Typing && (
+            {/* {Typing && (
                 <Button className="stop-btn" onClick={() => setIsTyping(false)}>
                     <Icon.Stop /> Stop generating
                 </Button>
-            )}
+            )} */}
 
             <ChatInput
                 input={input}
