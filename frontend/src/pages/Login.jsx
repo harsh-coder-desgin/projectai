@@ -24,7 +24,7 @@ export default function LoginForm() {
             const res = await auth.login({ email: email, password: password })
             if (res) {
                 setUser({username: res.data,email: email})
-                navigate("/tech")
+                navigate("/chat")
             }
         } catch (error) {
             showToast(error.message);

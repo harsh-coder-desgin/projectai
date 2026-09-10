@@ -205,10 +205,10 @@ const MessageBubble = (msg) => {
                 {
                   aiData?.content?.technology_stack &&
                   (
-                    (aiData?.content?.technology_stack?.frontend.length > 0 ||
-                      aiData?.content?.technology_stack?.backend.length > 0 ||
-                      aiData?.content?.technology_stack?.database.length > 0 ||
-                      aiData?.content?.technology_stack?.other.length > 0)
+                    (aiData?.content?.technology_stack?.frontend ||
+                      aiData?.content?.technology_stack?.backend ||
+                      aiData?.content?.technology_stack?.database ||
+                      aiData?.content?.technology_stack?.other)
                     &&
                     <div style={{ marginTop: "25px" }}>
                       <h3

@@ -142,9 +142,21 @@ const sendChat = async (req, res) => {
     const userData = await UserData.findOne({
         userId: req.userId,
     });
-
+    // console.log(userData,req.userId);
     if (!userData) {
-        throw new ApiError(404, "User data not found");
+    await UserData.create({
+        userId: req.userId,
+
+        tech: {
+        frontend: [],
+        backend: [],
+        database: [],
+        other: [],
+        },
+
+        chats: [],
+        chatHistory: [],
+    });
     }
 
     const checking = await check(message)
@@ -245,10 +257,10 @@ const sendChat = async (req, res) => {
             key_features: aires?.key_features,
             security_considerations: aires?.security_considerations,
             technology_stack: {
-                frontend: aires?.technology_stack.frontend,
-                backend: aires?.technology_stack.backend,
-                database: aires?.technology_stack.database,
-                other: aires?.technology_stack.other,
+                frontend: aires?.technology_stack?.frontend,
+                backend: aires?.technology_stack?.backend,
+                database: aires?.technology_stack?.database,
+                other: aires?.technology_stack?.other,
             },
             feature_group: aires?.feature_group,
             features: aires?.features,
