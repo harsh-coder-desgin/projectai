@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import auth from "../auth/auth.js";
 import "../styles/login.css"
 
-export default function SignupForm() {
+function SignupForm() {
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -108,11 +108,13 @@ export default function SignupForm() {
           <div className="login-divider">or</div>
 
           <div className="login-signup-row">
-            Already have an account?{" "}
-            <Link to="/login">Sign in</Link>
+                       <a href="/login">Sign in</a>
+
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+export default SignupForm;

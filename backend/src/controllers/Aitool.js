@@ -198,7 +198,7 @@ import { system_prompt_AI_project_idea_generator, system_prompt_AI_project_detai
 
 const keys = [process.env.Gemini_API, process.env.Gemini_API_2];
 const random = Math.floor(Math.random() * 2) + 1;
-const ai = new GoogleGenAI({ apiKey: keys[1] });
+const ai = new GoogleGenAI({ apiKey: keys[0] });
 
 async function project_idea_generator(userinput = '') {
     try {
@@ -271,23 +271,17 @@ async function AItool(userinput = '') {
     const ans4 = await project_checker(userinput)
     const clean = ans4
         .replace(/^```json\s*/, "")
-        .replace(/\s*```$/, "");
-        console.log(clean);
-        
+        .replace(/\s*```$/, "");        
     const getvaleus = JSON.parse(clean)
-    console.log(getvaleus);
     if (getvaleus.return === true) {
         const ans3 = await project_idea_generator(userinput)
         if (ans3) {
             const ans34 = await project_detail_maker(ans3)
-            console.log(JSON.parse(ans34.replace(/^```json\s*/, "")
-        .replace(/\s*```$/, "")));
-            return JSON.parse(ans34.replace(/^```json\s*/, "")
-        .replace(/\s*```$/, ""));
+            return JSON.parse(ans34.replace(/^```json\s*/, "").replace(/\s*```$/, ""));
         }
     } else if (getvaleus.return === false) {
-        console.log(getvaleus.text);
         return { text:getvaleus.text }
     }
 }
+
 export default AItool;

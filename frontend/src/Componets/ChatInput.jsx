@@ -15,7 +15,6 @@ const ChatInput = ({ input, setInput, sendMessage, isTyping, textareaRef, handle
               value={input}
               onChange={(e) => {
                 setInput(e.target.value);
-                // autoResize();
               }}
               onKeyDown={handleKeyDown}
             />

@@ -142,7 +142,7 @@ const sendChat = async (req, res) => {
     const userData = await UserData.findOne({
         userId: req.userId,
     });
-    // console.log(userData,req.userId);
+
     if (!userData) {
     await UserData.create({
         userId: req.userId,
@@ -159,11 +159,11 @@ const sendChat = async (req, res) => {
     });
     }
 
-    const checking = await check(message)
+    // const checking = await check(message)
 
-    if (checking === "false") {
-        throw new ApiError(500,"Error something wrong")
-    }
+    // if (checking === "false") {
+    //     throw new ApiError(500,"Error something wrong")
+    // }
 
     const userskills = userData.tech
     const aires = await AItool(`${message} User skills:${userskills}`)
@@ -203,10 +203,10 @@ const sendChat = async (req, res) => {
                         key_features: aires?.key_features,
                         security_considerations: aires?.security_considerations,
                         technology_stack: {
-                            frontend: aires?.technology_stack.frontend,
-                            backend: aires?.technology_stack.backend,
-                            database: aires?.technology_stack.database,
-                            other: aires?.technology_stack.other,
+                            frontend: aires?.technology_stack?.frontend,
+                            backend: aires?.technology_stack?.backend,
+                            database: aires?.technology_stack?.database,
+                            other: aires?.technology_stack?.other,
                         },
                         feature_group: aires?.feature_group,
                         features: aires?.features,

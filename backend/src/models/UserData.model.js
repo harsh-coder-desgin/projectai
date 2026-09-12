@@ -32,8 +32,6 @@ const userDataSchema = new mongoose.Schema(
               enum: ["user", "ai"],
               required: true,
             },
-            // no need 
-            textuser: String,
 
             content: {
               project_title: {

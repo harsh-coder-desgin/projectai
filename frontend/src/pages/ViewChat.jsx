@@ -11,8 +11,8 @@ function ViewChat() {
     const [oldchats, setoldChats] = useState([]);
     const [errorpage, seterrorpage] = useState(false);
     const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
+    
+    useEffect(() => {        
         chat.getOneChat(id).then((data) => {
             setoldChats(data.data)
         }).catch((error) => {

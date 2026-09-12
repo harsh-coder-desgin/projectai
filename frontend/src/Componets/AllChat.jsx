@@ -13,10 +13,10 @@ function AllChat() {
     const [activeChat, setActiveChat] = useState(null);
     const [chats, setChats] = useState([]);
 
-    // const startNewChat = () => {
-    //     setActiveChat(null);
-    //     navigate("/chat")
-    // };
+    const startNewChat = () => {
+        setActiveChat(null);
+        navigate("/chat")
+    };
 
     const handleLogout = useCallback( async() => {
         try {
@@ -63,7 +63,7 @@ function AllChat() {
                     </Button>
                 </div>
 
-                <Button className="new-chat-btn" onClick={()=>{ setActiveChat(null),navigate("/chat") }}>
+                <Button className="new-chat-btn" onClick={startNewChat}>
                     <Icon.Plus /> New chat
                 </Button>
 

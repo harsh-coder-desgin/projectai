@@ -1,9 +1,7 @@
 // import { useState } from "react";
 
 const MessageBubble = (msg) => {
-  // console.log("display chat");
   
-  // console.log(msg);
   // const [copied, setCopied] = useState(false);
 
   // const handleCopy = () => {
@@ -13,8 +11,6 @@ const MessageBubble = (msg) => {
   // };
 
   const renderText = (text) => {
-    // console.log(text.msg.content, "d");
-    // console.log(text);
     // const parts = text?.split(/(```[\s\S]*?```)/g);
     return text.msg.content.text || text
   };
@@ -34,10 +30,7 @@ const MessageBubble = (msg) => {
       console.log(err);
       aiData = null;
     }
-  }
-
-  // console.log(aiData);
-  
+  }  
 
   return (
     <div className={`message-row ${msg.msg.role}`}>

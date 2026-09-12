@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect,useContext } from "react";
-import { MessageBubble, TypingMessage, MainChat, Navbar } from "../Componets/index.js"
+import { MessageBubble, TypingMessage, MainChat, Navbar, AllChat } from "../Componets/index.js"
 import { UserContext } from "../Context/UserContext.jsx";
 import "../styles/Chat.css"
 
-const Chat = ({ olddata, chatid }) => {
+const Chat = ({ olddata, chatid }) => {  
   const messagesEndRef = useRef(null);
   const { user } = useContext(UserContext);
   const [messages, setMessages] = useState(olddata || []);
@@ -13,13 +13,11 @@ const Chat = ({ olddata, chatid }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  // useEffect(() => {
-  //   if (olddata && olddata.length > 0) {
-  //     setMessages(olddata);
-  //     console.log("Loding chat");
-      
-  //   }
-  // }, [olddata])
+  useEffect(() => {
+    if (olddata && olddata.length > 0) {
+      setMessages(olddata);      
+    }
+  }, [olddata])
 
   const isMobile = () => window.innerWidth <= 640;
 
@@ -27,6 +25,7 @@ const Chat = ({ olddata, chatid }) => {
     <>
       <div className="chat-app">
         <main className="chat-main">
+          <AllChat/>
           {user.username.length === 0 && <Navbar />}
           <div className="messages-area">
             {messages.length !== 0 && (

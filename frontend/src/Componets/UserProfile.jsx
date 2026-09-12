@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "./index.js"
 import "../styles/Form.css"
 
-const UserProfile = React.memo(function UserProfile({ username,onLogout }){
+const UserProfile = React.memo(function ({ username, onLogout }) {
   return (
     <div className="sidebar-footer">
       <div className="user-profile">
@@ -15,10 +15,10 @@ const UserProfile = React.memo(function UserProfile({ username,onLogout }){
             {username}
           </div>
         </div>
-       {username !== "User" ? <Button className="logout-btn" onClick={onLogout}> Logout </Button> : null}
+        {username !== "User" ? <Button className="logout-btn" onClick={onLogout}> Logout </Button> : null}
       </div>
     </div>
   );
 })
-  
+
 export default UserProfile;
