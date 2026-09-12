@@ -30,7 +30,6 @@ const Chat = ({ olddata, chatid }) => {
           <div className="messages-area">
             {messages.length !== 0 && (
               <div className="messages-inner">
-                {/* if message change in useeffect then re-render only messagees */}
                 {messages?.map((msg, index) => (
                   <div key={index}>
                     <MessageBubble msg={msg} />

@@ -1,11 +1,9 @@
 import { GoogleGenAI } from "@google/genai"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { ApiError } from "../utils/ApiError.js"
-import User from "../models/User.model.js"
 import UserData from "../models/UserData.model.js"
 import { System_prompt_AI_check } from "../utils/System prompt.js"
 import AItool from "./Aitool.js"
-import jwt from "jsonwebtoken";
 
 const ai = new GoogleGenAI({
     apiKey: process.env.Gemini_API,
@@ -83,9 +81,7 @@ const saveUserTech = async (req, res) => {
 };
 
 const getAllChats = async (req, res) => {
-    const userData = await UserData.findOne({
-        userId: req.userId,
-    }).select("chatHistory")
+    const userData = await UserData.findOne({ userId: req.userId }).select("chatHistory")
 
     if (!userData) {
         throw new ApiError(404, "User data not found");
@@ -107,9 +103,7 @@ const getAllChats = async (req, res) => {
 const getOneChat = async (req, res) => {
     const { chatId } = req.params;
 
-    const userData = await UserData.findOne({
-        userId: req.userId,
-    }).select("chats");
+    const userData = await UserData.findOne({ userId: req.userId }).select("chats");
 
     if (!userData) {
         throw new ApiError(404, "User data not found");
@@ -159,11 +153,11 @@ const sendChat = async (req, res) => {
     });
     }
 
-    // const checking = await check(message)
+    const checking = await check(message)
 
-    // if (checking === "false") {
-    //     throw new ApiError(500,"Error something wrong")
-    // }
+    if (checking === "false") {
+        throw new ApiError(500,"Error something wrong")
+    }
 
     const userskills = userData.tech
     const aires = await AItool(`${message} User skills:${userskills}`)
@@ -289,11 +283,11 @@ const demoChat = async (req, res) => {
         throw new ApiError(400, "Message is required");
     }
 
-    // const checking = await check(message)
+    const checking = await check(message)
 
-    // if (checking === "false") {
-    //    throw new ApiError(500,"Error something wrong")
-    // }
+    if (checking === "false") {
+       throw new ApiError(500,"Error something wrong")
+    }
 
     const aires = await AItool(message)
 

@@ -4,66 +4,41 @@ const API = "/api/chat";
 
 const chat = {
   saveTech: async (data) => {
-    // try {
-      const res = await request(`${API}/tech`, {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      return res;
-    // } catch (error) {
-      // console.log(error);
-      // return error
-    // }
+    const res = await request(`${API}/tech`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    return res;
   },
 
   demoChat: async (data) => {
-    // try {
-      const res = await request(`${API}/chats/demo`, {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      return res;
-    // } catch (error) {
-      // console.log(error);
-      // return error
-    // }
+    const res = await request(`${API}/chats/demo`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    return res;
   },
 
   sendChat: async (data) => {
-    // try {
-      const res = await request(`${API}/chats`, {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      return res;
-    // } catch (error) {
-      // console.log(error);
-      // return error
-    // }
+    const res = await request(`${API}/chats`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    return res;
   },
 
   getAllChats: async () => {
-    // try {
-      const res = await request(`${API}/chats`, {
-        method: "GET",
-      });
-      return res;
-    // } catch (error) {
-      // console.log(error);
-      // return error.message
-    // }
+    const res = await request(`${API}/chats`, {
+      method: "GET",
+    });
+    return res;
   },
 
   getOneChat: async (chatId) => {
-    // try {
-      const res = await request(`${API}/chats/${chatId}`, {
-        method: "GET",
-      });
-      return res;
-    // } catch (error) {
-      // console.log(error);
-      // return error
-    // }
+    const res = await request(`${API}/chats/${chatId}`, {
+      method: "GET",
+    });
+    return res;
   },
 };
 

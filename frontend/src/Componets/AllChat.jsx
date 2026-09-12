@@ -70,7 +70,6 @@ function AllChat() {
                 <div className="sidebar-section-label">Recent</div>
 
                 <div className="sidebar-chats">
-                    {/* when chatdata come only this comonet should re-render */}
                     {
                         chats?.map((chat,index) => (
                             <RecentChatItem

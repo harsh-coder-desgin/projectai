@@ -1,17 +1,5 @@
-// import { useState } from "react";
-
 const MessageBubble = (msg) => {
-  
-  // const [copied, setCopied] = useState(false);
-
-  // const handleCopy = () => {
-  //   navigator.clipboard.writeText(msg.text).catch(() => { });
-  //   setCopied(true);
-  //   setTimeout(() => setCopied(false), 1500);
-  // };
-
   const renderText = (text) => {
-    // const parts = text?.split(/(```[\s\S]*?```)/g);
     return text.msg.content.text || text
   };
 
@@ -19,13 +7,7 @@ const MessageBubble = (msg) => {
 
   if (msg.msg.role === "ai") {
     try {
-      //   if (typeof msg.content === 'string') {
       aiData = msg.msg
-      //   }else{
-      //     aiData = msg
-      //   //   aiData = JSON?.parse(msg.content);
-      // }
-
     } catch (err) {
       console.log(err);
       aiData = null;

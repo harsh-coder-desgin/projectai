@@ -25,7 +25,6 @@ function ViewChat() {
     }, id ? [id] : [])
 
     if (loading) {
-        // here lazy loading of  ChatNotFound and navbar
         return null;
     }
         

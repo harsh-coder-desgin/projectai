@@ -41,10 +41,6 @@ function AuthLayout({ children }) {
     return null;
   }
 
-  // if (!techData && ["/login", "/signup"].includes(location.pathname)) {
-  //   return <Navigate to="/tech" replace />;
-  // }
-
   if (!isLoggedIn && !techData && location.pathname === "/tech") {
     return <Navigate to="/login" replace />;
   }
@@ -57,10 +53,6 @@ function AuthLayout({ children }) {
     return <Navigate to="/login" replace />;
   }
 
-  // if (!isLoggedIn && !techData && (location.pathname === "/chat" || location.pathname.startsWith("/chat/"))) {
-  //   return <Navigate to="/tech" replace />;
-  // }
-  
   if (
     isLoggedIn &&
     ["/login", "/signup"].includes(location.pathname)

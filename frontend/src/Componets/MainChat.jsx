@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext, useCallback} from "react";
-import { WelcomeScreen, ChatInput, Icon, Button } from "./index.js"
+import { WelcomeScreen, ChatInput, Icon } from "./index.js"
 import { UserContext } from "../Context/UserContext.jsx";
 import { useLocation ,useNavigate } from "react-router-dom";
 import chat from "../auth/chat.js"
@@ -40,43 +40,22 @@ const MainChat = React.memo(function MainChat({ Typing, setMessages, setIsTyping
         setMessages((prev) => [...prev, userMsg]);
         if (textareaRef.current) textareaRef.current.style.height = "auto";    
         if (!text || Typing) return;
-        // const data = localStorage.getItem("techSkills")
-        // if (data && user.username.length !== 0 && skills) {
-        //     try {
-            //         const saveskills = await chat.saveTech({ tech: data })
-            //         console.log(saveskills);
-            //         setskills(false)
-            //     } catch (error) {
-                //         if (error.message != "internal server error") {
-                    //             setskills(false)
-                    //         }
-                    //         console.log(error.message);
-                    //     }
-                    // }
-                    let res;
-                    // let errormsg;
+        let res;
         if (user.username.length === 0) {
             try {
                 res = await chat.demoChat({ message: text })
-                // res = await chat.demoChat({ tech: data, message: text })
-                // console.log(res);
             } catch (error) {
-                // errormsg = error.message
                 console.log(error);
             }
         } else {
             try {
                 res = await chat.sendChat({ message: text, chatId: chatid || null })
-                // console.log(res);
             } catch (error) {
-                // errormsg = error.message
                 console.log(error);
             }
             if (res) {
                 if (location.pathname === "/chat") {
-                    setchatdata({ chatId:res.data.chatId,title: text,
-                        // _id: res.data._id 
-                    })
+                    setchatdata({ chatId:res.data.chatId,title: text })
                     navigate(`/chat/${res.data.chatId}`)
                 }
             }
@@ -118,19 +97,12 @@ const MainChat = React.memo(function MainChat({ Typing, setMessages, setIsTyping
                 </div>
             )}
 
-            {/* {Typing && (
-                <Button className="stop-btn" onClick={() => setIsTyping(false)}>
-                    <Icon.Stop /> Stop generating
-                </Button>
-            )} */}
-
             <ChatInput
                 input={input}
                 setInput={setInput}
                 sendMessage={sendMessage}
                 isTyping={Typing}
                 textareaRef={textareaRef}
-                // autoResize={autoResize}
                 handleKeyDown={handleKeyDown}
                 Icon={Icon} 
             />
