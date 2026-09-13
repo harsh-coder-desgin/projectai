@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect,useContext } from "react";
-import { MessageBubble, TypingMessage, MainChat, Navbar, AllChat } from "../Componets/index.js"
+import { MessageBubble, TypingMessage, MainChat, Navbar } from "../Componets/index.js"
 import { UserContext } from "../Context/UserContext.jsx";
 import "../styles/Chat.css"
 
@@ -25,7 +25,6 @@ const Chat = ({ olddata, chatid }) => {
     <>
       <div className="chat-app">
         <main className="chat-main">
-          <AllChat/>
           {user.username.length === 0 && <Navbar />}
           <div className="messages-area">
             {messages.length !== 0 && (

@@ -60,7 +60,6 @@ const MainChat = React.memo(function MainChat({ Typing, setMessages, setIsTyping
                 }
             }
         }    
-        
         setTimeout(() => {
             setMessages((prev) => [...prev, { id: Date.now() + 1, role: "ai", content: res?.data?.aires || "Error something wrong" }]);
             setIsTyping(false);

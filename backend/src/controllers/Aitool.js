@@ -80,7 +80,8 @@ async function AItool(userinput = '') {
             const ans3 = await project_idea_generator(userinput)
             if (ans3) {
                 const ans34 = await project_detail_maker(ans3)
-                return JSON.parse(ans34.replace(/^```json\s*/, "").replace(/\s*```$/, ""));
+                const final = JSON.parse(ans34.replace(/^```json\s*/, "").replace(/\s*```$/, ""));
+                return final
             }
         } else if (getvaleus.return === false) {
             return { text: getvaleus.text }

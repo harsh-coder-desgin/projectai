@@ -29,8 +29,8 @@ async function check(userinput = '') {
             const res = JSON.parse(result);
             return res.output
         } catch (error) {
-            console.log(error)     
-            return false           
+            console.log(error)
+            return false
         }
     } catch (error) {
         console.log(error)
@@ -47,29 +47,56 @@ const saveUserTech = async (req, res) => {
 
     const data = JSON?.parse(tech);
 
-    const existingData = await UserData.findOne({
+    let userData = await UserData.findOne({
         userId: req.userId,
     });
 
-    if (existingData) {
-        return res.status(400).json(
-            new ApiResponse(
-                400,
-                null,
-                "Technologies already submitted"
-            )
-        );
+    if (userData) {
+        const hasTech =
+            userData.tech?.frontend?.length > 0 ||
+            userData.tech?.backend?.length > 0 ||
+            userData.tech?.database?.length > 0 ||
+            userData.tech?.other?.length > 0;
+
+        if (hasTech) {
+            return res.status(400).json({
+                message: "Technologies already submitted",
+            });
+        }
     }
 
-    const userData = await UserData.create({
-        userId: req.userId,
-        tech: {
+    if (!userData) {
+        userData = await UserData.create({
+            userId: req.userId,
+
+            tech: {
+                frontend: data.frontend || [],
+                backend: data.backend || [],
+                database: data.database || [],
+                other: data.other || [],
+            },
+
+            chats: [],
+            chatHistory: [],
+        });
+    } else {
+        if (!userData.chats) {
+            userData.chats = [];
+        }
+
+        if (!userData.chatHistory) {
+            userData.chatHistory = [];
+        }
+
+        userData.tech = {
             frontend: data.frontend || [],
             backend: data.backend || [],
             database: data.database || [],
             other: data.other || [],
-        },
-    });
+        };
+
+        await userData.save();
+    }
 
     return res.status(201).json(
         new ApiResponse(
@@ -133,24 +160,24 @@ const sendChat = async (req, res) => {
         throw new ApiError(400, "Message is required");
     }
 
-    const userData = await UserData.findOne({
+    let userData = await UserData.findOne({
         userId: req.userId,
     });
 
     if (!userData) {
-    await UserData.create({
-        userId: req.userId,
+        userData = await UserData.create({
+            userId: req.userId,
 
-        tech: {
-        frontend: [],
-        backend: [],
-        database: [],
-        other: [],
-        },
+            tech: {
+                frontend: [],
+                backend: [],
+                database: [],
+                other: [],
+            },
 
-        chats: [],
-        chatHistory: [],
-    });
+            chats: [],
+            chatHistory: [],
+        });
     }
 
     const checking = await check(message)
@@ -159,11 +186,11 @@ const sendChat = async (req, res) => {
         throw new ApiError(500,"Error something wrong")
     }
 
-    const userskills = userData.tech
-    const aires = await AItool(`${message} User skills:${userskills}`)
+    const userskills = userData?.tech
+    const aires = await AItool(`${message} User skills:${userskills || ''}`)
 
     if (aires === false) {
-        throw new ApiError(500,"Error something wrong or your limit over")
+        throw new ApiError(500, "Error something wrong or your limit over")
     }
 
     if (!chatId) {
@@ -286,13 +313,13 @@ const demoChat = async (req, res) => {
     const checking = await check(message)
 
     if (checking === "false") {
-       throw new ApiError(500,"Error something wrong")
+        throw new ApiError(500, "Error something wrong")
     }
 
     const aires = await AItool(message)
 
     if (aires === false) {
-        throw new ApiError(500,"Error something wrong or your limit over")
+        throw new ApiError(500, "Error something wrong or your limit over")
     }
 
     return res.status(200).json(

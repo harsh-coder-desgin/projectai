@@ -46,11 +46,9 @@ function TechForm() {
       ...formData,
       other: [...formData.other, ...extraSkills],
     };
-    // here call save tech api
     try {
       const techData = JSON.stringify(finalData)
       const saveskills = await chat.saveTech({ tech: techData })
-      console.log(saveskills);
       if (saveskills) {
         localStorage.setItem("techSkills", techData); 
         navigate("/chat")

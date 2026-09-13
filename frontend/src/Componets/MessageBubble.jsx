@@ -1,4 +1,4 @@
-const MessageBubble = (msg) => {
+const MessageBubble = (msg) => {  
   const renderText = (text) => {
     return text.msg.content.text || text
   };

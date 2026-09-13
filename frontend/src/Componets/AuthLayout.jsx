@@ -41,7 +41,7 @@ function AuthLayout({ children }) {
     return null;
   }
 
-  if (!isLoggedIn && !techData && location.pathname === "/tech") {
+  if (!isLoggedIn && techData && location.pathname === "/tech") {
     return <Navigate to="/login" replace />;
   }
 
