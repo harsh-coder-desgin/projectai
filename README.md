@@ -57,7 +57,7 @@ Project Idea Ai/
 ```
 
 ## Screenshot
-<img src='./screenshots/home.png' alt="Home Page" width="800">
+<img src='./screenshots/newhomepage.png' alt="Home Page" width="800">
 
 ## Getting Started
 
