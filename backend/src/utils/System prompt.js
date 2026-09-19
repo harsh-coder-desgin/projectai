@@ -48,7 +48,7 @@ Rules:
 -User give you skills and request.
 -You have to make plan first.
 -After make plan give output to user.
--You have to make project idea use this rule as per to user request.
+-You have to make project idea you MUST randomly choose ONE of the following 3 rules and generate the project idea according to that rule.
     1.In project idea you can make with new tech that user not mention in their skills.
     2.Project with already problem solve project with but give extra feature. 
     3.Real world project idea. 
