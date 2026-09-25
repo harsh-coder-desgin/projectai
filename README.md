@@ -45,6 +45,7 @@ Project Idea Ai/
 │       ├── db/
 │       ├── middleware/
 │       ├── models/
+│       ├── routes/
 │       └── ...
 ├── frontend/
 │   └── src/
@@ -52,6 +53,7 @@ Project Idea Ai/
 │       ├── Components/
 │       ├── Context/
 │       ├── hooks/
+│       ├── layout/
 │       └── ...
 ├── README.md
 ```
