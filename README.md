@@ -84,7 +84,6 @@ Project Idea Ai/
 - Add GitHub integration to track and analyze user projects.
 - Add more technology and skill options.
 - Add project difficulty levels such as Beginner,Intermediate and Advanced.
-- Allow users to save and manage their favorite project ideas.
 - Add the ability to export project ideas and details.
 
 ## Author
