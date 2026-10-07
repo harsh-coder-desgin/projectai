@@ -1,12 +1,12 @@
 import "./config/config.js"; 
-import dns from "dns";
+// import dns from "dns";
 import app from "./app.js"
 import connectDB from "./db/index.js";
 
-dns.setServers([
-   "1.1.1.1", 
-   "8.8.8.8" 
-]);
+// dns.setServers([
+//    "1.1.1.1", 
+//    "8.8.8.8" 
+// ]);
 
 connectDB()
    .then(() => {
